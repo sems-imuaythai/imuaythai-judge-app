@@ -13,11 +13,6 @@ class LoginView extends Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Login</Title>
-          </Body>
-        </Header>
         <Content style={ { marginTop: 10 } }>
           <Image style={ { width: null, height: 200 } } source={ { uri: 'http://www.downwithdesign.com/wp-content/uploads/2012/07/dark-knight-rises-logo.png' } } />
           <Form>

@@ -3,34 +3,32 @@ import LoginContainer from '../Login/LoginContainer';
 import DashboardView from '../../components/Dashboard/DashboardView'
 import { Root, Toast } from "native-base";
 import { StackNavigator } from "react-navigation";
+import FightPointView from '../../components/Fight/FightPointsView'
+import { connect } from 'react-redux';
+import CenterSpinner from '../../components/Spinner/CenterSpinner';
+import FightListContainer from '../Fight/FightListContainer';
 
 class MainContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            showToast: false
-        }
-    }
     render() {
-        const ToastNotifier = () => Toast.show({
-            text: 'Wrong password!',
-            position: 'bottom',
-            buttonText: 'Okay',
-            type: "danger"
-        })
-        return (<DashboardView/>);
+
+        return (<FightListContainer/>)
     }
 }
-const AppNavigator = StackNavigator(
-    {
-        Page: {
-            screen: MainContainer
-        },
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        authToken: state.Account.authToken,
+        error: state.Notify.errorMessage
     }
-);
+}
 
-MainContainer = () => <Root>
-                        <AppNavigator />
-                      </Root>;
-
+MainContainer = connect(mapStateToProps)(MainContainer);
+/*MainContainer = StackNavigator({
+    Login: {
+        screen: LoginContainer
+    },
+    FightList: {
+        screen: FightListContainer
+    }
+});*/
 export default MainContainer;

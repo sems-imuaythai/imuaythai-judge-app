@@ -3,13 +3,16 @@ import LoginView from '../../components/Login/LoginView';
 import { connect } from 'react-redux';
 import { Spinner } from 'native-base';
 import { loginAccount } from '../../actions/AccountActions';
+import CenterSpinner from '../../components/Spinner/CenterSpinner';
 
 class LoginContainer extends Component {
-
+    static navigationOptions = {
+        title: 'Login',
+    }
 
     render() {
         if (this.props.fetching)
-            return (<Spinner/>)
+            return (<CenterSpinner/>)
         else
             return (
                 <LoginView handleSubmit={ this.props.handleSubmit } />
@@ -22,7 +25,6 @@ const mapStateToProps = (state, ownProps) => {
         authToken: state.Account.authToken,
         fetching: state.Account.fetching,
         fetched: state.Account.fetched,
-        error: state.Account.error
     }
 }
 

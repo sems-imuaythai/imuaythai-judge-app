@@ -2,25 +2,23 @@ import * as actionTypes from './types';
 import axios from 'axios';
 import { host } from '../common/globalVariables';
 
-export const loginAccount = (credentials) => {
+export const getFights = (ring) => {
     return (dispatch) => {
         dispatch({
-            type: actionTypes.LOGIN_ACCOUNT_REQUEST
-        });
+            type: actionTypes.GET_FIGHTS_REQUEST
+        })
+
         return axios
-            .post(host + "api/account/login", credentials)
+            .get(host + "api/fight", ring)
             .then((response) => {
                 dispatch({
-                    type: actionTypes.LOGIN_ACCOUNT_SUCCESS,
+                    type: actionTypes.GET_FIGHTS_SUCCESS,
                     payload: response.data
                 })
             })
             .catch((err) => {
                 dispatch({
-                    type: actionTypes.LOGIN_ACCOUNT_REJECTED,
-                    payload: err.response != null
-                        ? err.response.data
-                        : "Cannot connect to server"
+                    type: actionTypes.GET_FIGHTS_REJECTED
                 })
                 dispatch({
                     type: actionTypes.SHOW_ERROR,
@@ -29,7 +27,5 @@ export const loginAccount = (credentials) => {
                         : "Cannot connect to server"
                 })
             })
-
-
     }
 }
