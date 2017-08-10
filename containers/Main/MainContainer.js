@@ -17,8 +17,8 @@ class MainContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        authToken: state.Account.authToken,
-        error: state.Notify.errorMessage
+        //authToken: state.Account.authToken,
+        //error: state.Notify.errorMessage
     }
 }
 

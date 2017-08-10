@@ -30,3 +30,5 @@ const websocket = (state = websocketInitialState, action) => {
             return state
     }
 }
+
+export default websocket;

@@ -10,34 +10,36 @@ class FightListContaier extends Component {
         super();
 
     }
+
+    componentWillMount() {
+        this.props.subscribe();
+    }
     render() {
 
         return (
-            <FightListView />
+            <FightListView sendMessage={ this.props.sendMessage } />
             );
     }
 }
 const mapStateToProps = (state, ownProps) => {
     return {
-        //fights: state.Fight.fightList,
-        // fetching: state.Fight.fetching,
-        // ring: state.Settings.ring,
-        //socket: state.Websocket.socket
+        fights: state.Fight.fightList,
+        fetching: state.Fight.fetching,
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getFights: (ring) => {
-            dispatch(getFights(ring))
+        getFights: () => {
+            dispatch(getFights())
         },
 
-        subscribe: (ring) => {
-            dispatch(subscribe(ring))
+        subscribe: () => {
+            dispatch(subscribe())
         },
 
-        sendMessage: (socket, message) => {
-            dispatch(sendMessage(socket, message))
+        sendMessage: (message) => {
+            dispatch(sendMessage(message))
         }
     }
 }

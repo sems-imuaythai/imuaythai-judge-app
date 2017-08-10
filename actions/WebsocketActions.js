@@ -8,13 +8,17 @@ const constructUrl = (ring) => {
         case "B":
             return websocket + "/ringb";
         case "C":
-            return websocket + "/ringc"
+            return websocket + "/ringc";
+        default:
+            return websocket + "/ringa";
     }
 }
 
-export const subscribe = (ring) => {
-    return (dispatch) => {
-        var socket = new WebSocket(websocket + "/ringa");
+export const subscribe = () => {
+    return (dispatch, getState) => {
+        //const {ring} = getState().Settings;
+
+        var socket = new WebSocket(websocket + "ringa");
 
         socket.onmessage = (event) => {
             dispatch({
@@ -22,11 +26,18 @@ export const subscribe = (ring) => {
                 payload: event.data
             });
         }
+
+        dispatch({
+            type: actionTypes.WEBSOCKET_CONNECT,
+            payload: socket
+        })
     }
 }
 
-export const sendMessage = (socket, message) => {
-    return (dispatch) => {
+export const sendMessage = (message) => {
+    return (dispatch, getState) => {
+
+        const {socket} = getState().Websocket;
         dispatch({
             type: actionTypes.WEBSOCKET_SEND_MESSAGE,
             payload: message
