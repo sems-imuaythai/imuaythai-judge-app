@@ -1,25 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, List, ListItem, Text, Button } from 'native-base';
-import *as requestTypes from '../../containers/Fight/requestTypes';
+import CenterSpinner from '../Spinner/CenterSpinner';
 class FightListView extends Component {
-
-  handleClick() {
-
-    const data = {
-
-      test: 'test test'
-
-    }
-
-    const request = {
-      requestType: requestTypes.JuryConnected,
-      data: JSON.stringify(data)
-    }
-
-    let text = JSON.stringify(request);
-    this.props.sendMessage(text);
-
-  }
 
 
   render() {
@@ -27,20 +9,18 @@ class FightListView extends Component {
       <Container>
         <Header />
         <Content>
-          <List>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-          </List>
-          <Button onPress={ this.handleClick.bind(this) }>
-            <Text>SendTest</Text>
-          </Button>
+          { this.props.fetching ? <CenterSpinner/> :
+            <List>
+              <ListItem button onPress={ () => this.props.setFightId(id) }>
+                <Text>Simon Mignolet</Text>
+              </ListItem>
+              <ListItem button>
+                <Text>Nathaniel Clyne</Text>
+              </ListItem>
+              <ListItem button>
+                <Text>Dejan Lovren</Text>
+              </ListItem>
+            </List> }
         </Content>
       </Container>
       );

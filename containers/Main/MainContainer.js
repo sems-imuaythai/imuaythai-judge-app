@@ -7,28 +7,59 @@ import FightPointView from '../../components/Fight/FightPointsView'
 import { connect } from 'react-redux';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
 import FightListContainer from '../Fight/FightListContainer';
+import FightScreenResolver from '../Fight/FightScreenResolver';
+
+const renderToast = message => {
+    Toast.show({
+        text: message,
+        position: 'bottom',
+        buttonText: 'Okay',
+        type: "danger"
+    })
+}
 
 class MainContainer extends Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showToast: false
+        }
+    }
 
-        return (<FightListContainer/>)
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false,
+    };
+
+    render() {
+        if (this.props.error != '')
+            renderToast(this.props.error)
+
+        if (this.props.authToken != '')
+            return <FightListContainer/>
+        else if (this.props.fightId != '')
+            return <FightScreenResolver fightId={ this.props.fightId } />
+        else
+            return <LoginContainer/>
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        //authToken: state.Account.authToken,
-        //error: state.Notify.errorMessage
+        authToken: state.Account.authToken,
+        error: state.Notify.errorMessage,
+        fightId: state.Fight.fightId
     }
 }
 
 MainContainer = connect(mapStateToProps)(MainContainer);
-/*MainContainer = StackNavigator({
-    Login: {
-        screen: LoginContainer
-    },
-    FightList: {
-        screen: FightListContainer
+AppNavigator = StackNavigator({
+    Main: {
+        screen: MainContainer
     }
-});*/
-export default MainContainer;
+});
+
+var MainContainerWithNavigator = () => <Root>
+                                         <AppNavigator />
+                                       </Root>;
+export default MainContainerWithNavigator;

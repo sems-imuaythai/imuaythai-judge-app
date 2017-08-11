@@ -6,17 +6,11 @@ import { loginAccount } from '../../actions/AccountActions';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
 
 class LoginContainer extends Component {
-    static navigationOptions = {
-        title: 'Login',
-    }
 
     render() {
-        if (this.props.fetching)
-            return (<CenterSpinner/>)
-        else
-            return (
-                <LoginView handleSubmit={ this.props.handleSubmit } />
-                );
+        return (
+            <LoginView handleSubmit={ this.props.handleSubmit } fetching={ this.props.fetching } />
+            );
     }
 }
 

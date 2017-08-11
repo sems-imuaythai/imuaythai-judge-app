@@ -23,7 +23,7 @@ const notify = (state = notifyInitialState, action) => {
                 ...state,
                 warningMessage: action.payload
             }
-        case actionType.HIDE_NOTIFY:
+        case actionType.RESET_NOTIFY:
             return {
                 ...state,
                 errorMessage: '',

@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
 import FightListView from '../../components/Fight/FightListView';
-import { getFights } from '../../actions/FightActions';
+import { getFights, setFightId } from '../../actions/FightActions';
 import { subscribe, sendMessage } from '../../actions/WebsocketActions';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
 import { connect } from 'react-redux';
 
 class FightListContaier extends Component {
-    constructor() {
-        super();
-
-    }
-
-    componentWillMount() {
-        this.props.subscribe();
-    }
     render() {
 
         return (
-            <FightListView sendMessage={ this.props.sendMessage } />
+            <FightListView fights={ this.props.fights } fetching={ this.props.fetching } setFightId={ this.props.setFightId } />
             );
     }
 }
@@ -33,13 +25,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         getFights: () => {
             dispatch(getFights())
         },
-
-        subscribe: () => {
-            dispatch(subscribe())
-        },
-
-        sendMessage: (message) => {
-            dispatch(sendMessage(message))
+        setFightId: (id) => {
+            dispatch(setFightId(id))
         }
     }
 }

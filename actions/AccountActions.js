@@ -7,6 +7,10 @@ export const loginAccount = (credentials) => {
         dispatch({
             type: actionTypes.LOGIN_ACCOUNT_REQUEST
         });
+        dispatch({
+            type: actionTypes.RESET_NOTIFY
+        });
+
         return axios
             .post(host + "api/account/login", credentials)
             .then((response) => {
