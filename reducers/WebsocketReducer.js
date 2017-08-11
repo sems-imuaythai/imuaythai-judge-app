@@ -3,7 +3,8 @@ import * as actionType from '../actions/types';
 const websocketInitialState = {
     socket: null,
     connected: false,
-    open: false
+    open: false,
+    message: ''
 }
 const websocket = (state = websocketInitialState, action) => {
     switch (action.type) {
@@ -24,7 +25,8 @@ const websocket = (state = websocketInitialState, action) => {
             return {
                 ...state,
                 connected: true,
-                open: true
+                open: true,
+                message: action.payload
             }
         default:
             return state
