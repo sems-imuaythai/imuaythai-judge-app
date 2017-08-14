@@ -32,10 +32,9 @@ class MainContainer extends Component {
     };
 
     render() {
-        if (this.props.error != '')
-            renderToast(this.props.error)
-
-        if (this.props.authToken != '')
+        /* if (this.props.error != '')
+             renderToast(this.props.error) */
+        if (this.props.authToken != '' && this.props.fightId == '')
             return <FightListContainer/>
         else if (this.props.fightId != '')
             return <FightScreenResolver fightId={ this.props.fightId } />
@@ -47,7 +46,7 @@ class MainContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         authToken: state.Account.authToken,
-        error: state.Notify.errorMessage,
+        // error: state.Notify.errorMessage,
         fightId: state.Fight.fightId
     }
 }

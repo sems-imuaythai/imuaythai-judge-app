@@ -1,6 +1,7 @@
 import * as actionTypes from './types';
 import axios from 'axios';
 import { host } from '../common/globalVariables';
+import { unsubscribe } from './WebsocketActions';
 
 export const loginAccount = (credentials) => {
     return (dispatch) => {
@@ -33,7 +34,14 @@ export const loginAccount = (credentials) => {
                         : "Cannot connect to server"
                 })
             })
+    }
+}
 
-
+export const logout = () => {
+    return (dispatch) => {
+        dispatch(unsubscribe())
+        dispatch({
+            type: actionTypes.ACCOUNT_LOGOUT
+        })
     }
 }

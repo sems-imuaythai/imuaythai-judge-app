@@ -5,13 +5,6 @@ import { Col, Row } from 'react-native-easy-grid';
 
 
 class WarningButton extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      c: 0
-    }
-  }
 
   render() {
     var style = StyleSheet.create({
@@ -23,23 +16,15 @@ class WarningButton extends Component {
     return (
       <Col style={ style.centerElements }>
       <Row style={ style.centerElements }>
-        <Button large full light onPress={ () => {
-                                             this.setState({
-                                               c: this.state.c + 1
-                                             })
-                                           } } style={ { height: 85, width: 85 } }>
+        <Button large full light style={ { height: 85, width: 85 } } onPress={ this.props.increment }>
           <H1>{ this.props.symbol }</H1>
         </Button>
       </Row>
       <Row style={ { height: 85, width: 85, backgroundColor: this.props.playerBackgrounColor, justifyContent: 'center', alignItems: 'center' } }>
-        <H2 style={ { color: '#ffffff' } }>{ this.state.c }</H2>
+        <H2 style={ { color: '#ffffff' } }>{ this.props.symbolCount }</H2>
       </Row>
       <Row style={ style.centerElements }>
-        <Button large full light style={ { height: 85, width: 85 } } onPress={ () => {
-                                                                                 this.setState({
-                                                                                   c: this.state.c - 1
-                                                                                 })
-                                                                               } }>
+        <Button large full light style={ { height: 85, width: 85 } } onPress={ this.props.decrement }>
           <H1> - </H1>
         </Button>
       </Row>

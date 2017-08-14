@@ -19,8 +19,11 @@ export const subscribe = () => {
         //const {ring} = getState().Settings;
 
         var socket = new WebSocket(websocket + "ringa");
-
         socket.onmessage = (event) => {
+            dispatch({
+                type: actionTypes.WEBSOCKET_CLEAR_MESSAGE
+            });
+            
             dispatch({
                 type: actionTypes.WEBSOCKET_RECEIVED_MESSAGE,
                 payload: event.data
@@ -46,5 +49,16 @@ export const sendMessage = (message) => {
         socket.send(message);
 
 
+    }
+}
+
+export const unsubscribe = () => {
+    return (dispatch, getState) => {
+        const {socket} = getState().Websocket;
+
+        socket.close();
+        dispatch({
+            type: actionTypes.WEBSOCKET_DISCONNECT
+        })
     }
 }

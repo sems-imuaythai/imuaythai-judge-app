@@ -4,7 +4,7 @@ const reducerInitialState = {
     authToken: '',
     fetching: false,
     fetched: false,
-    error: undefined
+    user: null
 }
 const reducer = (state = reducerInitialState, action) => {
     switch (action.type) {
@@ -16,7 +16,8 @@ const reducer = (state = reducerInitialState, action) => {
         case actionType.LOGIN_ACCOUNT_SUCCESS:
             return {
                 ...state,
-                authToken: action.payload,
+                authToken: action.payload.authToken,
+                user: action.payload.user,
                 fetching: false,
                 fetched: true
             }
@@ -24,7 +25,12 @@ const reducer = (state = reducerInitialState, action) => {
             return {
                 ...state,
                 fetching: false,
-                error: action.payload
+            }
+        case actionType.ACCOUNT_LOGOUT:
+            return {
+                ...state,
+                authToken: '',
+                user: null
             }
         default:
             return state

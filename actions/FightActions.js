@@ -7,9 +7,8 @@ export const getFights = (ring) => {
         dispatch({
             type: actionTypes.GET_FIGHTS_REQUEST
         })
-
         return axios
-            .get(host + "api/fight", ring)
+            .get(host + "api/fight/get/" + ring)
             .then((response) => {
                 dispatch({
                     type: actionTypes.GET_FIGHTS_SUCCESS,
@@ -41,26 +40,27 @@ export const getFightDetails = (id) => {
                 dispatch({
                     type: actionTypes.GET_FIGHT_DETAILS_SUCCESS,
                     payload: response.data
-                })
+                }),
+                (err) => {
+                    dispatch({
+                        type: actionTypes.GET_FIGHT_DETAILS_REJECTED
+                    })
+                    dispatch({
+                        type: actionTypes.SHOW_ERROR,
+                        payload: err.response != null
+                            ? err.response.data
+                            : "Cannot connect to server"
+                    })
+                }
             })
-            .catch((err) => {
-                dispatch({
-                    type: actionTypes.GET_FIGHT_DETAILS_REJECTED
-                })
-                dispatch({
-                    type: actionTypes.SHOW_ERROR,
-                    payload: err.response != null
-                        ? err.response.data
-                        : "Cannot connect to server"
-                })
-            })
+
     }
 }
 
 export const setFightId = (id) => {
     return dispatch => {
         dispatch({
-            type: 'SET_FIGHT_ID',
+            type: actionTypes.SET_FIGHT_ID,
             payload: id
         })
     }

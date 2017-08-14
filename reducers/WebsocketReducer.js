@@ -28,6 +28,18 @@ const websocket = (state = websocketInitialState, action) => {
                 open: true,
                 message: action.payload
             }
+        case actionType.WEBSOCKET_DISCONNECT:
+            return {
+                ...state,
+                connected: false,
+                open: false,
+                socket: null
+            }
+            case actionType.WEBSOCKET_CLEAR_MESSAGE:
+            return {
+                ...state,
+                message: ''
+            }
         default:
             return state
     }

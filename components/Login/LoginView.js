@@ -29,9 +29,9 @@ class LoginView extends Component {
             <CenterSpinner/> :
             <Form>
               <Item>
-                <Input placeholder="Username" onChangeText={ (text) => this.setState({
-                                                               email: text
-                                                             }) } />
+                <Input placeholder="Username" keyboardType="email-address" onChangeText={ (text) => this.setState({
+                                                                                            email: text
+                                                                                          }) } />
               </Item>
               <Item last>
                 <Input placeholder="Password" secureTextEntry={ true } onChangeText={ (text) => this.setState({

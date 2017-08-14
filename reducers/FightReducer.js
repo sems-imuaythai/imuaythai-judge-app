@@ -38,6 +38,12 @@ const fight = (state = fightInitialState, action) => {
                 ...state,
                 fetching: false
             }
+
+        case actionType.SET_FIGHT_ID:
+            return {
+                ...state,
+                fightId: action.payload
+            }
         default:
             return state
     }

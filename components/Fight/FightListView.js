@@ -5,21 +5,21 @@ class FightListView extends Component {
 
 
   render() {
+    const renderFightList = this.props.fights.map((fight, key) => (
+      <ListItem key={ key } button onPress={ () => this.props.setFightId(fight.id) }>
+        <Text>
+          { fight.blueAthlete.firstName }
+          { fight.blueAthlete.surname } vs
+          { fight.redAthlete.firstName }
+          { fight.redAthlete.surname } </Text>
+      </ListItem>))
     return (
       <Container>
         <Header />
         <Content>
           { this.props.fetching ? <CenterSpinner/> :
             <List>
-              <ListItem button onPress={ () => this.props.setFightId(id) }>
-                <Text>Simon Mignolet</Text>
-              </ListItem>
-              <ListItem button>
-                <Text>Nathaniel Clyne</Text>
-              </ListItem>
-              <ListItem button>
-                <Text>Dejan Lovren</Text>
-              </ListItem>
+              { renderFightList }
             </List> }
         </Content>
       </Container>
