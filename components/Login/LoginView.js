@@ -11,6 +11,9 @@ class LoginView extends Component {
       password: '',
     }
   }
+
+
+
   render() {
     return (
       <Container>
@@ -43,7 +46,7 @@ class LoginView extends Component {
                   Log in
                 </Text>
               </Button>
-              <Button block success>
+              <Button block success onPress={ this.props.handleQRPress }>
                 <Text>
                   Scan QR code
                 </Text>

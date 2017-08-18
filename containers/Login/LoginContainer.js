@@ -6,8 +6,17 @@ import { loginAccount } from '../../actions/AccountActions';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
 
 class LoginContainer extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            showQR: false,
+            data: null
+        }
+    }
 
     render() {
+
         return (
             <LoginView handleSubmit={ this.props.handleSubmit } fetching={ this.props.fetching } />
             );

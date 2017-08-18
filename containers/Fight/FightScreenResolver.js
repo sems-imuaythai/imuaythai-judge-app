@@ -12,17 +12,12 @@ import CenterSpinner from '../../components/Spinner/CenterSpinner';
 
 
 const GetJudgeRole = (props) => {
-    const {fight, user, subscribe, sendMessage} = props;
-    if (fight.refereeId === user.id) {
-        subscribe();
-        return "Referee";
-    } else if (fight.timeKeeperId === user.id) {
+    const {fight, user, subscribe} = props;
+    if (fight.timeKeeperId === user.id) {
         subscribe();
         return "Timekeeper";
     } else if (fight.fightJudgesMappings.find(judge => judge.judgeId === user.id && judge.main === 1)) {
         subscribe();
-        var message = MainJudgeConnected();
-        sendMessage(message);
         return "Main";
     } else if (fight.fightJudgesMappings.find(judge => judge.judgeId === user.id && judge.main === 0)) {
         subscribe();
@@ -30,14 +25,6 @@ const GetJudgeRole = (props) => {
     }
     else
         return "";
-}
-const MainJudgeConnected = () => {
-    var request = {
-        requestType: requestType.JuryConnected,
-        data: null
-    }
-
-    return JSON.stringify(request);
 }
 
 
@@ -53,11 +40,11 @@ class FightScreenResolver extends Component {
             var judgeRole = GetJudgeRole(this.props);
             switch (judgeRole) {
                 case "Main":
-                    return <MainJudgeContainer fight={ fight } sendMessage={ sendMessage } />
+                    return <MainJudgeContainer fight={ fight } sendMessage={ sendMessage } user={ user } />
                 case "Points":
                     return <FightPointsContainer fight={ fight } sendMessage={ sendMessage } user={ user } />
                 case "Timekeeper":
-                    return <TimekeeperContainer fight={ fight } sendMessage={ sendMessage } />
+                    return <TimekeeperContainer fight={ fight } sendMessage={ sendMessage } user={ user } />
                 default:
                     return <FightListContainer />
             }

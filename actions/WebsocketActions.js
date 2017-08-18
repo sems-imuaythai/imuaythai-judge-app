@@ -14,6 +14,14 @@ const constructUrl = (ring) => {
     }
 }
 
+export const notifyJuryConnected = () => {
+    return dispatch => {
+        dispatch({
+            type: actionTypes.WEBSOCKET_JURY_CONNECT
+        });
+    }
+}
+
 export const subscribe = () => {
     return (dispatch, getState) => {
         //const {ring} = getState().Settings;
@@ -23,7 +31,7 @@ export const subscribe = () => {
             dispatch({
                 type: actionTypes.WEBSOCKET_CLEAR_MESSAGE
             });
-            
+
             dispatch({
                 type: actionTypes.WEBSOCKET_RECEIVED_MESSAGE,
                 payload: event.data
@@ -60,5 +68,13 @@ export const unsubscribe = () => {
         dispatch({
             type: actionTypes.WEBSOCKET_DISCONNECT
         })
+    }
+}
+
+export const clearMessage = () => {
+    return dispatch => {
+        dispatch({
+            type: actionTypes.WEBSOCKET_CLEAR_MESSAGE
+        });
     }
 }

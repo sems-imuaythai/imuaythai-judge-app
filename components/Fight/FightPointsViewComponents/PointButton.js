@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Button, Text, Input, H1, Title, Body, Toast } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Button, Text } from 'native-base';
+import { Col, Row } from 'react-native-easy-grid';
+import { StyleSheet } from 'react-native';
 
 class PointButton extends Component {
     render() {
+
+        const styles = {
+            default: {
+                height: 70,
+                width: 70
+            },
+            selected: {
+                height: 70,
+                width: 70,
+                backgroundColor: this.props.color
+            }
+        }
         return (
             <Col style={ { justifyContent: 'center', alignItems: 'center' } }>
-            <Row style={ { height: 70, width: 70, backgroundColor: '#b6b6b6', justifyContent: 'center', alignItems: 'center' } }>
-              <H1>{ this.props.pointValue }</H1>
+            <Row style={ { justifyContent: 'center', alignItems: 'center' } }>
+              <Button light full style={ this.props.selected ? styles.selected : styles.default } onPress={ this.props.setPoint }>
+                <Text>
+                  { this.props.pointValue }
+                </Text>
+              </Button>
             </Row>
             </Col>
             );

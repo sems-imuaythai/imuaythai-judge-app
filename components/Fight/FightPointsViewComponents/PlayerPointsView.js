@@ -14,7 +14,7 @@ const initialState = {
   points: 0,
   judgeId: '',
   fighterId: '',
-  subbmited: false
+  roundId: 0,
 }
 class PlayerPointsView extends Component {
   constructor() {
@@ -27,11 +27,13 @@ class PlayerPointsView extends Component {
     this.handleAccept = this.handleAccept.bind(this);
   }
 
-  componentWillMount(){
-    this.setState({
-      judgeId: this.props.judgeId,
-      fighterId: this.props.fighterId
-    })
+  componentDidUpdate() {
+    if(this.props.roundId != this.state.roundId)
+      this.setState({
+        judgeId: this.props.judgeId,
+        fighterId: this.props.fighterId,
+        roundId: this.props.roundId
+      })
   }
 
   incrementWarning(warning) {
@@ -62,13 +64,12 @@ class PlayerPointsView extends Component {
     var serizedRequest = JSON.stringify(request);
 
     this.props.sendPoints(serizedRequest);
-    this.setState({subbmited: true});
   }
 
 
   render() {
     var numberArray = [5, 6, 7, 8, 9, 10];
-    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } setPoint={ () => this.setPoint(val) } />)
+    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } setPoint={ () => this.setPoint(val) } selected={ this.state.points === val } color={ this.props.primaryBackgroundColor } />)
     return (
       <Col style={ { backgroundColor: this.props.primaryBackgroundColor, justifyContent: 'center', alignItems: 'center' } }>
       <Row>
@@ -93,7 +94,7 @@ class PlayerPointsView extends Component {
           { mappedPointButtons }
         </Grid>
       </Row>
-      <Button full large light style={ { margin: 5 } } disabled={this.state.subbmited} onPress={ this.handleAccept }>
+      <Button full large light style={ { margin: 5 } }  onPress={ this.handleAccept }>
         <Text>ACCEPT</Text>
       </Button>
       </Col>

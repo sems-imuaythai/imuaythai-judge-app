@@ -3,6 +3,7 @@ import * as actionType from '../actions/types';
 const websocketInitialState = {
     socket: null,
     connected: false,
+    juryConnected: false,
     open: false,
     message: ''
 }
@@ -14,6 +15,11 @@ const websocket = (state = websocketInitialState, action) => {
                 socket: action.payload,
                 connected: true,
                 open: true
+            }
+        case actionType.WEBSOCKET_JURY_CONNECT:
+            return {
+                ...state,
+                juryConnected: true
             }
         case actionType.WEBSOCKET_SEND_MESSAGE:
             return {
@@ -33,9 +39,10 @@ const websocket = (state = websocketInitialState, action) => {
                 ...state,
                 connected: false,
                 open: false,
+                juryConnected: false,
                 socket: null
             }
-            case actionType.WEBSOCKET_CLEAR_MESSAGE:
+        case actionType.WEBSOCKET_CLEAR_MESSAGE:
             return {
                 ...state,
                 message: ''
