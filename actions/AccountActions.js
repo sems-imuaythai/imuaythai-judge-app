@@ -37,6 +37,16 @@ export const loginAccount = (credentials) => {
     }
 }
 
+export const loginWithQRCode = (qrcode) => {
+    let data = JSON.parse(qrcode.data);
+    return dispatch => {
+        dispatch({
+            type: actionTypes.LOGIN_ACCOUNT_SUCCESS,
+            payload: data
+        })
+    }
+}
+
 export const logout = () => {
     return (dispatch) => {
         dispatch(unsubscribe())

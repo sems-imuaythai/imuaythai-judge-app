@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import LoginView from '../../components/Login/LoginView';
 import { connect } from 'react-redux';
 import { Spinner } from 'native-base';
-import { loginAccount } from '../../actions/AccountActions';
+import { loginAccount, loginWithQRCode } from '../../actions/AccountActions';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
+import { Permissions } from 'expo';
 
 class LoginContainer extends Component {
     constructor() {
@@ -11,14 +12,23 @@ class LoginContainer extends Component {
 
         this.state = {
             showQR: false,
-            data: null
+            data: null,
+            hasCameraPermission: null
         }
     }
 
-    render() {
+    async componentWillMount() {
+        const {status} = await Permissions.askAsync(Permissions.CAMERA);
+        this.setState({
+            hasCameraPermission: status === 'granted'
+        });
+    }
 
+    render() {
+        const {hasCameraPermission} = this.state;
         return (
-            <LoginView handleSubmit={ this.props.handleSubmit } fetching={ this.props.fetching } />
+
+            <LoginView handleSubmit={ this.props.handleSubmit } fetching={ this.props.fetching } hasCameraPermission={ hasCameraPermission } loginWithQRCode={ this.props.loginWithQRCode } />
             );
     }
 }
@@ -35,6 +45,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleSubmit: (credentials) => {
             dispatch(loginAccount(credentials))
+        },
+        loginWithQRCode: (qrcode) => {
+            dispatch(loginWithQRCode(qrcode))
         }
     }
 }
