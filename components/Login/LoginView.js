@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 import CenterSpinner from '../Spinner/CenterSpinner';
 import { BarCodeScanner } from 'expo';
 import { StyleSheet } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 class LoginView extends Component {
   constructor() {
@@ -23,7 +24,14 @@ class LoginView extends Component {
 
   render() {
     if (this.state.showQRScanner)
-      return <BarCodeScanner onBarCodeRead={ this.props.loginWithQRCode } style={ StyleSheet.absoluteFill } />;
+      return <Container>
+               <BarCodeScanner onBarCodeRead={ this.props.loginWithQRCode } style={ StyleSheet.absoluteFill } />
+               <Button block light style={ { position: 'absolute', bottom: 0, width: '100%' } } onPress={ () => this.setState({
+                                                                                                            showQRScanner: false
+                                                                                                          }) }>
+                 <Text>Cancel</Text>
+               </Button>
+             </Container>;
     else
       return (
         <Container>

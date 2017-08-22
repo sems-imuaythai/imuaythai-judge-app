@@ -6,21 +6,38 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   dimensions: {
-    width: 85,
-    height: 85
+    height: 75,
+    width: '100%'
   },
   rowBorder: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: 'black',
+    height: 75,
     width: '100%'
   }
 });
 
 class JudgeTable extends Component {
+  constructor() {
+    super();
+
+    this.calculateMedian = this.calculateMedian.bind(this);
+  }
+
+  calculateMedian(array) {
+    array.sort((a, b) => a - b);
+    let lowMiddle = Math.floor((array.length - 1) / 2);
+    let highMiddle = Math.ceil((array.length - 1) / 2);
+    let median = (array[lowMiddle] + array[highMiddle]) / 2;
+
+    return median;
+  }
+
   render() {
     let roundArray = [];
+
     const {judgeMappings, rounds} = this.props;
     const renderIds = judgeMappings.map((judge, key) => (
       <Row key={ key } style={ styles.rowBorder }>
@@ -32,31 +49,48 @@ class JudgeTable extends Component {
         <H1>{ mapping.judge.firstName + " " + mapping.judge.surname }</H1>
       </Row>));
 
-    const renderRounds = rounds.map((round, i) => (
-      <Col style={ { justifyContent: 'center', alignItems: 'center' } } key={ i }>
-      <Row style={ styles.rowBorder }>
-        <H1>Round { i + 1 }</H1>
-      </Row>
-      { round.judges.map((judge, key) => (
-          <Row key={ key } style={ styles.rowBorder }>
-            <Button light full style={ styles.dimensions }>
-              <H1>{ judge.redPoints + "/" + judge.bluePoints }</H1>
-            </Button>
-          </Row>)) }
-      </Col>));
+    const renderRounds = rounds.map((round, i) => {
+      let bluePoints = [];
+      let redPoints = [];
+      return (
+        <Col style={ { justifyContent: 'center', alignItems: 'center' } } key={ i }>
+        <Row style={ styles.rowBorder }>
+          <H1>Round { i + 1 }</H1>
+        </Row>
+        { round.judges.map((judge, key) => {
+            bluePoints.push(judge.bluePoints);
+            redPoints.push(judge.redPoints);
+            return (
+              <Row key={ key } style={ styles.rowBorder }>
+                <Button light full style={ styles.dimensions }>
+                  <H1>{ judge.redPoints + "/" + judge.bluePoints }</H1>
+                </Button>
+              </Row>)
+          }) }
+        <Row style={ styles.rowBorder }>
+          <H1>{ this.calculateMedian(redPoints).toString() + "/" + this.calculateMedian(bluePoints).toString() }</H1>
+        </Row>
+        </Col>)
+    });
     return (
       <Grid style={ { backgroundColor: '#acacac' } }>
-        <Col style={ { justifyContent: 'center', alignItems: 'center' } }>
+        <Col style={ { justifyContent: 'center', alignItems: 'center', width: '10%' } }>
         <Row style={ styles.rowBorder }>
           <H1>Id</H1>
         </Row>
         { renderIds }
+        <Row style={ styles.rowBorder }>
+          <H1> </H1>
+        </Row>
         </Col>
         <Col style={ { justifyContent: 'center', alignItems: 'center' } }>
         <Row style={ styles.rowBorder }>
           <H1>Name</H1>
         </Row>
         { renderNames }
+        <Row style={ styles.rowBorder }>
+          <H1>Total</H1>
+        </Row>
         </Col>
         { renderRounds }
       </Grid>
