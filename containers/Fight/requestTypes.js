@@ -12,3 +12,4 @@ export const ShowPrematureEndPanel = 10;
 export const StartFight = 11;
 export const EndFight = 12;
 export const Fights = 13;
+export const SendTime = 14;

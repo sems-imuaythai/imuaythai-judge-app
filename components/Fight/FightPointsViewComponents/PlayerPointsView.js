@@ -15,6 +15,7 @@ const initialState = {
   judgeId: '',
   fighterId: '',
   roundId: 0,
+  fightId: 0
 }
 class PlayerPointsView extends Component {
   constructor() {
@@ -28,10 +29,11 @@ class PlayerPointsView extends Component {
   }
 
   componentDidUpdate() {
-    if(this.props.roundId != this.state.roundId)
+    if (this.props.roundId != this.state.roundId)
       this.setState({
         judgeId: this.props.judgeId,
         fighterId: this.props.fighterId,
+        fightId: this.props.fightId,
         roundId: this.props.roundId
       })
   }
@@ -94,7 +96,7 @@ class PlayerPointsView extends Component {
           { mappedPointButtons }
         </Grid>
       </Row>
-      <Button full large light style={ { margin: 5 } }  onPress={ this.handleAccept }>
+      <Button full large light style={ { margin: 5 } } onPress={ this.handleAccept }>
         <Text>ACCEPT</Text>
       </Button>
       </Col>

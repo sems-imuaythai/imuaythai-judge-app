@@ -8,20 +8,10 @@ import PlayerPointsView from './FightPointsViewComponents/PlayerPointsView'
 class FightPointView extends Component {
   constructor() {
     super();
-    this.state = {
-      fightStarted: false,
-      roundId: ''
-    }
 
-    this.setRound = this.setRound.bind(this);
     this.sendPoints = this.sendPoints.bind(this);
   }
 
-  setRound() {
-    this.setState((prevState) => ({
-      fightStarted: !prevState.fightStarted
-    }))
-  }
 
   componentDidUpdate() {
     const {message} = this.props;
@@ -32,29 +22,28 @@ class FightPointView extends Component {
         break;
 
       case requestType.StartRound:
-        this.setState({
-          roundId: message.data,
-          fightStarted: true
-        });
+        this.props.setRound(message.data)
 
         break;
 
       case requestType.EndRound:
-        this.setRound();
+        this.props.setRound(message.data);
         break;
       case requestType.ShowPrematureEndPanel:
-        //TODO premature end panel
+        this.props.showPanels();
         break;
 
       case requestType.EndFight:
         this.props.logout();
         break;
+      case requestType.SendTime:
+        this.props.setRoundEndTime(message.data)
 
       default:
-      match = false;
+        match = false;
         break;
     }
-    if(match){
+    if (match) {
       this.props.clearMessage();
     }
   }
@@ -63,20 +52,19 @@ class FightPointView extends Component {
     this.props.sendMessage(points);
   }
   render() {
-    console.log(this.state);
-    const {fight, user} = this.props;
+    const {fight, user, fightStarted} = this.props;
     const redFighterName = fight.redAthlete.firstName + " " + fight.redAthlete.surname;
     const blueFighterName = fight.blueAthlete.firstName + " " + fight.blueAthlete.surname;
     return (
 
       <Container>
         <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } />
+          <FightHeader user={ user } fight={ fight } started={ fightStarted } />
           <Grid>
             <PlayerPointsView primaryBackgroundColor='#cd2626' secondaryBackgroundColor='#720000' playerName={ redFighterName } sendPoints={ this.sendPoints } fighterId={ fight.redAthlete.id }
-              judgeId={ user.id } roundId={ this.state.roundId } />
+              judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } />
             <PlayerPointsView primaryBackgroundColor='#1874cd' secondaryBackgroundColor='#000080' playerName={ blueFighterName } sendPoints={ this.sendPoints } fighterId={ fight.blueAthlete.id }
-              judgeId={ user.id } roundId={ this.state.roundId } />
+              judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } />
           </Grid>
         </Content>
       </Container>

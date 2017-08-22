@@ -3,7 +3,6 @@ import FightHeader from './FightHeader';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Content, Text, Title, H1, Button } from 'native-base';
 import JudgeTable from './FightMainJudgeViewComponents/JudgeTable';
-
 import * as requestType from '../../containers/Fight/requestTypes';
 
 
@@ -13,7 +12,8 @@ class FightMainJudgeView extends Component {
 
     this.state = {
       rounds: [],
-      startRound: false
+      startRound: false,
+      roundEndTime: 0
     }
 
     this.sendMessage = this.sendMessage.bind(this);
@@ -42,7 +42,6 @@ class FightMainJudgeView extends Component {
   }
 
   handlePoints(points) {
-    console.log(points);
     const {fight} = this.props;
     let round = this.state.rounds.find(r => r.id === points.roundId);
     let roundArrayId = this.state.rounds.indexOf(round);
@@ -54,7 +53,6 @@ class FightMainJudgeView extends Component {
       judge.bluePoints = points.points;
 
     round.judges = round.judges.slice(0, judgeArrayId).concat(judge).concat(round.judges.slice(judgeArrayId + 1));
-    this.state.rounds.slice(0, roundArrayId).concat(round).concat(this.state.rounds.slice(roundArrayId + 1));
 
     this.setState((prevState) => ({
       rounds: prevState.rounds.slice(0, roundArrayId).concat(round).concat(prevState.rounds.slice(roundArrayId + 1))
@@ -72,6 +70,7 @@ class FightMainJudgeView extends Component {
       let mapping = judgeMappings[key];
       let judge = {
         id: mapping.judge.id,
+        fightId: this.props.fight.id,
         firstName: mapping.judge.firstName,
         surname: mapping.judge.surname,
         redPoints: 0,
@@ -86,9 +85,61 @@ class FightMainJudgeView extends Component {
 
   }
 
-  showPrematuredPanels() {}
+  showPrematuredPanels() {
+    this.sendMessage({
+      requestType: requestType.ShowPrematureEndPanel,
+      data: null
+    });
+  }
 
-  endFight() {}
+  endFight() {
+    this.sendMessage({
+      requestType: requestType.EndFight,
+      data: null
+    });
+    this.props.logout();
+  }
+  handleAcceptPoints() {
+    let pointsToAccept = [];
+
+    for (let roundId in this.state.rounds) {
+      let round = this.state.rounds[roundId];
+      for (let judgeId in round.judges) {
+        let judge = round.judges[judgeId];
+        let redPoints = {
+          points: judge.redPoints,
+          judgeId: judge.id,
+          fightId: judge.fightId,
+          fighterId: this.props.fight.redAthleteId,
+          roundId: round.id,
+          accepted: true
+        }
+        let redPointsString = JSON.stringify(redPoints);
+        pointsToAccept.push(redPointsString);
+
+        let bluePoints = {
+          points: judge.bluePoints,
+          judgeId: judge.id,
+          fightId: judge.fightId,
+          fighterId: this.props.fight.blueAthleteId,
+          roundId: round.id,
+          accepted: true
+        }
+        let bluePointsString = JSON.stringify(bluePoints);
+        pointsToAccept.push(bluePointsString);
+      }
+    }
+
+    let pointsArrayString = JSON.stringify(pointsToAccept);
+
+    let request = {
+      requestType: requestType.AcceptPoints,
+      data: pointsArrayString
+    }
+
+    this.sendMessage(request);
+
+  }
 
   componentDidUpdate() {
     const {message} = this.props;
@@ -111,6 +162,13 @@ class FightMainJudgeView extends Component {
         break;
       case requestType.JuryConnected:
         this.props.notifyOnJuryConnected();
+        break;
+
+      case requestType.SendTime:
+        this.setState({
+          roundEndTime: message.data
+        })
+        break;
       default:
         matched = false
         break;
@@ -122,15 +180,12 @@ class FightMainJudgeView extends Component {
 
 
   render() {
-    console.log('====================================');
-    console.log(this.state);
-    console.log('====================================');
     const judgeMappings = this.props.fight.fightJudgesMappings.filter(judge => judge.main === 0);
     const {user, fight} = this.props;
     return (
       <Container>
-        <Content>
-          <FightHeader user={ user } fight={ fight } />
+        <Content style={ { marginTop: 25 } }>
+          <FightHeader user={ user } fight={ fight } started={ this.state.startRound } />
           <Grid>
             <Col style={ { backgroundColor: '#cd2626' } }>
             <Row>
@@ -152,14 +207,14 @@ class FightMainJudgeView extends Component {
             </Button>
             </Col>
             <Col>
-            <Button block large bordered warning>
+            <Button block large bordered warning onPress={ this.showPrematuredPanels.bind(this) }>
               <Text>
                 Show injury panel
               </Text>
             </Button>
             </Col>
             <Col>
-            <Button block large bordered warning>
+            <Button block large bordered warning onPress={ this.endFight.bind(this) }>
               <Text>
                 End Fight
               </Text>
@@ -167,6 +222,9 @@ class FightMainJudgeView extends Component {
             </Col>
           </Grid>
           <JudgeTable judgeMappings={ judgeMappings } rounds={ this.state.rounds } />
+          <Button block success onPress={ this.handleAcceptPoints.bind(this) }>
+            <H1>ACCEPT</H1>
+          </Button>
         </Content>
       </Container>
 

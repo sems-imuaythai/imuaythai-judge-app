@@ -41,7 +41,7 @@ class MainContainer extends Component {
         }
         if (this.props.account.authToken != '' && this.props.fightId == '')
             return <FightListContainer/>
-        else if (this.props.fightId != '')
+        else if (this.props.account.user != null && this.props.fightId != '')
             return <FightScreenResolver fightId={ this.props.fightId } />
         else
             return <LoginContainer/>
