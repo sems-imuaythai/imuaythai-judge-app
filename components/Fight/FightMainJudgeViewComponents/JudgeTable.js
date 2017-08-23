@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Content, Text, Title, H1, Button } from 'native-base';
 import { StyleSheet } from 'react-native';
-
+import Modal from 'react-native-modal';
+import EditPoints from './EditPoints';
 
 const styles = StyleSheet.create({
   dimensions: {
@@ -22,8 +23,14 @@ const styles = StyleSheet.create({
 class JudgeTable extends Component {
   constructor() {
     super();
+    this.state ={
+      isModalVisible: false
+    }
 
     this.calculateMedian = this.calculateMedian.bind(this);
+  }
+  toggleModal(){
+    this.setState((prevState) => ({isModalVisible: !prevState.isModalVisible}));
   }
 
   calculateMedian(array) {
@@ -62,7 +69,7 @@ class JudgeTable extends Component {
             redPoints.push(judge.redPoints);
             return (
               <Row key={ key } style={ styles.rowBorder }>
-                <Button light full style={ styles.dimensions }>
+                <Button light full style={ styles.dimensions } onPress={}>
                   <H1>{ judge.redPoints + "/" + judge.bluePoints }</H1>
                 </Button>
               </Row>)
@@ -93,8 +100,10 @@ class JudgeTable extends Component {
         </Row>
         </Col>
         { renderRounds }
+        <Modal isVisible={this.state.isModalVisible}>
+          <EditPoints />
+        </Modal>
       </Grid>
-
       );
   }
 }
