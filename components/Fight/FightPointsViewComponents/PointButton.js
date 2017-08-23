@@ -20,10 +20,8 @@ class PointButton extends Component {
         return (
             <Col style={ { justifyContent: 'center', alignItems: 'center' } }>
             <Row style={ { justifyContent: 'center', alignItems: 'center' } }>
-              <Button light full disabled={this.props.disabled} style={ this.props.selected ? styles.selected : styles.default } onPress={ this.props.setPoint }>
-                <H1>
-                  { this.props.pointValue.toString() }
-                </H1>
+              <Button light full disabled={ this.props.disabled } style={ this.props.selected ? styles.selected : styles.default } onPress={ this.props.setPoint }>
+                <H1>{ this.props.pointValue.toString() }</H1>
               </Button>
             </Row>
             </Col>

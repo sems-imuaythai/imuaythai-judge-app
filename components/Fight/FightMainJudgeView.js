@@ -40,6 +40,20 @@ class FightMainJudgeView extends Component {
       startRound: !prevState.startRound
     }))
   }
+  editPoints(points) {
+    let round = this.state.rounds.find(r => r.id === points.roundId);
+    let roundArrayId = this.state.rounds.indexOf(round);
+    let judge = round.judges.find(j => j.id === points.judgeId);
+    let judgeArrayId = round.judges.indexOf(judge);
+    judge.redPoints = points.redPoints
+    judge.bluePoints = points.bluePoints;
+
+    round.judges = round.judges.slice(0, judgeArrayId).concat(judge).concat(round.judges.slice(judgeArrayId + 1));
+
+    this.setState((prevState) => ({
+      rounds: prevState.rounds.slice(0, roundArrayId).concat(round).concat(prevState.rounds.slice(roundArrayId + 1))
+    }));
+  }
 
   handlePoints(points) {
     const {fight} = this.props;
@@ -188,14 +202,14 @@ class FightMainJudgeView extends Component {
         <Content style={ { marginTop: 25 } }>
           <FightHeader user={ user } fight={ fight } started={ this.state.startRound } />
           <Grid>
-            <Col style={ { backgroundColor: '#cd2626' } }>
+            <Col style={ { backgroundColor: '#cd2626', justifyContent: 'center', alignItems: 'center' } }>
             <Row>
-              <H1>{ fight.redAthlete.firstName + " " + fight.redAthlete.surname }</H1>
+              <H1 style={ { color: '#ffffff' } }>{ fight.redAthlete.firstName + " " + fight.redAthlete.surname }</H1>
             </Row>
             </Col>
-            <Col style={ { backgroundColor: '#1874cd' } }>
+            <Col style={ { backgroundColor: '#1874cd', justifyContent: 'center', alignItems: 'center' } }>
             <Row>
-              <H1>{ fight.blueAthlete.firstName + " " + fight.blueAthlete.surname }</H1>
+              <H1 style={ { color: '#ffffff' } }>{ fight.blueAthlete.firstName + " " + fight.blueAthlete.surname }</H1>
             </Row>
             </Col>
           </Grid>
@@ -222,7 +236,7 @@ class FightMainJudgeView extends Component {
             </Button>
             </Col>
           </Grid>
-          <JudgeTable judgeMappings={ judgeMappings } rounds={ this.state.rounds } />
+          <JudgeTable judgeMappings={ judgeMappings } rounds={ this.state.rounds } editPoints={ this.editPoints.bind(this) } />
           <Button block success onPress={ this.handleAcceptPoints.bind(this) }>
             <H1>ACCEPT</H1>
           </Button>
