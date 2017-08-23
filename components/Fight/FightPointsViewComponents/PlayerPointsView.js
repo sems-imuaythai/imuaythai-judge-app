@@ -16,7 +16,7 @@ const initialState = {
   fighterId: '',
   roundId: 0,
   fightId: 0,
-  disabled: false
+  disabled: true
 }
 class PlayerPointsView extends Component {
   constructor() {
@@ -82,7 +82,7 @@ class PlayerPointsView extends Component {
 
   render() {
     var numberArray = [5, 6, 7, 8, 9, 10];
-    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } setPoint={ () => this.setPoint(val) } selected={ this.state.points === val } color={ this.props.primaryBackgroundColor } />)
+    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } disabled={this.state.disabled} setPoint={ () => this.setPoint(val) } selected={ this.state.points === val } color={ this.props.primaryBackgroundColor } />)
     return (
       <Col style={ { backgroundColor: this.props.primaryBackgroundColor, justifyContent: 'center', alignItems: 'center' } }>
       <Row>

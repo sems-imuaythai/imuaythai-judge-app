@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Button, Text, Form, Item, Input, Title, Body, Left, Right } from 'native-base';
-import { Image } from 'react-native';
+import { Container, Header, Content, Button, Text, Form, Item as FormItem, Input, Title, Body, Left, Right, Picker } from 'native-base';
+import { Image, StyleSheet } from 'react-native';
 import CenterSpinner from '../Spinner/CenterSpinner';
 import { BarCodeScanner } from 'expo';
-import { StyleSheet } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+const Item = Picker.Item;
 
 class LoginView extends Component {
   constructor() {
@@ -48,16 +48,26 @@ class LoginView extends Component {
             <Image style={ { width: null, height: 200 } } source={ { uri: 'http://www.downwithdesign.com/wp-content/uploads/2012/07/dark-knight-rises-logo.png' } } />
             { this.props.fetching ? <CenterSpinner/> : (
               <Form>
-                <Item>
+                <FormItem>
                   <Input placeholder="Username" keyboardType="email-address" onChangeText={ (text) => this.setState({
                                                                                               email: text
                                                                                             }) } />
-                </Item>
-                <Item last>
+                </FormItem>
+                <FormItem>
                   <Input placeholder="Password" secureTextEntry={ true } onChangeText={ (text) => this.setState({
                                                                                           password: text
                                                                                         }) } />
-                </Item>
+                </FormItem>
+                <Picker last
+              iosHeader="Select one"
+              mode="dropdown"
+              selectedValue={this.props.ring}
+              onValueChange={this.props.setRing}
+            >
+              <Item label="Ring A" value="A" />
+              <Item label="Ring B" value="B" />
+              <Item label="Ring C" value="C" />
+            </Picker>
                 <Button block primary onPress={ () => this.props.handleSubmit({
                                                   email: this.state.email,
                                                   password: this.state.password

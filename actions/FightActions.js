@@ -3,7 +3,8 @@ import axios from 'axios';
 import { host } from '../common/globalVariables';
 
 export const getFights = (ring) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const {ring} = getState().Settings;
         dispatch({
             type: actionTypes.GET_FIGHTS_REQUEST
         })

@@ -93,9 +93,10 @@ class FightMainJudgeView extends Component {
   }
 
   endFight() {
+    const {fight} = this.props;
     this.sendMessage({
       requestType: requestType.EndFight,
-      data: null
+      data: fight.id
     });
     this.props.logout();
   }
