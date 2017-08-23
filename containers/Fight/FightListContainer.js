@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 class FightListContaier extends Component {
     componentWillMount() {
         if (this.props.fights.length === 0)
-            this.props.getFights("A");
+            this.props.getFights();
     }
     render() {
         return (
@@ -25,8 +25,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getFights: (ring) => {
-            dispatch(getFights(ring))
+        getFights: () => {
+            dispatch(getFights())
         },
         setFightId: (id) => {
             dispatch(setFightId(id))

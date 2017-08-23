@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Text } from 'native-base';
+import { Button, Text, H1 } from 'native-base';
 import { Col, Row } from 'react-native-easy-grid';
 import { StyleSheet } from 'react-native';
 
@@ -20,10 +20,10 @@ class PointButton extends Component {
         return (
             <Col style={ { justifyContent: 'center', alignItems: 'center' } }>
             <Row style={ { justifyContent: 'center', alignItems: 'center' } }>
-              <Button light full style={ this.props.selected ? styles.selected : styles.default } onPress={ this.props.setPoint }>
-                <Text>
-                  { this.props.pointValue }
-                </Text>
+              <Button light full disabled={this.props.disabled} style={ this.props.selected ? styles.selected : styles.default } onPress={ this.props.setPoint }>
+                <H1>
+                  { this.props.pointValue.toString() }
+                </H1>
               </Button>
             </Row>
             </Col>

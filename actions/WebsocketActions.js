@@ -4,13 +4,13 @@ import { websocket } from '../common/globalVariables';
 const constructUrl = (ring) => {
     switch (ring) {
         case "A":
-            return websocket + "/ringa";
+            return websocket + "ringa";
         case "B":
-            return websocket + "/ringb";
+            return websocket + "ringb";
         case "C":
-            return websocket + "/ringc";
+            return websocket + "ringc";
         default:
-            return websocket + "/ringa";
+            return websocket + "ringa";
     }
 }
 
@@ -24,9 +24,11 @@ export const notifyJuryConnected = () => {
 
 export const subscribe = () => {
     return (dispatch, getState) => {
-        //const {ring} = getState().Settings;
+        const {ring} = getState().Settings;
 
-        var socket = new WebSocket(websocket + "ringa");
+        let url = constructUrl(ring);
+        let socket = new WebSocket(url);
+
         socket.onmessage = (event) => {
             dispatch({
                 type: actionTypes.WEBSOCKET_CLEAR_MESSAGE
