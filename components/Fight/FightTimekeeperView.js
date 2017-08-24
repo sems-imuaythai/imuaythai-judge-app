@@ -6,24 +6,17 @@ import * as requestType from '../../containers/Fight/requestTypes';
 
 
 class FightTimekeeperView extends Component {
-  constructor() {
-    super();
-    this.state = {
-      roundTime: 0
-    }
 
-  }
-  //TODO: send time 
   render() {
     const {user, fight} = this.props;
     return (
       <Container>
         <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } roundTime={ this.state.roundTime } started={this.props.timerStart} resetTimer={this.props.resetTimer} toggleTimer={this.props.toggleTimer} timerReset={this.props.timerReset} showTimer={true}/>
+          <FightHeader user={ user } fight={ fight } timerStarted={this.props.timerStart} paused={this.props.paused} started={this.props.startRound} timerReset={this.props.timerReset} setRound={this.props.setRound} showTimer={true}/>
           <Grid style={ { marginTop: 10 } }>
             <Col style={{justifyContent: 'center', alignItems: 'flex-end'}}>
-            <Row >
-              <Button light onPress={ this.props.toggleTimer } style={{width: 200, height: 200, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginRight:1}}>
+            <Row>
+              <Button light onPress={this.props.startRound ? this.props.toggleRound : this.props.setRound } style={{width: 200, height: 200, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginRight:1}}>
                 <Text>
                   { this.props.timerStart ? 'PAUSE' : 'START' }
                 </Text>
@@ -32,7 +25,7 @@ class FightTimekeeperView extends Component {
             </Col>
             <Col>
             <Row>
-              <Button light style={{width: 100, height: 100, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginLeft:1, marginBottom:1}}>
+              <Button light onPress={this.props.prematureEndRound} style={{width: 100, height: 100, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginLeft:1, marginBottom:1}}>
                 <Text>
                   STOP
                 </Text>

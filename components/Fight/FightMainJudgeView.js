@@ -13,6 +13,9 @@ class FightMainJudgeView extends Component {
     this.state = {
       rounds: [],
       startRound: false,
+      pauseRound: false,
+      timerStart: false,
+      timerReset: false,
       roundEndTime: 0
     }
 
@@ -24,22 +27,7 @@ class FightMainJudgeView extends Component {
 
     this.props.sendMessage(parsedMessage);
   }
-  setRound() {
-    if (this.state.startRound) {
-      this.sendMessage({
-        requestType: requestType.EndRound,
-        data: null
-      });
-    } else {
-      this.sendMessage({
-        requestType: requestType.StartRound,
-        data: null
-      });
-    }
-    this.setState((prevState) => ({
-      startRound: !prevState.startRound
-    }))
-  }
+
   editPoints(points) {
     let round = this.state.rounds.find(r => r.id === points.roundId);
     let roundArrayId = this.state.rounds.indexOf(round);
@@ -94,7 +82,10 @@ class FightMainJudgeView extends Component {
       round.judges.push(judge);
     }
     this.setState((prevState) => ({
-      rounds: prevState.rounds.concat([round])
+      rounds: prevState.rounds.concat([round]),
+      startRound: true,
+      timerStart: true,
+      timerReset: false
     }));
 
   }
@@ -167,6 +158,14 @@ class FightMainJudgeView extends Component {
       case requestType.StartRound:
         this.handleStartRound(message.data);
         break;
+      case requestType.EndRound:
+        this.setState({
+          startRound: false,
+          timerStart: false,
+          timerReset: true,
+          pauseRound: false
+        })
+        break;
 
       case requestType.Connect:
         if (!this.props.JuryConnected)
@@ -184,6 +183,20 @@ class FightMainJudgeView extends Component {
           roundEndTime: message.data
         })
         break;
+      case requestType.ResumeRound:
+        this.setState({
+            pauseRound: false,
+            timerStart: true
+        });
+        break;
+
+      case requestType.PauseRound:
+        this.setState({
+            pauseRound: true,
+            timerStart: false
+        });
+        break;
+
       default:
         matched = false
         break;
@@ -200,7 +213,7 @@ class FightMainJudgeView extends Component {
     return (
       <Container>
         <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } started={ this.state.startRound } />
+          <FightHeader user={ user } fight={ fight } timerStarted={this.state.timerStart} started={this.state.startRound} paused={this.state.pauseRound} timerReset={this.state.timerReset} showTimer={true} />
           <Grid>
             <Col style={ { backgroundColor: '#cd2626', justifyContent: 'center', alignItems: 'center' } }>
             <Row>
@@ -214,13 +227,6 @@ class FightMainJudgeView extends Component {
             </Col>
           </Grid>
           <Grid>
-            <Col>
-            <Button block large bordered warning onPress={ this.setRound.bind(this) }>
-              <Text>
-                { this.state.startRound ? "End round" : "Start round" }
-              </Text>
-            </Button>
-            </Col>
             <Col>
             <Button block large bordered warning onPress={ this.showPrematuredPanels.bind(this) }>
               <Text>
@@ -237,7 +243,7 @@ class FightMainJudgeView extends Component {
             </Col>
           </Grid>
           <JudgeTable judgeMappings={ judgeMappings } rounds={ this.state.rounds } editPoints={ this.editPoints.bind(this) } />
-          <Button block success onPress={ this.handleAcceptPoints.bind(this) }>
+          <Button block large success onPress={ this.handleAcceptPoints.bind(this) }>
             <H1>ACCEPT</H1>
           </Button>
         </Content>

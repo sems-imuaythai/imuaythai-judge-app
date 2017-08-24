@@ -37,7 +37,7 @@ class FightScreenResolver extends Component {
         const {fight, sendMessage, user} = this.props;
 
         if (fight) {
-            var judgeRole = GetJudgeRole(this.props);
+            let judgeRole = GetJudgeRole(this.props);
             switch (judgeRole) {
                 case "Main":
                     return <MainJudgeContainer fight={ fight } sendMessage={ sendMessage } user={ user } />

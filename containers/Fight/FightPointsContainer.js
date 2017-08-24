@@ -15,9 +15,14 @@ class FightPointsContainer extends Component {
             showPrematureEndPanels: false,
             fightStarted: false,
             roundId: '',
-            roundEndTime: 0
+            roundEndTime: 0,
+            pauseRound: false
         }
     }
+    togglePause(){
+        this.setState((prevState) =>({pauseRound: !prevState.pauseRound}))
+    }
+
     showPanels() {
         this.setState({
             showPrematureEndPanels: true
@@ -44,7 +49,7 @@ class FightPointsContainer extends Component {
         else
             return (
                 <FightPointsView fightStarted={ this.state.fightStarted } fight={ this.props.fight } user={ this.props.user } message={ parsedMessage } sendMessage={ this.props.sendMessage }
-                  showPanels={ this.showPanels.bind(this) } setRound={ this.setRound.bind(this) } clearMessage={ this.props.clearMessage } roundId={ this.state.roundId } setRoundEndTime={ this.setRoundEndTime.bind(this) } logout={this.props.logout}
+                  showPanels={ this.showPanels.bind(this) } setRound={ this.setRound.bind(this) } clearMessage={ this.props.clearMessage } roundId={ this.state.roundId } setRoundEndTime={ this.setRoundEndTime.bind(this) } logout={this.props.logout} togglePause={this.togglePause.bind(this)} pauseRound={this.state.pauseRound}
                 />
                 );
     }

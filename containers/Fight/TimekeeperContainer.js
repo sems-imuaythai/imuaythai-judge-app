@@ -3,57 +3,126 @@ import React, { Component } from 'react';
 import * as requestTypes from './requestTypes';
 import FightTimekeeperView from '../../components/Fight/FightTimekeeperView';
 import { logout } from '../../actions/AccountActions'
-import { parseMessage } from '../../common/helpers'
+import { parseMessage } from '../../common/helpers';
+import { clearMessage } from '../../actions/WebsocketActions'
 
 
 class TimekeeperContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          timerStart: false,
-          timerReset: false
+            timerStart: false,
+            timerReset: false,
+            startRound: false,
+            pauseRound: false,
+            disabled: true
         };
-    
-        this.toggleTimer = this.toggleTimer.bind(this);
-        this.resetTimer = this.resetTimer.bind(this);
-      }
-    
-      toggleTimer() {
-        this.setState({
-          timerStart: !this.state.timerStart,
-          timerReset: false
-        });
-      }
-    
-      resetTimer() {
-        this.setState({
-          timerStart: false,
-          timerReset: true
-        });
-      }
 
-    sendTime(time) {
-        let request = {
-            requestType: requestTypes.SendTime,
-            data: time.toString()
+        this.sendMessage = this.sendMessage.bind(this);
+    }
+
+    sendMessage(message) {
+        let parsedMessage = JSON.stringify(message);
+
+        this.props.sendMessage(parsedMessage);
+    }
+
+    setRound() {
+        if (this.state.startRound) {
+            this.sendMessage({
+                requestType: requestTypes.EndRound,
+                data: null
+            });
+        } else {
+            this.sendMessage({
+                requestType: requestTypes.StartRound,
+                data: null
+            });
         }
-        let requestString = JSON.stringify(request);
-        this.props.sendMessage(requestString)
+    }
+
+    toggleRound() {
+        if (this.state.pauseRound) {
+            this.sendMessage({
+                requestType: requestTypes.ResumeRound,
+                data: null
+            });
+        } else {
+            this.sendMessage({
+                requestType: requestTypes.PauseRound,
+                data: null
+            });
+        }
+    }
+
+    prematureEndRound(){
+        this.sendMessage({
+            requestType: requestTypes.EndRound,
+            data: null
+        });
     }
 
     componentDidUpdate() {
-        switch (this.props.message.requestType) {
-            case requestTypes.EndFight:
-                this.props.logout();
-                break;
+        if (this.props.message) {
+            let match = true;
+            let message = parseMessage(this.props.message);
 
-            default:
-                break;
+            switch (message.requestType) {
+                case requestTypes.StartRound:
+                    this.setState({
+                        timerStart: true,
+                        timerReset: false,
+                        startRound: true,
+                        pauseRound: false,
+                    });
+                    break;
+
+                case requestTypes.EndFight:
+                    this.props.logout();
+                    break;
+
+                case requestTypes.ResumeRound:
+                    this.setState({
+                        pauseRound: false,
+                        timerStart: true
+                    });
+                    break;
+
+                case requestTypes.PauseRound:
+                    this.setState({
+                        pauseRound: true,
+                        timerStart: false
+                    });
+                    break;
+
+                case requestTypes.JuryConnected:
+                    this.setState({
+                        disabled: false,
+                    });
+                    break;
+
+                case requestTypes.EndRound:
+                    this.setState({
+                        timerStart: false,
+                        timerReset: true,
+                        startRound: false,
+                        pauseRound: false,
+                    });
+                    break;
+                default:
+                    match = false;
+                    break;
+            }
+
+            if (match) {
+                this.props.clearMessage();
+            }
         }
     }
     render() {
         return (
-            <FightTimekeeperView sendTime={ this.sendTime.bind(this) } user={ this.props.user } fight={ this.props.fight } timerStart={this.state.timerStart} resetTimer={this.resetTimer} toggleTimer={this.toggleTimer} timerReset={this.state.timerReset}/>
+            <FightTimekeeperView user={ this.props.user } fight={ this.props.fight } timerStart={ this.state.timerStart } timerReset={ this.state.timerReset } setRound={ this.setRound.bind(this) } toggleRound={ this.toggleRound.bind(this) } paused={ this.state.pauseRound } startRound={ this.state.startRound } prematureEndRound={this.prematureEndRound.bind(this)}
+            />
             );
     }
 }
@@ -67,6 +136,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         logout: () => {
             dispatch(logout())
+        },
+        clearMessage: () => {
+            dispatch(clearMessage())
         }
     }
 }

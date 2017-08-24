@@ -38,6 +38,11 @@ class FightPointView extends Component {
         break;
       case requestType.SendTime:
         this.props.setRoundEndTime(message.data)
+        break;
+      case requestType.ResumeRound:
+      case requestType.PauseRound:
+        this.props.togglePause();
+          break;
 
       default:
         match = false;
@@ -59,7 +64,7 @@ class FightPointView extends Component {
 
       <Container>
         <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } started={ fightStarted } />
+          <FightHeader user={ user } fight={ fight } started={ fightStarted } paused={this.props.pauseRound}/>
           <Grid>
             <PlayerPointsView primaryBackgroundColor='#cd2626' secondaryBackgroundColor='#720000' playerName={ redFighterName } sendPoints={ this.sendPoints } fighterId={ fight.redAthlete.id }
               judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } />
