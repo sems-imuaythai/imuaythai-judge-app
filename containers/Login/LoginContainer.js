@@ -7,6 +7,8 @@ import { setRing } from '../../actions/SettingsActionCreators';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
 import { Permissions } from 'expo';
 import { bindActionCreators } from 'redux';
+import MyDrawer from '../../common/drawer';
+import SettingsContainer from '../Settings/SettingsContainer';
 
 class LoginContainer extends Component {
     constructor() {
@@ -29,8 +31,11 @@ class LoginContainer extends Component {
     render() {
         const {hasCameraPermission} = this.state;
         return (
-            <LoginView handleSubmit={ this.props.loginAccount } fetching={ this.props.fetching } hasCameraPermission={ hasCameraPermission } loginWithQRCode={ this.props.loginWithQRCode } setRing={ this.props.setRing }
-              ring={ this.props.ring } />
+            <MyDrawer content={ <SettingsContainer /> }>
+              <LoginView handleSubmit={ this.props.loginAccount } fetching={ this.props.fetching } hasCameraPermission={ hasCameraPermission } loginWithQRCode={ this.props.loginWithQRCode } setRing={ this.props.setRing }
+                ring={ this.props.ring } />
+            </MyDrawer>
+
 
             );
     }

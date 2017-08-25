@@ -35,4 +35,5 @@ export const GET_POINTS_HISOTRY = 'GET_POINTS_HISOTRY';
 
 //settings
 export const SET_RING = 'SET_RING';
-export const SET_URLS = 'SET_URLS';
+export const SET_HOST_URL = 'SET_HOST_URL';
+export const SET_WEBSOCKET_URL = 'SET_WEBSOCKET_URL';

@@ -1,7 +1,6 @@
 import * as actionTypes from './types';
-import { websocket } from '../common/globalVariables';
 
-const constructUrl = (ring) => {
+const constructUrl = (ring, websocket) => {
     switch (ring) {
         case "A":
             return websocket + "ringa";
@@ -24,9 +23,9 @@ export const notifyJuryConnected = () => {
 
 export const subscribe = () => {
     return (dispatch, getState) => {
-        const {ring} = getState().Settings;
+        const {ring, websocket} = getState().Settings;
 
-        let url = constructUrl(ring);
+        let url = constructUrl(ring, websocket);
         let socket = new WebSocket(url);
 
         socket.onmessage = (event) => {

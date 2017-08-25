@@ -5,3 +5,14 @@ export const setRing = (ring) => ({
     payload: ring
 
 })
+
+export const setHostUrl = (url) => ({
+    type: actionType.SET_HOST_URL,
+    payload: url
+})
+
+
+export const setWebsocketUrl = (url) => ({
+    type: actionType.SET_WEBSOCKET_URL,
+    payload: url
+})

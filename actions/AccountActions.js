@@ -1,10 +1,10 @@
 import * as actionTypes from './types';
 import axios from 'axios';
-import { host } from '../common/globalVariables';
 import { unsubscribe } from './WebsocketActions';
 
 export const loginAccount = (credentials) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const {host} = getState().Settings
         dispatch({
             type: actionTypes.LOGIN_ACCOUNT_REQUEST
         });

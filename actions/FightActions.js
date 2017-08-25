@@ -1,11 +1,10 @@
 import * as actionTypes from './types';
 import axios from 'axios';
-import { host } from '../common/globalVariables';
 import { unsubscribe } from './WebsocketActions';
 
 export const getFights = (ring) => {
     return (dispatch, getState) => {
-        const {ring} = getState().Settings;
+        const {ring, host} = getState().Settings;
         dispatch({
             type: actionTypes.GET_FIGHTS_REQUEST
         })
@@ -32,7 +31,8 @@ export const getFights = (ring) => {
 }
 
 export const getFightDetails = (id) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const {host} = getState().Settings
         dispatch({
             type: actionTypes.GET_FIGHT_DETAILS_REQUEST
         })
