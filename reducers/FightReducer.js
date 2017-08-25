@@ -44,12 +44,15 @@ const fight = (state = fightInitialState, action) => {
                 ...state,
                 fightId: action.payload
             }
-            case actionType.ACCOUNT_LOGOUT:
+        case actionType.ACCOUNT_LOGOUT:
+        case actionType.ACCOUNT_PREFIGHT_LOGOUT:
+        case actionType.EXIT_FIGHT:
             return {
                 ...state,
                 fight: undefined,
                 fightId: ''
             }
+
         default:
             return state
     }

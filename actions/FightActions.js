@@ -1,6 +1,7 @@
 import * as actionTypes from './types';
 import axios from 'axios';
 import { host } from '../common/globalVariables';
+import { unsubscribe } from './WebsocketActions';
 
 export const getFights = (ring) => {
     return (dispatch, getState) => {
@@ -63,6 +64,15 @@ export const setFightId = (id) => {
         dispatch({
             type: actionTypes.SET_FIGHT_ID,
             payload: id
+        })
+    }
+}
+
+export const exitFight = () => {
+    return (dispatch) => {
+        dispatch(unsubscribe())
+        dispatch({
+            type: actionTypes.EXIT_FIGHT
         })
     }
 }

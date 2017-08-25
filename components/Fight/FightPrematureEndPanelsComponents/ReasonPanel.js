@@ -21,7 +21,7 @@ class ReasonPanel extends Component {
             }
         });
         const renderButtons = this.props.buttonNames.map((name, key) => (
-            <Button full light key={ key } style={ this.props.reason === name ? style.selected : style.default } onPress={ () =>{this.props.handleSelect(name)} }>
+            <Button disabled={this.props.disabled} full light key={ key } style={ this.props.reason === name ? style.selected : style.default } onPress={ () =>{this.props.handleSelect(name)} }>
               <H3 style={{color: this.props.reason === name ? '#fff': '#000'}}>{ name }</H3>
             </Button>));
         return (

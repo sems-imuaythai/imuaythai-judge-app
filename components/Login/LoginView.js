@@ -58,16 +58,11 @@ class LoginView extends Component {
                                                                                           password: text
                                                                                         }) } />
                 </FormItem>
-                <Picker last
-              iosHeader="Select one"
-              mode="dropdown"
-              selectedValue={this.props.ring}
-              onValueChange={this.props.setRing}
-            >
-              <Item label="Ring A" value="A" />
-              <Item label="Ring B" value="B" />
-              <Item label="Ring C" value="C" />
-            </Picker>
+                <Picker last iosHeader="Select one" mode="dropdown" selectedValue={ this.props.ring } onValueChange={ this.props.setRing }>
+                  <Item label="Ring A" value="A" />
+                  <Item label="Ring B" value="B" />
+                  <Item label="Ring C" value="C" />
+                </Picker>
                 <Button block primary onPress={ () => this.props.handleSubmit({
                                                   email: this.state.email,
                                                   password: this.state.password

@@ -46,6 +46,41 @@ class PlayerPointsView extends Component {
       })
   }
 
+  addPointsToHistory() {
+    let points = [{
+      name: 'Cautions',
+      value: this.state.cautions
+    },
+      {
+        name: 'Knock down',
+        value: this.state.knockDown
+      },
+      {
+        name: 'Warnings',
+        value: this.state.warnings
+      },
+      {
+        name: 'J',
+        value: this.state.j
+      },
+      {
+        name: 'X',
+        value: this.state.x
+      },
+      {
+        name: 'Points',
+        value: this.state.points
+      }
+    ]
+    let round = {
+      id: this.state.roundId,
+      fighterId: this.state.fighterId,
+      points: points
+    }
+
+    this.props.addToHistory(round);
+  }
+
   incrementWarning(warning) {
     this.setState((prevState, props) => ({
       [warning]: prevState[warning] + 1
@@ -74,6 +109,7 @@ class PlayerPointsView extends Component {
     var serizedRequest = JSON.stringify(request);
 
     this.props.sendPoints(serizedRequest);
+    this.addPointsToHistory();
     this.setState({
       disabled: true
     })
@@ -82,7 +118,8 @@ class PlayerPointsView extends Component {
 
   render() {
     var numberArray = [5, 6, 7, 8, 9, 10];
-    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } disabled={this.state.disabled} setPoint={ () => this.setPoint(val) } selected={ this.state.points === val } color={ this.props.primaryBackgroundColor } />)
+    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } disabled={ this.state.disabled } setPoint={ () => this.setPoint(val) } selected={ this.state.points === val } color={ this.props.primaryBackgroundColor }
+                                                         />)
     return (
       <Col style={ { backgroundColor: this.props.primaryBackgroundColor, justifyContent: 'center', alignItems: 'center' } }>
       <Row>

@@ -42,7 +42,7 @@ class FightPointView extends Component {
       case requestType.ResumeRound:
       case requestType.PauseRound:
         this.props.togglePause();
-          break;
+        break;
 
       default:
         match = false;
@@ -64,12 +64,12 @@ class FightPointView extends Component {
 
       <Container>
         <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } started={ fightStarted } paused={this.props.pauseRound}/>
+          <FightHeader user={ user } fight={ fight } started={ fightStarted } paused={ this.props.pauseRound } />
           <Grid>
             <PlayerPointsView primaryBackgroundColor='#cd2626' secondaryBackgroundColor='#720000' playerName={ redFighterName } sendPoints={ this.sendPoints } fighterId={ fight.redAthlete.id }
-              judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } />
+              judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } addToHistory={ this.props.addToHistory } />
             <PlayerPointsView primaryBackgroundColor='#1874cd' secondaryBackgroundColor='#000080' playerName={ blueFighterName } sendPoints={ this.sendPoints } fighterId={ fight.blueAthlete.id }
-              judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } />
+              judgeId={ user.id } roundId={ this.props.roundId } fightId={ fight.id } addToHistory={ this.props.addToHistory } />
           </Grid>
         </Content>
       </Container>

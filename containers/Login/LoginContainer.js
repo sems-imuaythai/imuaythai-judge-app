@@ -3,10 +3,10 @@ import LoginView from '../../components/Login/LoginView';
 import { connect } from 'react-redux';
 import { Spinner } from 'native-base';
 import { loginAccount, loginWithQRCode } from '../../actions/AccountActions';
-import {setRing} from '../../actions/SettingsActionCreators';
+import { setRing } from '../../actions/SettingsActionCreators';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
 import { Permissions } from 'expo';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 
 class LoginContainer extends Component {
     constructor() {
@@ -29,8 +29,9 @@ class LoginContainer extends Component {
     render() {
         const {hasCameraPermission} = this.state;
         return (
+            <LoginView handleSubmit={ this.props.loginAccount } fetching={ this.props.fetching } hasCameraPermission={ hasCameraPermission } loginWithQRCode={ this.props.loginWithQRCode } setRing={ this.props.setRing }
+              ring={ this.props.ring } />
 
-            <LoginView handleSubmit={ this.props.loginAccount } fetching={ this.props.fetching } hasCameraPermission={ hasCameraPermission } loginWithQRCode={ this.props.loginWithQRCode } setRing={this.props.setRing} ring={this.props.ring} />
             );
     }
 }
@@ -45,7 +46,13 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    return bindActionCreators(Object.assign({}, {loginAccount}, {loginWithQRCode}, {setRing}), dispatch)
+    return bindActionCreators(Object.assign({}, {
+        loginAccount
+    }, {
+        loginWithQRCode
+    }, {
+        setRing
+    }), dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)

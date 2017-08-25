@@ -4,6 +4,7 @@ import Fight from './FightReducer';
 import Notify from './NotifyReducer';
 import Websocket from './WebsocketReducer';
 import Settings from './SettingsReducer';
+import PointsHistory from './PointsHistoryReducer';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
     Fight,
     Notify,
     Settings,
-    Websocket
+    Websocket,
+    PointsHistory
 })

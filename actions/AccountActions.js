@@ -55,3 +55,7 @@ export const logout = () => {
         })
     }
 }
+
+export const prefightLogout = () => ({
+    type: actionTypes.ACCOUNT_PREFIGHT_LOGOUT
+})

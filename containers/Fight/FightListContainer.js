@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FightListView from '../../components/Fight/FightListView';
+import {prefightLogout} from '../../actions/AccountActions';
 import { getFights, setFightId } from '../../actions/FightActions';
 import { subscribe, sendMessage } from '../../actions/WebsocketActions';
 import CenterSpinner from '../../components/Spinner/CenterSpinner';
@@ -12,7 +13,7 @@ class FightListContaier extends Component {
     }
     render() {
         return (
-            <FightListView fights={ this.props.fights } fetching={ this.props.fetching } setFightId={ this.props.setFightId } />
+            <FightListView fights={ this.props.fights } fetching={ this.props.fetching } setFightId={ this.props.setFightId } isSidebar={false} logout={this.props.logout} />
             );
     }
 }
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         setFightId: (id) => {
             dispatch(setFightId(id))
+        },
+        logout: () => {
+            dispatch(prefightLogout());
         }
     }
 }

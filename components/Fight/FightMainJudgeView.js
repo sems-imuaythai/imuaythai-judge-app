@@ -103,7 +103,7 @@ class FightMainJudgeView extends Component {
       requestType: requestType.EndFight,
       data: fight.id
     });
-    this.props.logout();
+    this.props.exitFight();
   }
   handleAcceptPoints() {
     let pointsToAccept = [];
@@ -157,6 +157,7 @@ class FightMainJudgeView extends Component {
 
       case requestType.StartRound:
         this.handleStartRound(message.data);
+        this.props.setRound(message.data);
         break;
       case requestType.EndRound:
         this.setState({
@@ -185,16 +186,20 @@ class FightMainJudgeView extends Component {
         break;
       case requestType.ResumeRound:
         this.setState({
-            pauseRound: false,
-            timerStart: true
+          pauseRound: false,
+          timerStart: true
         });
         break;
 
       case requestType.PauseRound:
         this.setState({
-            pauseRound: true,
-            timerStart: false
+          pauseRound: true,
+          timerStart: false
         });
+        break;
+
+      case requestType.ShowPrematureEndPanel:
+        this.props.showPanels();
         break;
 
       default:
@@ -213,7 +218,8 @@ class FightMainJudgeView extends Component {
     return (
       <Container>
         <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } timerStarted={this.state.timerStart} started={this.state.startRound} paused={this.state.pauseRound} timerReset={this.state.timerReset} showTimer={true} />
+          <FightHeader user={ user } fight={ fight } timerStarted={ this.state.timerStart } started={ this.state.startRound } paused={ this.state.pauseRound } timerReset={ this.state.timerReset }
+            showTimer={ true } />
           <Grid>
             <Col style={ { backgroundColor: '#cd2626', justifyContent: 'center', alignItems: 'center' } }>
             <Row>

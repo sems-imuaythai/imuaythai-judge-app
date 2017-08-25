@@ -26,6 +26,7 @@ const reducer = (state = reducerInitialState, action) => {
                 ...state,
                 fetching: false,
             }
+        case actionType.ACCOUNT_PREFIGHT_LOGOUT:
         case actionType.ACCOUNT_LOGOUT:
             return {
                 ...state,
