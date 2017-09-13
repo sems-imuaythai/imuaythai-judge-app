@@ -25,12 +25,11 @@ const settings = (state = settingsInitialState, action) => {
         ...state,
         websocket: action.payload
       };
-    case actionType.GET_CONTESTS_REQUEST:
-      return state;
     case actionType.GET_CONTESTS_SUCCESS:
       return {
         ...state,
-        contests: action.payload
+        contests: action.payload,
+        contest: action.payload[0]
       };
     case actionType.SET_CONTEST:
       return {

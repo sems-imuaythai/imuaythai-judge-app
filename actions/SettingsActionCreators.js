@@ -28,7 +28,7 @@ export const getContests = () => {
       type: actionType.GET_CONTESTS_REQUEST
     });
     return axios
-      .get(host + "api/fight/contest/")
+      .get(host + "api/contests")
       .then(response => {
         dispatch({
           type: actionType.GET_CONTESTS_SUCCESS,
