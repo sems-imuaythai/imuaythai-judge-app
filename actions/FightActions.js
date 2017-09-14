@@ -1,6 +1,7 @@
 import * as actionTypes from "./types";
 import axios from "axios";
 import { unsubscribe } from "./WebsocketActions";
+import { clearNotify, showError } from "./NotifyActionCreators";
 
 export const getFights = ring => {
   return (dispatch, getState) => {
@@ -20,13 +21,10 @@ export const getFights = ring => {
         dispatch({
           type: actionTypes.GET_FIGHTS_REJECTED
         });
-        dispatch({
-          type: actionTypes.SHOW_ERROR,
-          payload:
-            err.response != null
-              ? err.response.data
-              : "Cannot connect to server"
-        });
+        dispatch(clearNotify());
+        let error =
+          err.response != null ? err.response.data : "Cannot connect to server";
+        dispatch(showError(error));
       });
   };
 };
@@ -46,13 +44,12 @@ export const getFightDetails = id => {
           dispatch({
             type: actionTypes.GET_FIGHT_DETAILS_REJECTED
           });
-          dispatch({
-            type: actionTypes.SHOW_ERROR,
-            payload:
-              err.response != null
-                ? err.response.data
-                : "Cannot connect to server"
-          });
+          dispatch(clearNotify());
+          let error =
+            err.response != null
+              ? err.response.data
+              : "Cannot connect to server";
+          dispatch(showError(error));
         };
     });
   };

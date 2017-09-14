@@ -1,4 +1,5 @@
 import * as actionTypes from "./types";
+import { showSuccess, showError, clearNotify } from "./NotifyActionCreators";
 
 const constructUrl = (ring, websocket) => {
   switch (ring) {
@@ -39,10 +40,17 @@ export const subscribe = () => {
       });
     };
 
+    socket.onerror = error => {
+      dispatch(clearNotify());
+      dispatch(showError(error));
+    };
+
     dispatch({
       type: actionTypes.WEBSOCKET_CONNECT,
       payload: socket
     });
+    dispatch(clearNotify());
+    dispatch(showSuccess("Connected to fight"));
   };
 };
 
@@ -69,10 +77,6 @@ export const unsubscribe = () => {
   };
 };
 
-export const clearMessage = () => {
-  return dispatch => {
-    dispatch({
-      type: actionTypes.WEBSOCKET_CLEAR_MESSAGE
-    });
-  };
-};
+export const clearMessage = () => ({
+  type: actionTypes.WEBSOCKET_CLEAR_MESSAGE
+});

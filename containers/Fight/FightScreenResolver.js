@@ -27,7 +27,7 @@ const GetJudgeRole = props => {
     )
   ) {
     subscribe();
-    return "Timekeeper";
+    return "Points";
   } else return "";
 };
 

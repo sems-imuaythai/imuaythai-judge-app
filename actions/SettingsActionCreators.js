@@ -1,5 +1,6 @@
 import * as actionType from "./types";
 import axios from "axios";
+import { clearNotify, showError } from "./NotifyActionCreators";
 
 export const setRing = ring => ({
   type: actionType.SET_RING,
@@ -39,13 +40,10 @@ export const getContests = () => {
         dispatch({
           type: actionType.GET_CONTESTS_REJECTED
         });
-        dispatch({
-          type: actionType.SHOW_ERROR,
-          payload:
-            err.response != null
-              ? err.response.data
-              : "Cannot connect to server"
-        });
+        dispatch(clearNotify());
+        let error =
+          err.response != null ? err.response.data : "Cannot connect to server";
+        dispatch(showError(error));
       });
   };
 };
