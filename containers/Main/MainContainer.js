@@ -28,15 +28,18 @@ class MainContainer extends Component {
     };
   }
 
+  componentDidUpdate() {
+    if (this.props.error != "") renderToast(this.props.error, "danger");
+    if (this.props.success != "") renderToast(this.props.success, "success");
+    if (this.props.warning != "") renderToast(this.props.warning, "warning");
+  }
+
   static navigationOptions = {
     header: null,
     gesturesEnabled: false
   };
 
   render() {
-    if (this.props.error != "") renderToast(this.props.error, "danger");
-    if (this.props.success != "") renderToast(this.props.success, "success");
-
     if (this.props.account.authToken != "" && this.props.fightId == "")
       return <FightListContainer />;
     else if (this.props.account.user != null && this.props.fightId != "")
@@ -50,6 +53,7 @@ const mapStateToProps = (state, ownProps) => {
     account: state.Account,
     error: state.Notify.errorMessage,
     success: state.Notify.successMessage,
+    warning: state.Notify.warningMessage,
     fightId: state.Fight.fightId
   };
 };

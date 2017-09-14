@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getFightDetails } from "../../actions/FightActions";
 import { subscribe, sendMessage } from "../../actions/WebsocketActions";
+import { showWarning } from "../../actions/NotifyActionCreators";
 import * as requestType from "./requestTypes";
 import FightPointsContainer from "./FightPointsContainer";
 import MainJudgeContainer from "./MainJudgeContainer";
@@ -79,6 +80,7 @@ class FightScreenResolver extends Component {
             />
           );
         default:
+          this.props.showWarning("You don't have any role in this fight");
           return <FightListContainer />;
       }
     }
@@ -106,6 +108,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     sendMessage: message => {
       dispatch(sendMessage(message));
+    },
+    showWarning: message => {
+      dispatch(showWarning(message));
     }
   };
 };

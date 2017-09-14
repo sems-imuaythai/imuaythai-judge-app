@@ -10,6 +10,11 @@ export const showSuccess = successMessage => ({
   payload: successMessage
 });
 
+export const showWarning = warningMessage => ({
+  type: actionTypes.SHOW_WARNING,
+  payload: warningMessage
+});
+
 export const clearNotify = () => ({
   type: actionTypes.RESET_NOTIFY
 });
