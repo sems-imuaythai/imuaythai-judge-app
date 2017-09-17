@@ -13,14 +13,14 @@ const options = {
 
 class FightHeader extends Component {
   render() {
-    const { user, fight } = this.props;
+    const { user, fight, timer } = this.props;
 
     return (
       <Grid>
         <Col style={{ width: "75%" }}>
           <Text>
             Logged as:
-            {user.firstName + " " + user.surname}{" "}
+            {user.firstName + " " + user.surname}
           </Text>
           <Text>
             Weight category:
@@ -45,16 +45,40 @@ class FightHeader extends Component {
           }}>
           {this.props.showTimer ? (
             <Timer
-              totalDuration={fight.structure.round.duration * 1000}
+              totalDuration={
+                timer.active === "fight" ? (
+                  fight.structure.round.duration * 1000
+                ) : (
+                  fight.structure.round.breakDuration * 1000
+                )
+              }
               msecs
-              start={this.props.timerStarted}
-              reset={this.props.timerReset}
+              start={
+                timer.active === "fight" ? (
+                  timer.fightTimerStart
+                ) : (
+                  timer.pauseTimerStart
+                )
+              }
+              reset={
+                timer.active === "fight" ? (
+                  timer.fightTimerReset
+                ) : (
+                  timer.pauseTimerReset
+                )
+              }
               options={options}
-              handleFinish={() => this.props.setRound()}
+              handleFinish={
+                timer.active === "fight" ? (
+                  timer.fightTimerCallback
+                ) : (
+                  timer.pauseTimerCallback
+                )
+              }
             />
           ) : (
             <Title>
-              {this.props.started ? this.props.paused ? (
+              {this.props.fightStarted ? this.props.fightPaused ? (
                 "Fight paused"
               ) : (
                 "Fight started"

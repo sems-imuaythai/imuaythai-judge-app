@@ -9,7 +9,7 @@ import CenterSpinner from "../../components/Spinner/CenterSpinner";
 import FightListContainer from "../Fight/FightListContainer";
 import FightScreenResolver from "../Fight/FightScreenResolver";
 import MainJudgeContainer from "../Fight/MainJudgeContainer";
-import { saveState } from "../../common/localStorage";
+import { clearNotify } from "../../actions/NotifyActionCreators";
 
 const renderToast = (message, type) => {
   Toast.show({
@@ -29,9 +29,18 @@ class MainContainer extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.error != "") renderToast(this.props.error, "danger");
-    if (this.props.success != "") renderToast(this.props.success, "success");
-    if (this.props.warning != "") renderToast(this.props.warning, "warning");
+    if (this.props.error != "") {
+      renderToast(this.props.error, "danger");
+      this.props.clearNotify();
+    }
+    if (this.props.success != "") {
+      renderToast(this.props.success, "success");
+      this.props.clearNotify();
+    }
+    if (this.props.warning != "") {
+      renderToast(this.props.warning, "warning");
+      this.props.clearNotify();
+    }
   }
 
   static navigationOptions = {
@@ -58,7 +67,15 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-MainContainer = connect(mapStateToProps)(MainContainer);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    clearNotify: () => {
+      dispatch(clearNotify());
+    }
+  };
+};
+
+MainContainer = connect(mapStateToProps, mapDispatchToProps)(MainContainer);
 AppNavigator = StackNavigator({
   Main: {
     screen: MainContainer

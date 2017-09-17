@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Content, Text, Title, Button } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import FightHeader from "./FightHeader";
+import FightHeader from "../../containers/Fight/FightHeaderContainer";
 import * as requestType from "../../containers/Fight/requestTypes";
 
 class FightTimekeeperView extends Component {
@@ -10,16 +10,7 @@ class FightTimekeeperView extends Component {
     return (
       <Container>
         <Content style={{ marginTop: 25 }}>
-          <FightHeader
-            user={user}
-            fight={fight}
-            timerStarted={this.props.timerStart}
-            paused={this.props.paused}
-            started={this.props.startRound}
-            timerReset={this.props.timerReset}
-            setRound={this.props.setRound}
-            showTimer={true}
-          />
+          <FightHeader showTimer={true} />
           <Grid style={{ marginTop: 10 }}>
             <Col style={{ justifyContent: "center", alignItems: "center" }}>
               <Row>
