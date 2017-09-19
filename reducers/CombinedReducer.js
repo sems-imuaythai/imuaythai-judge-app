@@ -6,6 +6,7 @@ import Websocket from "./WebsocketReducer";
 import Settings from "./SettingsReducer";
 import PointsHistory from "./PointsHistoryReducer";
 import Timer from "./TimerReducer";
+import Ui from "./UiReducer";
 
 export default combineReducers({
   Account,
@@ -14,5 +15,6 @@ export default combineReducers({
   Settings,
   Websocket,
   PointsHistory,
-  Timer
+  Timer,
+  Ui
 });

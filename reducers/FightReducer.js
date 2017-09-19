@@ -7,7 +7,8 @@ const fightInitialState = {
   fight: undefined,
   fightId: "",
   started: false,
-  paused: false
+  paused: false,
+  role: ""
 };
 
 const fight = (state = fightInitialState, action) => {
@@ -45,6 +46,13 @@ const fight = (state = fightInitialState, action) => {
         ...state,
         fightId: action.payload
       };
+
+    case actionType.SET_ROLE_IN_FIGHT: {
+      return {
+        ...state,
+        role: action.payload
+      };
+    }
     case actionType.ACCOUNT_LOGOUT:
     case actionType.ACCOUNT_PREFIGHT_LOGOUT:
     case actionType.EXIT_FIGHT:

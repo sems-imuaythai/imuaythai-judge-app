@@ -2,6 +2,7 @@ import * as actionTypes from "./types";
 import axios from "axios";
 import { unsubscribe } from "./WebsocketActions";
 import { clearNotify, showError } from "./NotifyActionCreators";
+import Expo from "expo";
 
 export const getFights = ring => {
   return (dispatch, getState) => {
@@ -71,4 +72,65 @@ export const exitFight = () => {
       type: actionTypes.EXIT_FIGHT
     });
   };
+};
+
+export const startRound = id => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+
+    switch (role) {
+      case "point":
+        dispatch({
+          type: actionTypes.UNBLOCK_UI
+        });
+        break;
+      case "main":
+        dispatch({
+          type: actionTypes.CREATE_ROUND,
+          payload: id
+        });
+        dispatch({
+          type: actionTypes.START_FIGHT_TIMER
+        });
+        break;
+      case "timekeeper":
+        dispatch({
+          type: actionTypes.START_FIGHT_TIMER
+        });
+        break;
+    }
+
+    dispatch({
+      type: actionTypes.START_ROUND
+    });
+  };
+};
+
+export const endRound = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+  };
+};
+
+export const pauseRound = () => {};
+
+export const resumeRound = () => {};
+
+export const endFight = () => {};
+
+export const juryConnected = () => {};
+
+export const acceptPoints = () => {};
+
+export const showPrematureEndPanels = () => {};
+
+export const timerButtonClick = () => {
+  return (dispatch, getState) => {};
+};
+
+const playSound = async () => {
+  await Expo.Audio.setIsEnabledAsync(true);
+  const sound = new Expo.Audio.Sound();
+  await sound.loadAsync(require("../../sounds/boxing_bell.mp3"));
+  await sound.playAsync();
 };
