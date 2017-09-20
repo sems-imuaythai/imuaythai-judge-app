@@ -1,7 +1,8 @@
 import * as actionTypes from "../actions/types";
 
 const uiInitialState = {
-  disabled: true
+  disabled: true,
+  showPrematureEndPanels: false
 };
 const ui = (state = uiInitialState, action) => {
   switch (action.type) {

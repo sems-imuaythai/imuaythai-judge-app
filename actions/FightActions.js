@@ -22,7 +22,6 @@ export const getFights = ring => {
         dispatch({
           type: actionTypes.GET_FIGHTS_REJECTED
         });
-        dispatch(clearNotify());
         let error =
           err.response != null ? err.response.data : "Cannot connect to server";
         dispatch(showError(error));
@@ -33,6 +32,9 @@ export const getFights = ring => {
 export const getFightDetails = id => {
   return (dispatch, getState) => {
     const { host } = getState().Settings;
+    const { fightId } = getState().Fight;
+
+    if (fightId === id) return;
     dispatch({
       type: actionTypes.GET_FIGHT_DETAILS_REQUEST
     });
@@ -41,17 +43,15 @@ export const getFightDetails = id => {
         type: actionTypes.GET_FIGHT_DETAILS_SUCCESS,
         payload: response.data
       }),
-        err => {
-          dispatch({
-            type: actionTypes.GET_FIGHT_DETAILS_REJECTED
-          });
-          dispatch(clearNotify());
-          let error =
-            err.response != null
-              ? err.response.data
-              : "Cannot connect to server";
-          dispatch(showError(error));
-        };
+        dispatch(setRoleInFight());
+      err => {
+        dispatch({
+          type: actionTypes.GET_FIGHT_DETAILS_REJECTED
+        });
+        let error =
+          err.response != null ? err.response.data : "Cannot connect to server";
+        dispatch(showError(error));
+      };
     });
   };
 };
@@ -62,6 +62,7 @@ export const setFightId = id => {
       type: actionTypes.SET_FIGHT_ID,
       payload: id
     });
+    dispatch(getFightDetails(id));
   };
 };
 
@@ -79,7 +80,7 @@ export const startRound = id => {
     const { role } = getState().Fight;
 
     switch (role) {
-      case "point":
+      case "points":
         dispatch({
           type: actionTypes.UNBLOCK_UI
         });
@@ -109,6 +110,43 @@ export const startRound = id => {
 export const endRound = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
+  };
+};
+
+export const setRoleInFight = () => {
+  return (dispatch, getState) => {
+    const { fight } = getState().Fight;
+    const { user } = getState().Account;
+
+    if (fight.timeKeeperId === user.id) {
+      dispatch({
+        type: actionTypes.SET_ROLE_IN_FIGHT,
+        payload: "timekeeper"
+      });
+    } else if (
+      fight.fightJudgesMappings.find(
+        judge => judge.judgeId === user.id && judge.main === 1
+      )
+    ) {
+      dispatch({
+        type: actionTypes.SET_ROLE_IN_FIGHT,
+        payload: "main"
+      });
+    } else if (
+      fight.fightJudgesMappings.find(
+        judge => judge.judgeId === user.id && judge.main === 0
+      )
+    ) {
+      dispatch({
+        type: actionTypes.SET_ROLE_IN_FIGHT,
+        payload: "points"
+      });
+    } else {
+      dispatch({
+        type: actionTypes.SET_ROLE_IN_FIGHT,
+        payload: "no role"
+      });
+    }
   };
 };
 
