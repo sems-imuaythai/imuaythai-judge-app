@@ -52,7 +52,7 @@ class MainContainer extends Component {
     if (this.props.account.authToken != "" && this.props.fightId == "")
       return <FightListContainer />;
     else if (this.props.account.user != null && this.props.fightId != "")
-      return <FightScreenResolver fightId={this.props.fightId} />;
+      return <FightScreenResolver />;
     else return <LoginContainer />;
   }
 }

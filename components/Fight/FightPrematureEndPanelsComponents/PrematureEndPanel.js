@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import { Container, Content, Text, Title, Button, H1 } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { StyleSheet } from 'react-native';
-import ReasonPanel from './ReasonPanel';
-import * as requestTypes from '../../../containers/Fight/requestTypes';
+import React, { Component } from "react";
+import { Container, Content, Text, Title, Button, H1 } from "native-base";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { StyleSheet } from "react-native";
+import ReasonPanel from "./ReasonPanel";
+import * as requestTypes from "../../../containers/Fight/requestTypes";
 
 class PrematureEndPanel extends Component {
   constructor() {
     super();
 
     this.state = {
-      endFightReason: '',
+      endFightReason: "",
       endFightTime: 0,
       fightId: 0,
-      fighterId: '',
+      fighterId: "",
       roundId: 0,
-      judgeId:''
+      judgeId: ""
     };
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handlePress = this.handlePress.bind(this);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({
       endFightTime: this.props.roundEndTime,
       judgeId: this.props.judgeId,
@@ -38,7 +38,7 @@ class PrematureEndPanel extends Component {
     });
   }
 
-  handlePress(){
+  handlePress() {
     let request = {
       requestType: requestTypes.PrematureEnd,
       data: {
@@ -49,34 +49,64 @@ class PrematureEndPanel extends Component {
         fightId: this.state.fightId,
         roundId: this.state.roundId
       }
-    }
+    };
     request.data = JSON.stringify(request.data);
 
     let serizedRequest = JSON.stringify(request);
-    this.props.sendMessage(serizedRequest)
+    this.props.sendMessage(serizedRequest);
     this.props.setDisable();
   }
   render() {
-
-    console.log(this.props.disabled)
-
     return (
-      <Col style={ { backgroundColor: this.props.primaryBackgroundColor, justifyContent: 'center', alignItems: 'center' } }>
-      <Row>
-        <H1 style={ { color: '#ffffff' } }>{ this.props.playerName }</H1>
-      </Row>
-      <Row>
-        <ReasonPanel disabled={this.props.disabled} header="KO" buttonNames={ ["HEAD", "BODY"] } reason={ this.state.endFightReason } handleSelect={ this.handleSelect } backgroundColor={this.props.secondaryBackgroundColor }/>
-      </Row>
-      <Row>
-        <ReasonPanel disabled={this.props.disabled} header="RSC" buttonNames={ ["INJ", "INJ BODY", "INJ HEAD", "CCTL", "OUTCLASS"] } reason={ this.state.endFightReason } handleSelect={ this.handleSelect } backgroundColor={this.props.secondaryBackgroundColor } />
-      </Row>
-      <Row>
-        <ReasonPanel disabled={this.props.disabled} header='' buttonNames={ ["NOCONTEST", "RET", "WO"] } reason={ this.state.endFightReason } handleSelect={ this.handleSelect } backgroundColor={this.props.secondaryBackgroundColor } />
-      </Row>
-      <Button full disabled={this.props.disabled} light style={{margin:5}} onPress={this.handlePress}><H1>ACCEPT</H1></Button>
+      <Col
+        style={{
+          backgroundColor: this.props.primaryBackgroundColor,
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+        <Row>
+          <H1 style={{ color: "#ffffff" }}>{this.props.playerName}</H1>
+        </Row>
+        <Row>
+          <ReasonPanel
+            disabled={this.props.disabled}
+            header="KO"
+            buttonNames={["HEAD", "BODY"]}
+            reason={this.state.endFightReason}
+            handleSelect={this.handleSelect}
+            backgroundColor={this.props.secondaryBackgroundColor}
+          />
+        </Row>
+        <Row>
+          <ReasonPanel
+            disabled={this.props.disabled}
+            header="RSC"
+            buttonNames={["INJ", "INJ BODY", "INJ HEAD", "CCTL", "OUTCLASS"]}
+            reason={this.state.endFightReason}
+            handleSelect={this.handleSelect}
+            backgroundColor={this.props.secondaryBackgroundColor}
+          />
+        </Row>
+        <Row>
+          <ReasonPanel
+            disabled={this.props.disabled}
+            header=""
+            buttonNames={["NOCONTEST", "RET", "WO"]}
+            reason={this.state.endFightReason}
+            handleSelect={this.handleSelect}
+            backgroundColor={this.props.secondaryBackgroundColor}
+          />
+        </Row>
+        <Button
+          full
+          disabled={this.props.disabled}
+          light
+          style={{ margin: 5 }}
+          onPress={this.handlePress}>
+          <H1>ACCEPT</H1>
+        </Button>
       </Col>
-      );
+    );
   }
 }
 

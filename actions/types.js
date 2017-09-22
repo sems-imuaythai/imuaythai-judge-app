@@ -27,6 +27,10 @@ export const PAUSE_ROUND = "PAUSE_ROUND";
 export const RESUME_ROUND = "RESUME_ROUND";
 export const CREATE_ROUND = "CREATE_ROUND";
 
+//fight - points
+export const EDIT_POINTS = "EDIT_POINTS";
+export const RECEIVED_POINTS = "RECEIVED_POINTS";
+
 //socket
 export const WEBSOCKET_CONNECT = "WEBSOCKET_CONNECT";
 export const WEBSOCKET_JURY_CONNECT = "WEBSOCKET_JURY_CONNECT";

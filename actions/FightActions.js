@@ -150,9 +150,37 @@ export const setRoleInFight = () => {
   };
 };
 
-export const pauseRound = () => {};
+export const pauseRound = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+    switch (role) {
+      case "main":
+      case "timekeeper":
+        dispatch({
+          type: actionTypes.STOP_FIGHT_TIMER
+        });
+    }
+    dispatch({
+      type: actionTypes.PAUSE_ROUND
+    });
+  };
+};
 
-export const resumeRound = () => {};
+export const resumeRound = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+    switch (role) {
+      case "main":
+      case "timekeeper":
+        dispatch({
+          type: actionTypes.START_FIGHT_TIMER
+        });
+    }
+    dispatch({
+      type: actionTypes.RESUME_ROUND
+    });
+  };
+};
 
 export const endFight = () => {};
 

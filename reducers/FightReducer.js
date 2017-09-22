@@ -59,6 +59,16 @@ const fight = (state = fightInitialState, action) => {
         ...state,
         rounds: state.rounds.concat([createRound(state)])
       };
+    case actionType.EDIT_POINTS:
+      return {
+        ...state,
+        rounds: editPoints(action.payload, state)
+      };
+    case actionType.RECEIVED_POINTS:
+      return {
+        ...state,
+        rounds: receivePoints(action.payload, state)
+      };
 
     case actionType.ACCOUNT_LOGOUT:
     case actionType.ACCOUNT_PREFIGHT_LOGOUT:
@@ -122,4 +132,21 @@ export const receivePoints = (points, state) => {
     .concat(state.rounds.slice(roundArrayId + 1));
 };
 
-export const editPoints = sate;
+export const editPoints = (points, state) => {
+  let round = state.rounds.find(r => r.id === points.roundId);
+  let roundArrayId = state.rounds.indexOf(round);
+  let judge = round.judges.find(j => j.id === points.judgeId);
+  let judgeArrayId = round.judges.indexOf(judge);
+  judge.redPoints = points.redPoints;
+  judge.bluePoints = points.bluePoints;
+
+  round.judges = round.judges
+    .slice(0, judgeArrayId)
+    .concat(judge)
+    .concat(round.judges.slice(judgeArrayId + 1));
+
+  return state.rounds
+    .slice(0, roundArrayId)
+    .concat(round)
+    .concat(state.rounds.slice(roundArrayId + 1));
+};

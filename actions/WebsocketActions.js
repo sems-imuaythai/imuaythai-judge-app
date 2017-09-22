@@ -1,5 +1,6 @@
 import * as actionTypes from "./types";
 import { showSuccess, showError, clearNotify } from "./NotifyActionCreators";
+import { handleMessage } from "../common/messageHandler";
 
 const constructUrl = (ring, websocket) => {
   switch (ring) {
@@ -38,10 +39,11 @@ export const subscribe = () => {
         type: actionTypes.WEBSOCKET_RECEIVED_MESSAGE,
         payload: event.data
       });
+
+      handleMessage(event.data, dispatch);
     };
 
     socket.onerror = error => {
-      dispatch(clearNotify());
       dispatch(showError(error));
     };
 
@@ -49,7 +51,6 @@ export const subscribe = () => {
       type: actionTypes.WEBSOCKET_CONNECT,
       payload: socket
     });
-    dispatch(clearNotify());
     dispatch(showSuccess("Connected to fight"));
   };
 };

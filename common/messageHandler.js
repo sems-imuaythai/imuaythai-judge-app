@@ -2,9 +2,10 @@ import * as actions from "../actions/FightActions";
 import * as requestTypes from "./requestTypes";
 
 export const handleMessage = (message, dispatch) => {
-  switch (message.requestType) {
+  let parsedMessage = parseMessage(message);
+  switch (parsedMessage.requestType) {
     case requestTypes.StartRound:
-      dispatch(actions.startRound(message.data));
+      dispatch(actions.startRound(parsedMessage.data));
       break;
     case requestTypes.EndRound:
       dispatch(actions.endRound());
@@ -31,6 +32,13 @@ export const handleMessage = (message, dispatch) => {
     default:
       break;
   }
+};
+
+export const strigifyMessage = message => {
+  if (message && typeof message.data === "object")
+    message.data = JSON.stringify(message.data);
+
+  return JSON.stringify(message);
 };
 
 export const parseMessage = message => {

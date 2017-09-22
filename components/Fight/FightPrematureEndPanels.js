@@ -6,45 +6,6 @@ import PrematureEndPanel from "./FightPrematureEndPanelsComponents/PrematureEndP
 import * as requestType from "../../containers/Fight/requestTypes";
 
 class FightPrematureEndPanels extends Component {
-  constructor() {
-    super();
-    this.state = {
-      disabled: false
-    };
-
-    this.sendMessage = this.sendMessage.bind(this);
-  }
-  componentDidUpdate() {
-    const { message } = this.props;
-    switch (message.requestType) {
-      case requestType.EndFight:
-        this.props.logout();
-        break;
-
-      default:
-        break;
-    }
-  }
-  sendMessage(message) {
-    let parsedMessage = JSON.stringify(message);
-
-    this.props.sendMessage(parsedMessage);
-  }
-
-  endFight() {
-    const { fight } = this.props;
-    this.sendMessage({
-      requestType: requestType.EndFight,
-      data: fight.id
-    });
-    this.props.exitFight();
-  }
-  setDisable() {
-    this.setState({
-      disabled: true
-    });
-  }
-
   render() {
     const { fight, user } = this.props;
     const redFighterName =
