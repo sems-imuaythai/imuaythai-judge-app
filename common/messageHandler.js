@@ -25,6 +25,9 @@ export const handleMessage = (message, dispatch) => {
     case requestTypes.AcceptPoints:
       dispatch(actions.acceptPoints());
       break;
+    case requestTypes.SendPoints:
+      dispatch(actions.setPoints(parsedMessage.data));
+      break;
     case requestTypes.ShowPrematureEndPanel:
       dispatch(actions.showPrematureEndPanels());
       break;

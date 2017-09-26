@@ -1,5 +1,5 @@
 import * as actionTypes from "./types";
-export const preparePointsToSend = state => {
+export const modelPointsToBeAccepted = state => {
   let pointsToAccept = [];
 
   for (let roundId in state.Fight.rounds) {
@@ -32,8 +32,15 @@ export const preparePointsToSend = state => {
 
   return pointsToAccept;
 };
+//TODO: implement model points to be send
+export const modelPointsToBeSend = state => {};
 
 export const editPoints = points => ({
   type: actionTypes.EDIT_POINTS,
+  payload: points
+});
+
+export const setPoints = points => ({
+  type: actionTypes.SET_POINTS,
   payload: points
 });

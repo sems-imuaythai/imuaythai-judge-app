@@ -1,10 +1,13 @@
 import * as actionTypes from "./types";
 import axios from "axios";
 import { unsubscribe } from "./WebsocketActions";
-import { clearNotify, showError } from "./NotifyActionCreators";
+import { clearNotify, showError, showSuccess } from "./NotifyActionCreators";
+import * as messageActions from "./MessageActions";
 import Expo from "expo";
+import httpAdapter from "axios/lib/adapters/http";
+axios.defaults.adapter = httpAdapter;
 
-export const getFights = ring => {
+export const getFights = () => {
   return (dispatch, getState) => {
     const { ring, host, contest } = getState().Settings;
     dispatch({
@@ -110,6 +113,29 @@ export const startRound = id => {
 export const endRound = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
+
+    switch (role) {
+      case "main":
+      case "timekeeper":
+        dispatch({
+          type: actionTypes.SET_ACTIVE_TIMER,
+          payload: "pause"
+        });
+        dispatch({
+          type: actionTypes.START_PAUSE_TIMER
+        });
+        break;
+      case "points":
+        dispatch({
+          type: actionTypes.START_BLINK
+        });
+        break;
+      default:
+        break;
+    }
+    dispatch({
+      type: actionTypes.END_ROUND
+    });
   };
 };
 
@@ -182,16 +208,73 @@ export const resumeRound = () => {
   };
 };
 
-export const endFight = () => {};
+export const endFight = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+    switch (role) {
+      case "main":
+        dispatch({
+          type: actionTypes.END_FIGHT
+        });
+        dispatch({
+          type: actionTypes.EXIT_FIGHT
+        });
+        break;
+      case "timekeeper":
+      case "points":
+        dispatch({
+          type: actionTypes.END_FIGHT
+        });
+        dispatch({
+          type: actionTypes.ACCOUNT_LOGOUT
+        });
+        break;
+    }
+  };
+};
 
-export const juryConnected = () => {};
+export const juryConnected = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
 
-export const acceptPoints = () => {};
+    if (role !== "timekeeper") return;
 
-export const showPrematureEndPanels = () => {};
+    dispatch({
+      type: actionTypes.UNBLOCK_UI
+    });
+  };
+};
+
+export const acceptPoints = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+    if (role === "timekeeper") return;
+
+    dispatch({
+      type: actionTypes.POINTS_ACCEPTED
+    });
+    dispatch(showSuccess("Points has been accepted!"));
+  };
+};
+
+export const showPrematureEndPanels = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+    if (role === "timekeeper") return;
+
+    dispatch({
+      type: actionTypes.SHOW_PREMATURE_END_PANELS
+    });
+  };
+};
 
 export const timerButtonClick = () => {
-  return (dispatch, getState) => {};
+  return (dispatch, getState) => {
+    const { started, paused } = getState().Fight;
+    if (started && paused) dispatch(messageActions.resumeRound());
+    else if (started && !paused) dispatch(messageActions.pauseRound());
+    else dispatch(dispatch(messageActions.startRound()));
+  };
 };
 
 const playSound = async () => {
