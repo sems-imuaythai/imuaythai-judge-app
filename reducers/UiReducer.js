@@ -16,6 +16,11 @@ const ui = (state = uiInitialState, action) => {
         ...state,
         disabled: false
       };
+    case actionTypes.SHOW_PREMATURE_END_PANELS:
+      return {
+        ...state,
+        showPrematureEndPanels: true
+      };
     default:
       return state;
   }

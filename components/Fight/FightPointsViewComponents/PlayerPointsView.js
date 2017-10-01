@@ -1,155 +1,89 @@
-import React, { Component } from 'react';
-import WarningButton from './WarningButton';
-import PointButton from './PointButton';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Button, Text, Input, H1, Title, Body } from 'native-base';
-import { StyleSheet } from 'react-native';
-import * as requestTypes from '../../../containers/Fight/requestTypes';
-const initialState = {
-  cautions: 0,
-  knockDown: 0,
-  warnings: 0,
-  j: 0,
-  x: 0,
-  points: 0,
-  judgeId: '',
-  fighterId: '',
-  roundId: 0,
-  fightId: 0,
-  disabled: true
-}
-class PlayerPointsView extends Component {
-  constructor() {
-    super();
-    this.state = initialState;
+import React from "react";
+import WarningButton from "./WarningButton";
+import PointButton from "./PointButton";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { Button, Text, Input, H1, Title, Body } from "native-base";
+import { StyleSheet } from "react-native";
 
-    this.incrementWarning = this.incrementWarning.bind(this);
-    this.decrementWarning = this.decrementWarning.bind(this);
-    this.setPoint = this.setPoint.bind(this);
-    this.handleAccept = this.handleAccept.bind(this);
-  }
+const PlayerPointsView = props => {
+  const setPoint = value => {
+    let point = {
+      id: props.fighterId,
+      name: "points",
+      value: value,
+      action: "SET_POINTS"
+    };
 
-  componentDidUpdate() {
-    if (this.props.roundId != this.state.roundId)
-      this.setState({
-        judgeId: this.props.judgeId,
-        fighterId: this.props.fighterId,
-        fightId: this.props.fightId,
-        roundId: this.props.roundId,
-        cautions: 0,
-        knockDown: 0,
-        warnings: 0,
-        j: 0,
-        x: 0,
-        points: 0,
-        disabled: false
-      })
-  }
+    props.setWarnings(point);
+  };
 
-  addPointsToHistory() {
-    let points = [{
-      name: 'Cautions',
-      value: this.state.cautions
-    },
-      {
-        name: 'Knock down',
-        value: this.state.knockDown
-      },
-      {
-        name: 'Warnings',
-        value: this.state.warnings
-      },
-      {
-        name: 'J',
-        value: this.state.j
-      },
-      {
-        name: 'X',
-        value: this.state.x
-      },
-      {
-        name: 'Points',
-        value: this.state.points
-      }
-    ]
-    let round = {
-      id: this.state.roundId,
-      fighterId: this.state.fighterId,
-      points: points
-    }
+  const setWarning = (name, action) => {
+    let point = {
+      id: props.fighterId,
+      name: name,
+      action: action
+    };
+    props.setWarnings(point);
+  };
 
-    this.props.addToHistory(round);
-  }
+  let numberArray = [5, 6, 7, 8, 9, 10];
+  let warningsArray = [
+    { symbol: "C", name: "cautions" },
+    { symbol: "KD", name: "knockDown" },
+    { symbol: "W", name: "warnings" },
+    { symbol: "J", name: "j" },
+    { symbol: "X", name: "x" }
+  ];
 
-  incrementWarning(warning) {
-    this.setState((prevState, props) => ({
-      [warning]: prevState[warning] + 1
-    }))
-  }
+  let mappedPointButtons = numberArray.map((val, i) => (
+    <PointButton
+      key={i}
+      pointValue={val}
+      disabled={props.disabled}
+      setPoint={() => setPoint(val)}
+      selected={props.point.points === val}
+      color={props.primaryBackgroundColor}
+    />
+  ));
 
-  decrementWarning(warning) {
-    if (this.state[warning] > 0)
-      this.setState((prevState, props) => ({
-        [warning]: prevState[warning] - 1
-      }))
-  }
-
-  setPoint(point) {
-    this.setState({
-      points: point
-    })
-  }
-
-  handleAccept() {
-    var request = {
-      requestType: requestTypes.SendPoints,
-      data: JSON.stringify(this.state)
-    }
-
-    var serizedRequest = JSON.stringify(request);
-
-    this.props.sendPoints(serizedRequest);
-    this.addPointsToHistory();
-    this.setState({
-      disabled: true
-    })
-  }
-
-
-  render() {
-    var numberArray = [5, 6, 7, 8, 9, 10];
-    var mappedPointButtons = numberArray.map((val, i) => <PointButton key={ i } pointValue={ val } disabled={ this.state.disabled } setPoint={ () => this.setPoint(val) } selected={ this.state.points === val } color={ this.props.primaryBackgroundColor }
-                                                         />)
-    return (
-      <Col style={ { backgroundColor: this.props.primaryBackgroundColor, justifyContent: 'center', alignItems: 'center' } }>
+  let mappedWarningButtons = warningsArray.map((val, i) => (
+    <WarningButton
+      key={i}
+      symbol={val.symbol}
+      playerBackgrounColor={props.secondaryBackgroundColor}
+      symbolCount={props.point[val.name]}
+      increment={() => setWarning(val.name, "INCREMENT_WARNING")}
+      decrement={() => setWarning(val.name, "DECREMENT_WARNING")}
+      disabled={props.disabled}
+    />
+  ));
+  return (
+    <Col
+      style={{
+        backgroundColor: props.primaryBackgroundColor,
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
       <Row>
-        <H1 style={ { color: '#ffffff' } }>{ this.props.playerName }</H1>
+        <H1 style={{ color: "#ffffff" }}>{props.playerName}</H1>
       </Row>
       <Row>
-        <Grid style={ { marginTop: 10 } }>
-          <WarningButton symbol="C" playerBackgrounColor={ this.props.secondaryBackgroundColor } symbolCount={ this.state.cautions } increment={ () => this.incrementWarning("cautions") } decrement={ () => this.decrementWarning("cautions") }
-            disabled={ this.state.disabled } />
-          <WarningButton symbol="KD" playerBackgrounColor={ this.props.secondaryBackgroundColor } symbolCount={ this.state.knockDown } increment={ () => this.incrementWarning("knockDown") } decrement={ () => this.decrementWarning("knockDown") }
-            disabled={ this.state.disabled } />
-          <WarningButton symbol="W" playerBackgrounColor={ this.props.secondaryBackgroundColor } symbolCount={ this.state.warnings } increment={ () => this.incrementWarning("warnings") } decrement={ () => this.decrementWarning("warnings") }
-            disabled={ this.state.disabled } />
-          <WarningButton symbol="J" playerBackgrounColor={ this.props.secondaryBackgroundColor } symbolCount={ this.state.j } increment={ () => this.incrementWarning("j") } decrement={ () => this.decrementWarning("j") }
-            disabled={ this.state.disabled } />
-          <WarningButton symbol="X" playerBackgrounColor={ this.props.secondaryBackgroundColor } symbolCount={ this.state.x } increment={ () => this.incrementWarning("x") } decrement={ () => this.decrementWarning("x") }
-            disabled={ this.state.disabled } />
-        </Grid>
+        <Grid style={{ marginTop: 10 }}>{mappedWarningButtons}</Grid>
       </Row>
       <Row>
-        <Grid style={ { marginTop: 10 } }>
-          { mappedPointButtons }
-        </Grid>
+        <Grid style={{ marginTop: 10 }}>{mappedPointButtons}</Grid>
       </Row>
-      <Button full large light style={ { margin: 5 } } disabled={ this.state.disabled } onPress={ this.handleAccept }>
+      <Button
+        full
+        large
+        light
+        style={{ margin: 5 }}
+        disabled={props.disabled}
+        onPress={props.sendPoints}>
         <Text>ACCEPT</Text>
       </Button>
-      </Col>
-      );
-  }
-}
+    </Col>
+  );
+};
 
 export default PlayerPointsView;

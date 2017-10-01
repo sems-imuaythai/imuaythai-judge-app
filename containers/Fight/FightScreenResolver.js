@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { subscribe } from "../../actions/WebsocketActions";
-import { showWarning } from "../../actions/NotifyActionCreators";
+import { showWarning } from "../../actions/NotifyActions";
 import FightPointsContainer from "./FightPointsContainer";
 import MainJudgeContainer from "./MainJudgeContainer";
 import TimekeeperContainer from "./TimekeeperContainer";
@@ -10,6 +10,7 @@ import CenterSpinner from "../../components/Spinner/CenterSpinner";
 
 class FightScreenResolver extends Component {
   render() {
+    const { role } = this.props;
     if (role) {
       switch (role) {
         case "main":

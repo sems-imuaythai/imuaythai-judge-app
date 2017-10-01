@@ -12,6 +12,7 @@ const options = {
 };
 
 const FightHeader = props => {
+  const { user, fight, timer } = props;
   return (
     <Grid>
       <Col style={{ width: "75%" }}>
@@ -34,8 +35,8 @@ const FightHeader = props => {
       </Col>
       <Col
         style={{
-          backgroundColor: this.props.started
-            ? this.props.paused ? "#f2f200" : "#18c90a"
+          backgroundColor: props.started
+            ? props.paused ? "#f2f200" : "#18c90a"
             : "#ff3030",
           justifyContent: "center",
           alignItems: "center"

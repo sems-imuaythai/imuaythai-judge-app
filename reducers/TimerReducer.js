@@ -7,7 +7,7 @@ const timerInitialState = {
   fightTimerStart: false,
   fightTimerReset: false,
   fightTimerCallback: undefined,
-  active: ""
+  active: "fight"
 };
 const timer = (state = timerInitialState, action) => {
   switch (action.type) {

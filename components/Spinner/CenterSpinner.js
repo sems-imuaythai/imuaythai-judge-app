@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import { Container, Header, Content, Spinner } from 'native-base';
+import React, { Component } from "react";
+import { Container, Header, Content, Spinner } from "native-base";
 
 class CenterSpinner extends Component {
   render() {
-    return (
-      <Spinner color='blue' />
-
-      );
+    return <Spinner color="blue" />;
   }
 }
 

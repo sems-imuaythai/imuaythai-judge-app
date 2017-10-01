@@ -1,11 +1,9 @@
 import * as actionTypes from "./types";
 import axios from "axios";
 import { unsubscribe } from "./WebsocketActions";
-import { clearNotify, showError, showSuccess } from "./NotifyActionCreators";
+import { clearNotify, showError, showSuccess } from "./NotifyActions";
 import * as messageActions from "./MessageActions";
 import Expo from "expo";
-import httpAdapter from "axios/lib/adapters/http";
-axios.defaults.adapter = httpAdapter;
 
 export const getFights = () => {
   return (dispatch, getState) => {
@@ -59,13 +57,19 @@ export const getFightDetails = id => {
   };
 };
 
+export const setWarning = warning => ({
+  type: actionTypes.SET_WARNINGS,
+  payload: warning
+});
+
 export const setFightId = id => {
   return dispatch => {
+    dispatch(getFightDetails(id));
+
     dispatch({
       type: actionTypes.SET_FIGHT_ID,
       payload: id
     });
-    dispatch(getFightDetails(id));
   };
 };
 
@@ -81,7 +85,9 @@ export const exitFight = () => {
 export const startRound = id => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
-
+    dispatch({
+      type: actionTypes.START_ROUND
+    });
     switch (role) {
       case "points":
         dispatch({
@@ -103,17 +109,15 @@ export const startRound = id => {
         });
         break;
     }
-
-    dispatch({
-      type: actionTypes.START_ROUND
-    });
   };
 };
 
 export const endRound = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
-
+    dispatch({
+      type: actionTypes.END_ROUND
+    });
     switch (role) {
       case "main":
       case "timekeeper":
@@ -133,9 +137,6 @@ export const endRound = () => {
       default:
         break;
     }
-    dispatch({
-      type: actionTypes.END_ROUND
-    });
   };
 };
 
@@ -179,6 +180,9 @@ export const setRoleInFight = () => {
 export const pauseRound = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
+    dispatch({
+      type: actionTypes.PAUSE_ROUND
+    });
     switch (role) {
       case "main":
       case "timekeeper":
@@ -186,15 +190,16 @@ export const pauseRound = () => {
           type: actionTypes.STOP_FIGHT_TIMER
         });
     }
-    dispatch({
-      type: actionTypes.PAUSE_ROUND
-    });
   };
 };
 
 export const resumeRound = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
+    dispatch({
+      type: actionTypes.RESUME_ROUND
+    });
+
     switch (role) {
       case "main":
       case "timekeeper":
@@ -202,9 +207,6 @@ export const resumeRound = () => {
           type: actionTypes.START_FIGHT_TIMER
         });
     }
-    dispatch({
-      type: actionTypes.RESUME_ROUND
-    });
   };
 };
 
@@ -267,19 +269,27 @@ export const showPrematureEndPanels = () => {
     });
   };
 };
+export const notifyJuryConnected = () => {
+  return (dispatch, getState) => {
+    const { role } = getState().Fight;
+    if (role !== "main") return;
+
+    dispatch(messageActions.juryConnected());
+  };
+};
 
 export const timerButtonClick = () => {
   return (dispatch, getState) => {
     const { started, paused } = getState().Fight;
     if (started && paused) dispatch(messageActions.resumeRound());
     else if (started && !paused) dispatch(messageActions.pauseRound());
-    else dispatch(dispatch(messageActions.startRound()));
+    else dispatch(messageActions.startRound());
   };
 };
 
-const playSound = async () => {
+/*const playSound = async () => {
   await Expo.Audio.setIsEnabledAsync(true);
   const sound = new Expo.Audio.Sound();
   await sound.loadAsync(require("../../sounds/boxing_bell.mp3"));
   await sound.playAsync();
-};
+};*/

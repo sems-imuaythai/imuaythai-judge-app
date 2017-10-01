@@ -6,7 +6,7 @@ import { modelPointsToBeAccepted, modelPointsToBeSend } from "./PointActions";
 export const showPrematuredPanels = () => {
   return dispatch => {
     const message = {
-      type: requestTypes.ShowPrematureEndPanel,
+      requestType: requestTypes.ShowPrematureEndPanel,
       data: null
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -17,7 +17,7 @@ export const showPrematuredPanels = () => {
 export const endFight = () => {
   return dispatch => {
     const message = {
-      type: requestTypes.EndFight,
+      requestType: requestTypes.EndFight,
       data: null
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -29,7 +29,7 @@ export const acceptPoints = () => {
   return (dispatch, getState) => {
     const points = modelPointsToBeAccepted(getState());
     const message = {
-      type: requestTypes.AcceptPoints,
+      requestType: requestTypes.AcceptPoints,
       data: points
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -41,7 +41,7 @@ export const sendPoints = () => {
   return (dispatch, getState) => {
     const points = modelPointsToBeSend(getState());
     const message = {
-      type: requestTypes.SendPoints,
+      requestType: requestTypes.SendPoints,
       data: points
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -51,8 +51,9 @@ export const sendPoints = () => {
 
 export const startRound = () => {
   return dispatch => {
+    console.log("start round");
     const message = {
-      type: requestTypes.StartRound,
+      requestType: requestTypes.StartRound,
       data: null
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -63,7 +64,7 @@ export const startRound = () => {
 export const endRound = () => {
   return dispatch => {
     const message = {
-      type: requestTypes.EndRound,
+      requestType: requestTypes.EndRound,
       data: null
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -74,7 +75,7 @@ export const endRound = () => {
 export const pauseRound = () => {
   return dispatch => {
     const message = {
-      type: requestTypes.PauseRound,
+      requestType: requestTypes.PauseRound,
       data: null
     };
     const stringifiedMessage = strigifyMessage(message);
@@ -85,7 +86,18 @@ export const pauseRound = () => {
 export const resumeRound = () => {
   return dispatch => {
     const message = {
-      type: requestTypes.ResumeRound,
+      requestType: requestTypes.ResumeRound,
+      data: null
+    };
+    const stringifiedMessage = strigifyMessage(message);
+    dispatch(sendMessage(stringifiedMessage));
+  };
+};
+
+export const juryConnected = () => {
+  return dispatch => {
+    const message = {
+      requestType: requestTypes.JuryConnected,
       data: null
     };
     const stringifiedMessage = strigifyMessage(message);

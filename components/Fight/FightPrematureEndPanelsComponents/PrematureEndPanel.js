@@ -3,7 +3,7 @@ import { Container, Content, Text, Title, Button, H1 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { StyleSheet } from "react-native";
 import ReasonPanel from "./ReasonPanel";
-import * as requestTypes from "../../../containers/Fight/requestTypes";
+import * as requestTypes from "../../../common/requestTypes";
 
 class PrematureEndPanel extends Component {
   constructor() {

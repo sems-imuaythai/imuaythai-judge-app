@@ -160,11 +160,11 @@ describe("fight actions", () => {
   it("should set fight id and download it", () => {
     const store = mockStore(initialState);
     const expectedActions = [
+      { type: types.GET_FIGHT_DETAILS_REQUEST },
       {
         type: types.SET_FIGHT_ID,
         payload: 1
-      },
-      { type: types.GET_FIGHT_DETAILS_REQUEST }
+      }
     ];
 
     store.dispatch(actions.setFightId(1));
@@ -519,6 +519,16 @@ describe("fight actions", () => {
     const store = mockStore(state);
     const expectedActions = [{ type: types.SHOW_PREMATURE_END_PANELS }];
     store.dispatch(actions.showPrematureEndPanels());
+
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it("should set warning", () => {
+    const state = {};
+    let point = { id: 1, name: "points", value: 3, action: "SET_POINTS" };
+    const store = mockStore(state);
+    const expectedActions = [{ type: types.SET_WARNINGS, payload: point }];
+    store.dispatch(actions.setWarning(point));
 
     expect(store.getActions()).toEqual(expectedActions);
   });

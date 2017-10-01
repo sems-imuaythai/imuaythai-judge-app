@@ -1,6 +1,6 @@
 import * as actionType from "./types";
 import axios from "axios";
-import { clearNotify, showError } from "./NotifyActionCreators";
+import { clearNotify, showError } from "./NotifyActions";
 
 export const setRing = ring => ({
   type: actionType.SET_RING,

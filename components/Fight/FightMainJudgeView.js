@@ -3,7 +3,6 @@ import FightHeader from "../../containers/Fight/FightHeaderContainer";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Container, Content, Text, Title, H1, Button } from "native-base";
 import JudgeTable from "./FightMainJudgeViewComponents/JudgeTable";
-import * as requestType from "../../containers/Fight/requestTypes";
 
 const FightMainJudgeView = props => {
   const judgeMappings = props.fight.fightJudgesMappings.filter(

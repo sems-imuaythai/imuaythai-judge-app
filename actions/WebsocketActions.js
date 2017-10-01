@@ -1,5 +1,5 @@
 import * as actionTypes from "./types";
-import { showSuccess, showError, clearNotify } from "./NotifyActionCreators";
+import { showSuccess, showError, clearNotify } from "./NotifyActions";
 import { handleMessage } from "../common/messageHandler";
 
 const constructUrl = (ring, websocket) => {

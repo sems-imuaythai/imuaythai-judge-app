@@ -24,7 +24,9 @@ const mapStateToProps = (state, ownProps) => {
     juryConnected: state.Websocket.juryConnected,
     fight: state.Fight.fight,
     user: state.Account.user,
-    disabled: state.Ui.disabled
+    rounds: state.Fight.rounds,
+    disabled: state.Ui.disabled,
+    showPrematureEndPanels: state.Ui.showPrematureEndPanels
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -167,7 +167,7 @@
           <line num="91" count="0" type="stmt"/>
           <line num="92" count="0" type="stmt"/>
         </file>
-        <file name="NotifyActionCreators.js" path="D:\Programowanie\imuaythai-judge\actions\NotifyActionCreators.js">
+        <file name="NotifyActions.js" path="D:\Programowanie\imuaythai-judge\actions\NotifyActions.js">
           <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
           <line num="3" count="1" type="stmt"/>
           <line num="8" count="2" type="stmt"/>

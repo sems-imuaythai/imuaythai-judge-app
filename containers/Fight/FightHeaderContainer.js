@@ -6,8 +6,8 @@ const mapStateToProps = (state, ownProps) => {
     timer: state.Timer,
     fight: state.Fight.fight,
     user: state.Account.user,
-    fightStarted: state.Fight.started,
-    fightPaused: state.Fight.paused,
+    started: state.Fight.started,
+    paused: state.Fight.paused,
     showTimer: ownProps.showTimer
   };
 };

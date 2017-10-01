@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import LoginContainer from "../Login/LoginContainer";
-import DashboardView from "../../components/Dashboard/DashboardView";
 import { Root, Toast } from "native-base";
 import { StackNavigator } from "react-navigation";
 import FightPointView from "../../components/Fight/FightPointsView";
@@ -9,7 +8,7 @@ import CenterSpinner from "../../components/Spinner/CenterSpinner";
 import FightListContainer from "../Fight/FightListContainer";
 import FightScreenResolver from "../Fight/FightScreenResolver";
 import MainJudgeContainer from "../Fight/MainJudgeContainer";
-import { clearNotify } from "../../actions/NotifyActionCreators";
+import { clearNotify } from "../../actions/NotifyActions";
 
 const renderToast = (message, type) => {
   Toast.show({

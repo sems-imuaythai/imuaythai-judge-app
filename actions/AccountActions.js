@@ -1,7 +1,7 @@
 import * as actionTypes from "./types";
 import axios from "axios";
 import { unsubscribe } from "./WebsocketActions";
-import { clearNotify, showError } from "./NotifyActionCreators";
+import { clearNotify, showError } from "./NotifyActions";
 
 export const loginAccount = credentials => {
   return (dispatch, getState) => {

@@ -4,6 +4,9 @@ import * as requestTypes from "./requestTypes";
 export const handleMessage = (message, dispatch) => {
   let parsedMessage = parseMessage(message);
   switch (parsedMessage.requestType) {
+    case requestTypes.Connect:
+      dispatch(actions.notifyJuryConnected());
+      break;
     case requestTypes.StartRound:
       dispatch(actions.startRound(parsedMessage.data));
       break;

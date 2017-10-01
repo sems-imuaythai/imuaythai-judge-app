@@ -3,7 +3,6 @@ import FightHeader from "../../containers/Fight/FightHeaderContainer";
 import { Container, Content, Text, Title, Button } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import PrematureEndPanel from "./FightPrematureEndPanelsComponents/PrematureEndPanel";
-import * as requestType from "../../containers/Fight/requestTypes";
 
 class FightPrematureEndPanels extends Component {
   render() {

@@ -28,13 +28,13 @@ export const RESUME_ROUND = "RESUME_ROUND";
 export const CREATE_ROUND = "CREATE_ROUND";
 export const END_FIGHT = "END_FIGHT";
 export const SHOW_PREMATURE_END_PANELS = "SHOW_PREMATURE_END_PANELS";
+export const SET_WARNINGS = "SET_WARNINGS";
 
 //fight - points
 export const EDIT_POINTS = "EDIT_POINTS";
 export const RECEIVED_POINTS = "RECEIVED_POINTS";
 export const START_BLINK = "START_BLINK";
 export const POINTS_ACCEPTED = "POINTS_ACCEPTED";
-export const SET_POINTS = "SET_POINTS";
 
 //socket
 export const WEBSOCKET_CONNECT = "WEBSOCKET_CONNECT";

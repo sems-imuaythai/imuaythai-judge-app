@@ -8,8 +8,10 @@ const fightInitialState = {
   fightId: "",
   started: false,
   paused: false,
+  roundId: "",
   role: undefined,
-  rounds: []
+  rounds: [],
+  points: []
 };
 
 const fight = (state = fightInitialState, action) => {
@@ -51,13 +53,14 @@ const fight = (state = fightInitialState, action) => {
     case actionType.SET_ROLE_IN_FIGHT:
       return {
         ...state,
-        role: action.payload
+        role: action.payload,
+        points: action.payload === "points" ? preparePoints(state) : []
       };
 
     case actionType.CREATE_ROUND:
       return {
         ...state,
-        rounds: state.rounds.concat([createRound(state)])
+        rounds: createRound(action.payload, state)
       };
     case actionType.EDIT_POINTS:
       return {
@@ -79,6 +82,36 @@ const fight = (state = fightInitialState, action) => {
         fightId: "",
         role: undefined
       };
+    case actionType.SET_WARNINGS:
+      return {
+        ...state,
+        points: setWarning(action.payload, state)
+      };
+
+    case actionType.START_ROUND:
+      return {
+        ...state,
+        roundId: action.payload,
+        started: true
+      };
+
+    case actionType.END_ROUND:
+      return {
+        ...state,
+        started: false
+      };
+    case actionType.PAUSE_ROUND:
+      return {
+        ...state,
+        paused: true
+      };
+    case actionType.RESUME_ROUND:
+      return {
+        ...state,
+        paused: false
+      };
+    case actionType.END_FIGHT:
+      return state;
 
     default:
       return state;
@@ -87,7 +120,7 @@ const fight = (state = fightInitialState, action) => {
 
 export default fight;
 
-export const createRound = state => {
+export const createRound = (roundId, state) => {
   const { fight } = state.Fight;
   const judgeMappings = fight.fightJudgesMappings.filter(
     judge => judge.main === 0
@@ -109,7 +142,8 @@ export const createRound = state => {
 
     round.judges.push(judge);
   }
-  return round;
+
+  return state.rounds.concat([round]);
 };
 
 export const receivePoints = (points, state) => {
@@ -149,4 +183,53 @@ export const editPoints = (points, state) => {
     .slice(0, roundArrayId)
     .concat(round)
     .concat(state.rounds.slice(roundArrayId + 1));
+};
+
+export const preparePoints = state => {
+  const { fight } = state;
+  let redPoints = {
+    fighterId: fight.redAthleteId,
+    cautions: 0,
+    knockDown: 0,
+    warnings: 0,
+    j: 0,
+    x: 0,
+    points: 0
+  };
+  state.points = state.points.concat([redPoints]);
+
+  let bluePoints = {
+    fighterId: fight.blueAthleteId,
+    cautions: 0,
+    knockDown: 0,
+    warnings: 0,
+    j: 0,
+    x: 0,
+    points: 0
+  };
+  state.points = state.points.concat([bluePoints]);
+
+  return state.points;
+};
+
+const setWarning = (warning, state) => {
+  let point = state.points.find(point => point.fighterId === warning.id);
+  let pointArrayId = state.points.indexOf(point);
+  switch (warning.action) {
+    case "INCREMENT_WARNING":
+      point[warning.name] = point[warning.name] + 1;
+      break;
+    case "DECREMENT_WARNING":
+      if (point[warning.name] > 0)
+        point[warning.name] = point[warning.name] - 1;
+      break;
+    case "SET_POINTS":
+      point[warning.name] = warning.value;
+      break;
+  }
+
+  return state.points
+    .slice(0, pointArrayId)
+    .concat(point)
+    .concat(state.points.slice(pointArrayId + 1));
 };
