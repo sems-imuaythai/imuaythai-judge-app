@@ -20,7 +20,9 @@ const FightPointsView = props => {
             secondaryBackgroundColor="#720000"
             playerName={redFighterName}
             setWarnings={props.setWarnings}
-            sendPoints={props.sendPoints}
+            sendPoints={() => {
+              props.sendPoints(fight.redAthlete.id);
+            }}
             point={props.points.find(
               point => point.fighterId === fight.redAthlete.id
             )}
@@ -33,7 +35,9 @@ const FightPointsView = props => {
             secondaryBackgroundColor="#000080"
             playerName={redFighterName}
             setWarnings={props.setWarnings}
-            sendPoints={props.sendPoints}
+            sendPoints={() => {
+              props.sendPoints(fight.blueAthlete.id);
+            }}
             point={props.points.find(
               point => point.fighterId === fight.blueAthlete.id
             )}

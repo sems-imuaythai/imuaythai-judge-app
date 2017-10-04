@@ -30,8 +30,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    sendPoints() {
-      dispatch(sendPoints());
+    sendPoints(fighterId) {
+      dispatch(sendPoints(fighterId));
     },
     setWarnings(warning) {
       dispatch(setWarning(warning));

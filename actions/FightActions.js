@@ -2,6 +2,7 @@ import * as actionTypes from "./types";
 import axios from "axios";
 import { unsubscribe } from "./WebsocketActions";
 import { clearNotify, showError, showSuccess } from "./NotifyActions";
+import { addToHistory } from "./PointHistoryActions";
 import * as messageActions from "./MessageActions";
 import Expo from "expo";
 
@@ -84,20 +85,21 @@ export const exitFight = () => {
 
 export const startRound = id => {
   return (dispatch, getState) => {
-    const { role } = getState().Fight;
+    const { role, points } = getState().Fight;
     dispatch({
-      type: actionTypes.START_ROUND
+      type: actionTypes.START_ROUND,
+      payload: id
     });
     switch (role) {
       case "points":
+        if (points.length > 0) dispatch(addToHistory());
         dispatch({
           type: actionTypes.UNBLOCK_UI
         });
         break;
       case "main":
         dispatch({
-          type: actionTypes.CREATE_ROUND,
-          payload: id
+          type: actionTypes.CREATE_ROUND
         });
         dispatch({
           type: actionTypes.START_FIGHT_TIMER
@@ -277,6 +279,11 @@ export const notifyJuryConnected = () => {
     dispatch(messageActions.juryConnected());
   };
 };
+
+export const setPoints = points => ({
+  type: actionTypes.RECEIVED_POINTS,
+  payload: points
+});
 
 export const timerButtonClick = () => {
   return (dispatch, getState) => {

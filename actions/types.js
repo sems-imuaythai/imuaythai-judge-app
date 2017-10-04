@@ -35,6 +35,7 @@ export const EDIT_POINTS = "EDIT_POINTS";
 export const RECEIVED_POINTS = "RECEIVED_POINTS";
 export const START_BLINK = "START_BLINK";
 export const POINTS_ACCEPTED = "POINTS_ACCEPTED";
+export const RESET_POINTS = "RESET_POINTS";
 
 //socket
 export const WEBSOCKET_CONNECT = "WEBSOCKET_CONNECT";

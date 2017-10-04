@@ -60,7 +60,7 @@ const fight = (state = fightInitialState, action) => {
     case actionType.CREATE_ROUND:
       return {
         ...state,
-        rounds: createRound(action.payload, state)
+        rounds: createRound(state)
       };
     case actionType.EDIT_POINTS:
       return {
@@ -112,6 +112,11 @@ const fight = (state = fightInitialState, action) => {
       };
     case actionType.END_FIGHT:
       return state;
+    case actionType.RESET_POINTS:
+      return {
+        ...state,
+        points: preparePoints(state)
+      };
 
     default:
       return state;
@@ -120,13 +125,13 @@ const fight = (state = fightInitialState, action) => {
 
 export default fight;
 
-export const createRound = (roundId, state) => {
-  const { fight } = state.Fight;
+export const createRound = state => {
+  const { fight } = state;
   const judgeMappings = fight.fightJudgesMappings.filter(
     judge => judge.main === 0
   );
   let round = {
-    id: roundId,
+    id: state.roundId,
     judges: []
   };
   for (let key in judgeMappings) {
@@ -147,7 +152,7 @@ export const createRound = (roundId, state) => {
 };
 
 export const receivePoints = (points, state) => {
-  const { fight } = state.Fight;
+  const { fight } = state;
   let round = state.rounds.find(r => r.id === points.roundId);
   let roundArrayId = state.rounds.indexOf(round);
   let judge = round.judges.find(j => j.id === points.judgeId);
@@ -187,6 +192,9 @@ export const editPoints = (points, state) => {
 
 export const preparePoints = state => {
   const { fight } = state;
+
+  state.points = [];
+
   let redPoints = {
     fighterId: fight.redAthleteId,
     cautions: 0,

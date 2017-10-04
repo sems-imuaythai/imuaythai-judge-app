@@ -1,6 +1,7 @@
 import * as requestTypes from "../common/requestTypes";
 import { sendMessage } from "./WebsocketActions";
 import { strigifyMessage } from "../common/messageHandler";
+import * as actionType from "./types";
 import { modelPointsToBeAccepted, modelPointsToBeSend } from "./PointActions";
 
 export const showPrematuredPanels = () => {
@@ -37,15 +38,18 @@ export const acceptPoints = () => {
   };
 };
 
-export const sendPoints = () => {
+export const sendPoints = fighterId => {
   return (dispatch, getState) => {
-    const points = modelPointsToBeSend(getState());
+    const points = modelPointsToBeSend(fighterId, getState());
     const message = {
       requestType: requestTypes.SendPoints,
       data: points
     };
     const stringifiedMessage = strigifyMessage(message);
     dispatch(sendMessage(stringifiedMessage));
+    dispatch({
+      type: actionType.BLOCK_UI
+    });
   };
 };
 

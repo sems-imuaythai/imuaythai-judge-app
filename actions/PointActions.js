@@ -32,8 +32,20 @@ export const modelPointsToBeAccepted = state => {
 
   return pointsToAccept;
 };
-//TODO: implement model points to be send
-export const modelPointsToBeSend = state => {};
+
+export const modelPointsToBeSend = (fighterId, state) => {
+  const { points, roundId, fightId } = state.Fight;
+  const { user } = state.Account;
+
+  let pointsToSend = points.find(point => point.fighterId === fighterId);
+
+  return {
+    ...pointsToSend,
+    roundId: roundId,
+    fightId: fightId,
+    judgeId: user.id
+  };
+};
 
 export const editPoints = points => ({
   type: actionTypes.EDIT_POINTS,
@@ -44,3 +56,48 @@ export const setPoints = points => ({
   type: actionTypes.SET_POINTS,
   payload: points
 });
+
+export const addPointsToHistory = state => {
+  const { points, roundId } = state.Fight;
+
+  for (let pointId in points) {
+    let point = points[pointId];
+
+    let pointsArray = [
+      {
+        name: "Cautions",
+        value: point.cautions
+      },
+      {
+        name: "Knock down",
+        value: point.knockDown
+      },
+      {
+        name: "Warnings",
+        value: point.warnings
+      },
+      {
+        name: "J",
+        value: point.j
+      },
+      {
+        name: "X",
+        value: point.x
+      },
+      {
+        name: "Points",
+        value: point.points
+      }
+    ];
+
+    let round = {
+      id: roundId,
+      fighterId: point.fighterId,
+      points: pointsArray
+    };
+
+    state.PointsHistory.rounds = state.PointsHistory.rounds.concat([round]);
+  }
+
+  return state.PointsHistory.rounds;
+};
