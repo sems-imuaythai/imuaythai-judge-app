@@ -101,3 +101,7 @@ export const addPointsToHistory = state => {
 
   return state.PointsHistory.rounds;
 };
+
+export const canSendPoints = state => {
+  return state.Fight.points.find(p => p.points === 10);
+};

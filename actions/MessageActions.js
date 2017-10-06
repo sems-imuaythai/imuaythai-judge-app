@@ -1,8 +1,13 @@
 import * as requestTypes from "../common/requestTypes";
 import { sendMessage } from "./WebsocketActions";
 import { strigifyMessage } from "../common/messageHandler";
+import { showError } from "./NotifyActions";
 import * as actionType from "./types";
-import { modelPointsToBeAccepted, modelPointsToBeSend } from "./PointActions";
+import {
+  modelPointsToBeAccepted,
+  modelPointsToBeSend,
+  canSendPoints
+} from "./PointActions";
 
 export const showPrematuredPanels = () => {
   return dispatch => {
@@ -40,6 +45,11 @@ export const acceptPoints = () => {
 
 export const sendPoints = fighterId => {
   return (dispatch, getState) => {
+    if (!canSendPoints(getState())) {
+      dispatch(showError("At least one of the fighters must have 10 points"));
+      return;
+    }
+
     const points = modelPointsToBeSend(fighterId, getState());
     const message = {
       requestType: requestTypes.SendPoints,
@@ -55,7 +65,6 @@ export const sendPoints = fighterId => {
 
 export const startRound = () => {
   return dispatch => {
-    console.log("start round");
     const message = {
       requestType: requestTypes.StartRound,
       data: null
