@@ -6,7 +6,7 @@ import PrematureEndPanel from "./FightPrematureEndPanelsComponents/PrematureEndP
 
 class FightPrematureEndPanels extends Component {
   render() {
-    const { fight, user } = this.props;
+    const { fight } = this.props;
     const redFighterName =
       fight.redAthlete.firstName + " " + fight.redAthlete.surname;
     const blueFighterName =
@@ -14,7 +14,7 @@ class FightPrematureEndPanels extends Component {
     return (
       <Container>
         <Content style={{ marginTop: 25 }}>
-          <FightHeader />
+          <FightHeader showTimer={this.props.isAdmin} />
           {this.props.isAdmin ? (
             <Grid>
               <Col>
@@ -23,7 +23,7 @@ class FightPrematureEndPanels extends Component {
                   large
                   bordered
                   warning
-                  onPress={this.endFight.bind(this)}>
+                  onPress={this.props.endFight}>
                   <Text>End Fight</Text>
                 </Button>
               </Col>
@@ -34,27 +34,17 @@ class FightPrematureEndPanels extends Component {
               primaryBackgroundColor="#cd2626"
               secondaryBackgroundColor="#720000"
               playerName={redFighterName}
-              sendMessage={this.props.sendMessage}
-              roundEndTime={this.props.roundEndTime}
+              sendInjury={this.props.sendInjury}
               fighterId={fight.redAthlete.id}
-              judgeId={user.id}
-              roundId={this.props.roundId}
-              fightId={fight.id}
-              disabled={this.state.disabled}
-              setDisable={this.setDisable.bind(this)}
+              disabled={this.props.disabled}
             />
             <PrematureEndPanel
               primaryBackgroundColor="#1874cd"
               secondaryBackgroundColor="#000080"
               playerName={blueFighterName}
-              sendMessage={this.props.sendMessage}
-              roundEndTime={this.props.roundEndTime}
+              sendInjury={this.props.sendInjury}
               fighterId={fight.blueAthlete.id}
-              judgeId={user.id}
-              roundId={this.props.roundId}
-              fightId={fight.id}
-              disabled={this.state.disabled}
-              setDisable={this.setDisable.bind(this)}
+              disabled={this.props.disabled}
             />
           </Grid>
         </Content>

@@ -92,10 +92,15 @@ export const startRound = id => {
     });
     switch (role) {
       case "points":
-        if (points.length > 0) dispatch(addToHistory());
+        if (points.length > 0 && points.find(p => p.points > 0))
+          dispatch(addToHistory());
         dispatch({
-          type: actionTypes.UNBLOCK_UI
+          type: actionTypes.RESET_POINTS
         });
+        dispatch({
+          type: actionTypes.UNBLOCK_POINTS
+        });
+
         break;
       case "main":
         dispatch({
@@ -241,7 +246,7 @@ export const juryConnected = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
 
-    if (role !== "timekeeper") return;
+    if (role === "points") return;
 
     dispatch({
       type: actionTypes.UNBLOCK_UI
@@ -268,6 +273,9 @@ export const showPrematureEndPanels = () => {
 
     dispatch({
       type: actionTypes.SHOW_PREMATURE_END_PANELS
+    });
+    dispatch({
+      type: actionTypes.STOP_FIGHT_TIMER
     });
   };
 };

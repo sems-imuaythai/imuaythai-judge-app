@@ -28,7 +28,6 @@ const FightPointsView = props => {
             )}
             fighterId={fight.redAthlete.id}
             addToHistory={props.addToHistory}
-            disabled={props.disabled}
           />
           <PlayerPointsView
             primaryBackgroundColor="#1874cd"
@@ -43,7 +42,6 @@ const FightPointsView = props => {
             )}
             fighterId={fight.blueAthlete.id}
             addToHistory={props.addToHistory}
-            disabled={props.disabled}
           />
         </Grid>
       </Content>

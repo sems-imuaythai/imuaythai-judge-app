@@ -1,6 +1,7 @@
 import * as actionType from "./types";
 import axios from "axios";
 import { clearNotify, showError } from "./NotifyActions";
+import { saveState } from "../common/localStorage";
 
 export const setRing = ring => ({
   type: actionType.SET_RING,
@@ -35,6 +36,7 @@ export const getContests = () => {
           type: actionType.GET_CONTESTS_SUCCESS,
           payload: response.data
         });
+        saveState(getState().Settings);
       })
       .catch(err => {
         dispatch({

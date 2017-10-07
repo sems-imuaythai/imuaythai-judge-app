@@ -8,7 +8,4 @@ export const addToHistory = () => {
       payload: addPointsToHistory(getState())
     });
   };
-  dispatch({
-    type: actionType.RESET_POINTS
-  });
 };

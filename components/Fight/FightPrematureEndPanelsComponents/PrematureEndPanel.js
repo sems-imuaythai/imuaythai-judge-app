@@ -10,26 +10,11 @@ class PrematureEndPanel extends Component {
     super();
 
     this.state = {
-      endFightReason: "",
-      endFightTime: 0,
-      fightId: 0,
-      fighterId: "",
-      roundId: 0,
-      judgeId: ""
+      endFightReason: ""
     };
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handlePress = this.handlePress.bind(this);
-  }
-
-  componentWillMount() {
-    this.setState({
-      endFightTime: this.props.roundEndTime,
-      judgeId: this.props.judgeId,
-      fighterId: this.props.fighterId,
-      fightId: this.props.fightId,
-      roundId: this.props.roundId
-    });
   }
 
   handleSelect(reason) {
@@ -39,22 +24,11 @@ class PrematureEndPanel extends Component {
   }
 
   handlePress() {
-    let request = {
-      requestType: requestTypes.PrematureEnd,
-      data: {
-        injury: this.state.endFightReason,
-        injuryTime: this.state.endFightTime,
-        judgeId: this.state.judgeId,
-        fighterId: this.state.fighterId,
-        fightId: this.state.fightId,
-        roundId: this.state.roundId
-      }
+    let injury = {
+      fighterId: this.props.fighterId,
+      name: this.state.endFightReason
     };
-    request.data = JSON.stringify(request.data);
-
-    let serizedRequest = JSON.stringify(request);
-    this.props.sendMessage(serizedRequest);
-    this.props.setDisable();
+    this.props.sendInjury(injury);
   }
   render() {
     return (

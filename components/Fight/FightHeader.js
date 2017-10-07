@@ -44,45 +44,33 @@ const FightHeader = props => {
         {props.showTimer ? (
           <Timer
             totalDuration={
-              timer.active === "fight" ? (
-                fight.structure.round.duration * 1000
-              ) : (
-                fight.structure.round.breakDuration * 1000
-              )
+              timer.active === "fight"
+                ? fight.structure.round.duration * 1000
+                : fight.structure.round.breakDuration * 1000
             }
             msecs
             start={
-              timer.active === "fight" ? (
-                timer.fightTimerStart
-              ) : (
-                timer.pauseTimerStart
-              )
+              timer.active === "fight"
+                ? timer.fightTimerStart
+                : timer.pauseTimerStart
             }
             reset={
-              timer.active === "fight" ? (
-                timer.fightTimerReset
-              ) : (
-                timer.pauseTimerReset
-              )
+              timer.active === "fight"
+                ? timer.fightTimerReset
+                : timer.pauseTimerReset
             }
             options={options}
             handleFinish={
-              timer.active === "fight" ? (
-                timer.fightTimerCallback
-              ) : (
-                timer.pauseTimerCallback
-              )
+              timer.active === "fight"
+                ? timer.fightTimerCallback
+                : timer.pauseTimerCallback
             }
           />
         ) : (
           <Title>
-            {props.fightStarted ? props.fightPaused ? (
-              "Fight paused"
-            ) : (
-              "Fight started"
-            ) : (
-              "Fight not started"
-            )}
+            {props.started
+              ? props.paused ? "Fight paused" : "Fight started"
+              : "Fight not started"}
           </Title>
         )}
       </Col>

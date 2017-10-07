@@ -33,6 +33,9 @@ class Timer extends Component {
       this.start();
     }
   }
+  componentWillUnmount() {
+    this.stop();
+  }
 
   componentWillReceiveProps(newProps) {
     if (newProps.start) {

@@ -6,7 +6,8 @@ import * as actionType from "./types";
 import {
   modelPointsToBeAccepted,
   modelPointsToBeSend,
-  canSendPoints
+  canSendPoints,
+  prepareInjury
 } from "./PointActions";
 
 export const showPrematuredPanels = () => {
@@ -58,7 +59,8 @@ export const sendPoints = fighterId => {
     const stringifiedMessage = strigifyMessage(message);
     dispatch(sendMessage(stringifiedMessage));
     dispatch({
-      type: actionType.BLOCK_UI
+      type: actionType.BLOCK_POINTS,
+      payload: fighterId
     });
   };
 };
@@ -115,5 +117,19 @@ export const juryConnected = () => {
     };
     const stringifiedMessage = strigifyMessage(message);
     dispatch(sendMessage(stringifiedMessage));
+  };
+};
+
+export const sendInjury = injury => {
+  return (dispatch, getState) => {
+    const message = {
+      requestType: requestTypes.PrematureEnd,
+      data: prepareInjury(injury, getState())
+    };
+    const stringifiedMessage = strigifyMessage(message);
+    dispatch(sendMessage(stringifiedMessage));
+    dispatch({
+      type: actionType.BLOCK_UI
+    });
   };
 };

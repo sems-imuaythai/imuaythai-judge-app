@@ -1,16 +1,16 @@
 {
   "expo": {
-   "name": "iMuayThai Judge",
-   "icon": "./icon.png",
-   "version": "0.0.1",
-   "slug": "imuaythai-judge",
-   "sdkVersion": "19.0.0",
-   "privacy": "unlisted",
-   "ios": {
-     "bundleIdentifier": "com.imuaythai.judgeapp"
-   },
-   "android": {
-     "package": "com.imuaythai.judgeapp"
-   }
+    "name": "iMuayThai Judge New",
+    "icon": "./icon.png",
+    "version": "0.0.2",
+    "slug": "imuaythai-judge-new",
+    "sdkVersion": "19.0.0",
+    "privacy": "unlisted",
+    "ios": {
+      "bundleIdentifier": "com.imuaythai.judgeappnew"
+    },
+    "android": {
+      "package": "com.imuaythai.judgeappnew"
+    }
   }
 }

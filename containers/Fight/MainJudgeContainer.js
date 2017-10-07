@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 
 const MainJudgeContainer = props => {
   if (props.showPrematureEndPanels)
-    return <FightPrematureEndPanels {...props} />;
+    return <FightPrematureEndPanels {...props} isAdmin={true} />;
   else
     return (
       <MyDrawer content={<FightListContainer isSidebar={true} />}>

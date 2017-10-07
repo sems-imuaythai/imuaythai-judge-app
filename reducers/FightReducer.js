@@ -117,7 +117,16 @@ const fight = (state = fightInitialState, action) => {
         ...state,
         points: preparePoints(state)
       };
-
+    case actionType.BLOCK_POINTS:
+      return {
+        ...state,
+        points: blockPoints(action.payload, state)
+      };
+    case actionType.UNBLOCK_POINTS:
+      return {
+        ...state,
+        points: unblockPoints(state)
+      };
     default:
       return state;
   }
@@ -202,7 +211,8 @@ export const preparePoints = state => {
     warnings: 0,
     j: 0,
     x: 0,
-    points: 0
+    points: 0,
+    disabled: true
   };
   state.points = state.points.concat([redPoints]);
 
@@ -213,7 +223,8 @@ export const preparePoints = state => {
     warnings: 0,
     j: 0,
     x: 0,
-    points: 0
+    points: 0,
+    disabled: true
   };
   state.points = state.points.concat([bluePoints]);
 
@@ -240,4 +251,25 @@ const setWarning = (warning, state) => {
     .slice(0, pointArrayId)
     .concat(point)
     .concat(state.points.slice(pointArrayId + 1));
+};
+
+const blockPoints = (fighterId, state) => {
+  let point = state.points.find(p => p.fighterId === fighterId);
+  let pointArrayId = state.points.indexOf(point);
+
+  point.disabled = true;
+
+  return state.points
+    .slice(0, pointArrayId)
+    .concat(point)
+    .concat(state.points.slice(pointArrayId + 1));
+};
+
+const unblockPoints = state => {
+  return state.points.map((item, index) => {
+    return {
+      ...item,
+      disabled: false
+    };
+  });
 };

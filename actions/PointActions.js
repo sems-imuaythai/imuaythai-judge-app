@@ -21,7 +21,7 @@ export const modelPointsToBeAccepted = state => {
         points: judge.bluePoints,
         judgeId: judge.id,
         fightId: judge.fightId,
-        fighterId: this.props.fight.blueAthleteId,
+        fighterId: props.fight.blueAthleteId,
         roundId: round.id,
         accepted: true
       };
@@ -91,7 +91,7 @@ export const addPointsToHistory = state => {
     ];
 
     let round = {
-      id: roundId,
+      id: roundId - 1,
       fighterId: point.fighterId,
       points: pointsArray
     };
@@ -104,4 +104,14 @@ export const addPointsToHistory = state => {
 
 export const canSendPoints = state => {
   return state.Fight.points.find(p => p.points === 10);
+};
+
+export const prepareInjury = (injury, state) => {
+  return {
+    injury: injury.name,
+    judgeId: state.Account.user.id,
+    fighterId: injury.fighterId,
+    fightId: state.Fight.fightId,
+    roundId: state.Fight.roundId
+  };
 };

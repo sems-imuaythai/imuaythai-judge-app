@@ -1,7 +1,7 @@
 import React from "react";
 import FightPointsView from "../../components/Fight/FightPointsView";
 import { addToHistory } from "../../actions/PointHistoryActions";
-import { sendPoints } from "../../actions/MessageActions";
+import { sendPoints, sendInjury } from "../../actions/MessageActions";
 import { setWarning } from "../../actions/FightActions";
 import { connect } from "react-redux";
 import FightPrematureEndPanels from "../../components/Fight/FightPrematureEndPanels";
@@ -38,6 +38,9 @@ const mapDispatchToProps = dispatch => {
     },
     addToHistory(points) {
       dispatch(addToHistory(points));
+    },
+    sendInjury(injury) {
+      dispatch(sendInjury(injury));
     }
   };
 };

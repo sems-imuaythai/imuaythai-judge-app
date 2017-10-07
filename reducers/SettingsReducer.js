@@ -5,7 +5,9 @@ const settingsInitialState = {
   host: "https://imuaythai.herokuapp.com/",
   websocket: "wss://imuaythai.herokuapp.com/",
   contest: null,
-  contests: []
+  contests: [],
+  fetching: false,
+  fetched: false
 };
 const settings = (state = settingsInitialState, action) => {
   switch (action.type) {
@@ -25,11 +27,24 @@ const settings = (state = settingsInitialState, action) => {
         ...state,
         websocket: action.payload
       };
+    case actionType.GET_CONTESTS_REQUEST:
+      return {
+        ...state,
+        fetching: true,
+        fetched: false
+      };
     case actionType.GET_CONTESTS_SUCCESS:
       return {
         ...state,
         contests: action.payload,
-        contest: action.payload[0]
+        contest: action.payload[0],
+        fetched: true,
+        fetching: false
+      };
+    case actionType.GET_CONTESTS_REJECTED:
+      return {
+        ...state,
+        fetching: false
       };
     case actionType.SET_CONTEST:
       return {

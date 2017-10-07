@@ -39,7 +39,7 @@ const PlayerPointsView = props => {
     <PointButton
       key={i}
       pointValue={val}
-      disabled={props.disabled}
+      disabled={props.point.disabled}
       setPoint={() => setPoint(val)}
       selected={props.point.points === val}
       color={props.primaryBackgroundColor}
@@ -54,7 +54,7 @@ const PlayerPointsView = props => {
       symbolCount={props.point[val.name]}
       increment={() => setWarning(val.name, "INCREMENT_WARNING")}
       decrement={() => setWarning(val.name, "DECREMENT_WARNING")}
-      disabled={props.disabled}
+      disabled={props.point.disabled}
     />
   ));
   return (
@@ -78,7 +78,7 @@ const PlayerPointsView = props => {
         large
         light
         style={{ margin: 5 }}
-        disabled={props.disabled}
+        disabled={props.point.disabled}
         onPress={props.sendPoints}>
         <Text>ACCEPT</Text>
       </Button>
