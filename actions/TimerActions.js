@@ -1,4 +1,5 @@
 import * as actionType from "./types";
+import * as messageActions from "./MessageActions";
 
 export const startFightTimer = () => ({
   type: actionType.START_FIGHT_TIMER
@@ -32,3 +33,17 @@ export const setActiveTimer = timer => ({
   type: actionType.SET_ACTIVE_TIMER,
   payload: timer
 });
+
+export const fightCallback = () => {
+  return dispatch => {
+    dispatch(messageActions.endRound());
+  };
+};
+export const pauseCallback = () => {
+  return dispatch => {
+    dispatch({
+      type: actionType.SET_ACTIVE_TIMER,
+      payload: "fight"
+    });
+  };
+};

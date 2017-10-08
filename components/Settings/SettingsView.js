@@ -31,7 +31,8 @@ const setConnectionMessage = props => {
       <FooterTab
         style={{
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          backgroundColor: "#fff"
         }}>
         <Text style={{ color: "gold" }}>Connecting...</Text>
       </FooterTab>
@@ -41,7 +42,8 @@ const setConnectionMessage = props => {
       <FooterTab
         style={{
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          backgroundColor: "#fff"
         }}>
         <Text style={{ color: "green" }}>Connected to server</Text>
       </FooterTab>
@@ -51,7 +53,8 @@ const setConnectionMessage = props => {
       <FooterTab
         style={{
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          backgroundColor: "#fff"
         }}>
         <Text style={{ color: "red" }}>Failed to connect to server</Text>
       </FooterTab>
@@ -61,9 +64,15 @@ const setConnectionMessage = props => {
 class SettingsView extends Component {
   componentWillMount() {
     AsyncStorage.getItem("Settings").then(settingsStr => {
-      const parsedState = JSON.parse(settingsStr);
-      this.props.setHostUrl(parsedState.host);
-      this.props.setWebsocketUrl(parsedState.websocket);
+      let parsedState = undefined;
+      try {
+        parsedState = JSON.parse(settingsStr);
+      } catch (error) {}
+      if (parsedState) {
+        this.props.setHostUrl(parsedState.host);
+        this.props.setWebsocketUrl(parsedState.websocket);
+      }
+
       if (this.props.contests.length === 0) this.props.getContests();
     });
   }
@@ -107,8 +116,8 @@ class SettingsView extends Component {
             </Picker>
           </Form>
         </Content>
-        <Footer>
-          <FooterTab>
+        <Footer style={{ backgroundColor: "#fff" }}>
+          <FooterTab style={{ backgroundColor: "#fff" }}>
             <Button onPress={this.props.getContests}>
               <Text>Check connection</Text>
             </Button>

@@ -6,7 +6,9 @@ class Timer extends Component {
     super(props);
     this.state = {
       started: false,
-      remainingTime: props.totalDuration
+      remainingTime: props.totalDuration,
+      timerType: props.timerType,
+      played: false
     };
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
@@ -38,6 +40,12 @@ class Timer extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    if (this.state.timerType !== newProps.timerType) {
+      this.setState({
+        remainingTime: newProps.totalDuration,
+        timerType: newProps.timerType
+      });
+    }
     if (newProps.start) {
       this.start();
     } else {
@@ -52,10 +60,18 @@ class Timer extends Component {
     if (this.state.started) return;
     const handleFinish = this.props.handleFinish
       ? this.props.handleFinish
-      : () => alert("Timer Finished");
+      : () => console.log("Timer finished");
     const endTime = new Date().getTime() + this.state.remainingTime;
     this.interval = setInterval(() => {
       const remaining = endTime - new Date();
+      if (
+        remaining <= 10000 &&
+        this.state.timerType === "pause" &&
+        !this.state.played
+      ) {
+        this.props.playPreSound();
+        this.setState({ played: true });
+      }
       if (remaining <= 1000) {
         this.setState({ remainingTime: 0 });
         this.stop();

@@ -21,7 +21,7 @@ export const modelPointsToBeAccepted = state => {
         points: judge.bluePoints,
         judgeId: judge.id,
         fightId: judge.fightId,
-        fighterId: props.fight.blueAthleteId,
+        fighterId: state.Fight.fight.blueAthleteId,
         roundId: round.id,
         accepted: true
       };

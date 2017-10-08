@@ -90,6 +90,7 @@ export const startRound = id => {
       type: actionTypes.START_ROUND,
       payload: id
     });
+    playSound();
     switch (role) {
       case "points":
         if (points.length > 0 && points.find(p => p.points > 0))
@@ -107,10 +108,18 @@ export const startRound = id => {
           type: actionTypes.CREATE_ROUND
         });
         dispatch({
+          type: actionTypes.SET_ACTIVE_TIMER,
+          payload: "fight"
+        });
+        dispatch({
           type: actionTypes.START_FIGHT_TIMER
         });
         break;
       case "timekeeper":
+        dispatch({
+          type: actionTypes.SET_ACTIVE_TIMER,
+          payload: "fight"
+        });
         dispatch({
           type: actionTypes.START_FIGHT_TIMER
         });
@@ -125,6 +134,7 @@ export const endRound = () => {
     dispatch({
       type: actionTypes.END_ROUND
     });
+    playSound();
     switch (role) {
       case "main":
       case "timekeeper":
@@ -302,9 +312,21 @@ export const timerButtonClick = () => {
   };
 };
 
-/*const playSound = async () => {
+const playSound = async () => {
   await Expo.Audio.setIsEnabledAsync(true);
   const sound = new Expo.Audio.Sound();
-  await sound.loadAsync(require("../../sounds/boxing_bell.mp3"));
+  await sound.loadAsync(require("../sounds/boxing_bell.mp3"));
   await sound.playAsync();
-};*/
+};
+
+export const playPreSound = () => {
+  return dispatch => {
+    playPauseSound();
+  };
+};
+const playPauseSound = async () => {
+  await Expo.Audio.setIsEnabledAsync(true);
+  const sound = new Expo.Audio.Sound();
+  await sound.loadAsync(require("../sounds/small_bell.mp3"));
+  await sound.playAsync();
+};

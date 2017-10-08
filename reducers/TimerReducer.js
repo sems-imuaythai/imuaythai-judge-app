@@ -58,7 +58,9 @@ const timer = (state = timerInitialState, action) => {
     case actionType.SET_ACTIVE_TIMER:
       return {
         ...state,
-        active: action.payload
+        active: action.payload,
+        pauseTimerStart: false,
+        fightTimerStart: false
       };
     default:
       return state;
