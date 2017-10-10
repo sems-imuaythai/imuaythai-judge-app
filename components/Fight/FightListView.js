@@ -43,21 +43,19 @@ const FightListView = props => {
 
   return (
     <Container>
-      <Header>
-        {props.isSidebar ? (
-          <Left />
-        ) : (
+      {props.isSidebar ? null : (
+        <Header>
           <Left>
             <Button transparent onPress={props.logout}>
               <Icon name="arrow-back" />
             </Button>
           </Left>
-        )}
-        <Body>
-          <Title>Fights list</Title>
-        </Body>
-        <Right />
-      </Header>
+          <Body>
+            <Title>Fights list</Title>
+          </Body>
+          <Right />
+        </Header>
+      )}
       <Content>
         {props.fetching ? <CenterSpinner /> : <List>{renderFightList}</List>}
       </Content>

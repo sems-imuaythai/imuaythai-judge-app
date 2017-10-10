@@ -72,7 +72,7 @@ class Timer extends Component {
         this.props.playPreSound();
         this.setState({ played: true });
       }
-      if (remaining <= 1000) {
+      if (remaining <= 100) {
         this.setState({ remainingTime: 0 });
         this.stop();
         handleFinish();
@@ -83,7 +83,7 @@ class Timer extends Component {
   }
 
   stop() {
-    this.setState({ started: false });
+    this.setState({ started: false, played: false });
     clearInterval(this.interval);
   }
 

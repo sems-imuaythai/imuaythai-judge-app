@@ -44,7 +44,11 @@ const FightHeader = props => {
         {props.showTimer ? (
           <Timer
             timerType={timer.active}
-            totalDuration={timer.active === "fight" ? 50 * 1000 : 20 * 1000}
+            totalDuration={
+              timer.active === "fight"
+                ? fight.structure.round.duration * 1000
+                : fight.structure.round.breakDuration * 1000
+            }
             msecs
             start={
               timer.active === "fight"

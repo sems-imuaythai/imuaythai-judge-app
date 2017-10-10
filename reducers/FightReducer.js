@@ -151,7 +151,17 @@ export const createRound = state => {
       firstName: mapping.judge.firstName,
       surname: mapping.judge.surname,
       redPoints: 0,
-      bluePoints: 0
+      redCautions: 0,
+      redKnockDown: 0,
+      redWarnings: 0,
+      redJ: 0,
+      redX: 0,
+      bluePoints: 0,
+      blueCautions: 0,
+      blueKnockDown: 0,
+      blueWarnings: 0,
+      blueJ: 0,
+      blueX: 0
     };
 
     round.judges.push(judge);
@@ -166,8 +176,21 @@ export const receivePoints = (points, state) => {
   let roundArrayId = state.rounds.indexOf(round);
   let judge = round.judges.find(j => j.id === points.judgeId);
   let judgeArrayId = round.judges.indexOf(judge);
-  if (fight.redAthleteId === points.fighterId) judge.redPoints = points.points;
-  else judge.bluePoints = points.points;
+  if (fight.redAthleteId === points.fighterId) {
+    judge.redPoints = points.points;
+    judge.redCautions = points.cautions;
+    judge.redKnockDown = points.knockDown;
+    judge.redWarnings = points.warnings;
+    judge.redJ = points.j;
+    judge.redX = points.x;
+  } else {
+    judge.bluePoints = points.points;
+    judge.blueCautions = points.cautions;
+    judge.blueKnockDown = points.knockDown;
+    judge.blueWarnings = points.warnings;
+    judge.blueJ = points.j;
+    judge.blueX = points.x;
+  }
 
   round.judges = round.judges
     .slice(0, judgeArrayId)
