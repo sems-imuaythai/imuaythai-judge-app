@@ -103,7 +103,10 @@ export const addPointsToHistory = state => {
 };
 
 export const canSendPoints = state => {
-  return state.Fight.points.find(p => p.points === 10);
+  return (
+    state.Fight.points.find(p => p.points === 10) &&
+    !state.Fight.points.find(p => p.points === 0)
+  );
 };
 
 export const prepareInjury = (injury, state) => {

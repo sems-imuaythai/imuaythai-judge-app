@@ -41,6 +41,9 @@ export const acceptPoints = () => {
     };
     const stringifiedMessage = strigifyMessage(message);
     dispatch(sendMessage(stringifiedMessage));
+    dispatch({
+      type: actionType.BLOCK_UI
+    });
   };
 };
 

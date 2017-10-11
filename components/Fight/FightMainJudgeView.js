@@ -3,11 +3,54 @@ import FightHeader from "../../containers/Fight/FightHeaderContainer";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Container, Content, Text, Title, H1, Button } from "native-base";
 import JudgeTable from "./FightMainJudgeViewComponents/JudgeTable";
-
+import { Alert } from "react-native";
+const createAlert = (title, text, callback) => {
+  Alert.alert(
+    title,
+    text,
+    [
+      {
+        text: "Cancel",
+        onPress: () => {},
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          callback();
+        }
+      }
+    ],
+    { cancelable: false }
+  );
+};
 const FightMainJudgeView = props => {
   const judgeMappings = props.fight.fightJudgesMappings.filter(
     judge => judge.main === 0
   );
+
+  const showPrematurePanelsAlert = () => {
+    createAlert(
+      "Warning",
+      "Are you sure you want to show injury panels?",
+      props.showPrematuredPanels
+    );
+  };
+  const endFightAlert = () => {
+    createAlert(
+      "Warning",
+      "Are you sure you want to end fight?",
+      props.endFight
+    );
+  };
+
+  const acceptPointsAlert = () => {
+    createAlert(
+      "Warning",
+      "Are you sure you want to send points to accept?",
+      props.acceptPoints
+    );
+  };
   const { user, fight } = props;
   return (
     <Container>
@@ -46,12 +89,12 @@ const FightMainJudgeView = props => {
               large
               bordered
               warning
-              onPress={props.showPrematuredPanels}>
+              onPress={showPrematurePanelsAlert}>
               <Text>Show injury panel</Text>
             </Button>
           </Col>
           <Col>
-            <Button block large bordered warning onPress={props.endFight}>
+            <Button block large bordered warning onPress={endFightAlert}>
               <Text>End Fight</Text>
             </Button>
           </Col>
@@ -66,7 +109,7 @@ const FightMainJudgeView = props => {
           block
           large
           success
-          onPress={props.acceptPoints}>
+          onPress={acceptPointsAlert}>
           <H1>ACCEPT POINTS</H1>
         </Button>
       </Content>

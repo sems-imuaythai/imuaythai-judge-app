@@ -114,6 +114,9 @@ export const startRound = id => {
         dispatch({
           type: actionTypes.START_FIGHT_TIMER
         });
+        dispatch({
+          type: actionTypes.UNBLOCK_UI
+        });
         break;
       case "timekeeper":
         dispatch({
