@@ -233,6 +233,7 @@ export const resumeRound = () => {
 export const endFight = () => {
   return (dispatch, getState) => {
     const { role } = getState().Fight;
+    dispatch(unsubscribe());
     switch (role) {
       case "main":
         dispatch({

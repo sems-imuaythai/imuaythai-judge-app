@@ -115,6 +115,7 @@ export const prepareInjury = (injury, state) => {
     judgeId: state.Account.user.id,
     fighterId: injury.fighterId,
     fightId: state.Fight.fightId,
-    roundId: state.Fight.roundId
+    roundId: state.Fight.roundId,
+    accepted: injury.accepted
   };
 };

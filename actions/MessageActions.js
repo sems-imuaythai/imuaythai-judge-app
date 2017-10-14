@@ -22,10 +22,11 @@ export const showPrematuredPanels = () => {
 };
 
 export const endFight = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { fightId } = getState().Fight;
     const message = {
       requestType: requestTypes.EndFight,
-      data: null
+      data: fightId
     };
     const stringifiedMessage = strigifyMessage(message);
     dispatch(sendMessage(stringifiedMessage));

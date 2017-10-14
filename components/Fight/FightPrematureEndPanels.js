@@ -37,6 +37,7 @@ class FightPrematureEndPanels extends Component {
               sendInjury={this.props.sendInjury}
               fighterId={fight.redAthlete.id}
               disabled={this.props.disabled}
+              isMain={this.props.isAdmin}
             />
             <PrematureEndPanel
               primaryBackgroundColor="#1874cd"
@@ -45,6 +46,7 @@ class FightPrematureEndPanels extends Component {
               sendInjury={this.props.sendInjury}
               fighterId={fight.blueAthlete.id}
               disabled={this.props.disabled}
+              isMain={this.props.isAdmin}
             />
           </Grid>
         </Content>

@@ -26,7 +26,8 @@ class PrematureEndPanel extends Component {
   handlePress() {
     let injury = {
       fighterId: this.props.fighterId,
-      name: this.state.endFightReason
+      name: this.state.endFightReason,
+      accepted: this.props.isMain
     };
     this.props.sendInjury(injury);
   }

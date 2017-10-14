@@ -77,10 +77,7 @@ const fight = (state = fightInitialState, action) => {
     case actionType.ACCOUNT_PREFIGHT_LOGOUT:
     case actionType.EXIT_FIGHT:
       return {
-        ...state,
-        fight: undefined,
-        fightId: "",
-        role: undefined
+        ...fightInitialState
       };
     case actionType.SET_WARNINGS:
       return {
