@@ -25,7 +25,9 @@ const FightListView = props => {
         key={key}
         button
         onPress={
-          props.setFightId ? () => props.setFightId(fight.id) : () => {}
+          props.setFightId && !props.isSidebar
+            ? () => props.setFightId(fight.id)
+            : () => {}
         }>
         <Text>
           {fight.redAthlete.firstName +
@@ -36,7 +38,7 @@ const FightListView = props => {
             " " +
             fight.blueAthlete.surname +
             " #" +
-            fight.startNumber}{" "}
+            fight.startNumber}
         </Text>
       </ListItem>
     ));

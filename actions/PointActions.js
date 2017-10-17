@@ -10,7 +10,7 @@ export const modelPointsToBeAccepted = state => {
         points: judge.redPoints,
         judgeId: judge.id,
         fightId: judge.fightId,
-        fighterId: state.Fight.fight.redAthleteId,
+        fighterId: state.Fight.fight.redAthlete.id,
         roundId: round.id,
         accepted: true
       };
@@ -21,7 +21,7 @@ export const modelPointsToBeAccepted = state => {
         points: judge.bluePoints,
         judgeId: judge.id,
         fightId: judge.fightId,
-        fighterId: state.Fight.fight.blueAthleteId,
+        fighterId: state.Fight.fight.blueAthlete.id,
         roundId: round.id,
         accepted: true
       };

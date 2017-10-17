@@ -2,7 +2,7 @@
   "expo": {
     "name": "iMuayThai Judge New",
     "icon": "./icon.png",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "slug": "imuaythai-judge-new",
     "sdkVersion": "19.0.0",
     "privacy": "unlisted",

@@ -173,7 +173,7 @@ export const receivePoints = (points, state) => {
   let roundArrayId = state.rounds.indexOf(round);
   let judge = round.judges.find(j => j.id === points.judgeId);
   let judgeArrayId = round.judges.indexOf(judge);
-  if (fight.redAthleteId === points.fighterId) {
+  if (fight.redAthlete.id === points.fighterId) {
     judge.redPoints = points.points;
     judge.redCautions = points.cautions;
     judge.redKnockDown = points.knockDown;
@@ -225,7 +225,7 @@ export const preparePoints = state => {
   state.points = [];
 
   let redPoints = {
-    fighterId: fight.redAthleteId,
+    fighterId: fight.redAthlete.id,
     cautions: 0,
     knockDown: 0,
     warnings: 0,
@@ -237,7 +237,7 @@ export const preparePoints = state => {
   state.points = state.points.concat([redPoints]);
 
   let bluePoints = {
-    fighterId: fight.blueAthleteId,
+    fighterId: fight.blueAthlete.id,
     cautions: 0,
     knockDown: 0,
     warnings: 0,

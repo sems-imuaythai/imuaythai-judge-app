@@ -32,7 +32,7 @@ const FightPointsView = props => {
           <PlayerPointsView
             primaryBackgroundColor="#1874cd"
             secondaryBackgroundColor="#000080"
-            playerName={redFighterName}
+            playerName={blueFighterName}
             setWarnings={props.setWarnings}
             sendPoints={() => {
               props.sendPoints(fight.blueAthlete.id);

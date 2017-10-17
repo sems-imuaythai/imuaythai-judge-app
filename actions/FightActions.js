@@ -165,14 +165,14 @@ export const setRoleInFight = () => {
     const { fight } = getState().Fight;
     const { user } = getState().Account;
 
-    if (fight.timeKeeperId === user.id) {
+    if (fight.timekeeper.id === user.id) {
       dispatch({
         type: actionTypes.SET_ROLE_IN_FIGHT,
         payload: "timekeeper"
       });
     } else if (
       fight.fightJudgesMappings.find(
-        judge => judge.judgeId === user.id && judge.main === 1
+        judge => judge.judge.id === user.id && judge.main === 1
       )
     ) {
       dispatch({
@@ -181,7 +181,7 @@ export const setRoleInFight = () => {
       });
     } else if (
       fight.fightJudgesMappings.find(
-        judge => judge.judgeId === user.id && judge.main === 0
+        judge => judge.judge.id === user.id && judge.main === 0
       )
     ) {
       dispatch({

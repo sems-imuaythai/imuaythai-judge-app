@@ -70,7 +70,8 @@ export const sendPoints = fighterId => {
 };
 
 export const startRound = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    if (!canStartNewRound(getState())) return;
     const message = {
       requestType: requestTypes.StartRound,
       data: null
@@ -136,4 +137,9 @@ export const sendInjury = injury => {
       type: actionType.BLOCK_UI
     });
   };
+};
+
+const canStartNewRound = state => {
+  const { fight, roundId } = state.Fight;
+  return fight.structure.round.roundsCount > roundId;
 };
