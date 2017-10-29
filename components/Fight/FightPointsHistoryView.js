@@ -44,10 +44,10 @@ class FightPointsHistoryView extends Component {
     const { fight, rounds } = this.props;
     let names = <Row style={styles.rowBorder} />;
     const redPoints = rounds.filter(
-      round => round.fighterId === fight.redAthleteId
+      round => round.fighterId === fight.redAthlete.id
     );
     const bluePoints = rounds.filter(
-      round => round.fighterId === fight.blueAthleteId
+      round => round.fighterId === fight.blueAthlete.id
     );
     if (rounds.length > 0)
       names = rounds[0].points.map((item, key) => (

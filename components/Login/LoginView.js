@@ -51,8 +51,7 @@ class LoginView extends Component {
             onPress={() =>
               this.setState({
                 showQRScanner: false
-              })}
-          >
+              })}>
             <Text>Cancel</Text>
           </Button>
         </Container>
@@ -67,13 +66,10 @@ class LoginView extends Component {
             </Body>
             <Right />
           </Header>
-          <Content>
+          <Content style={{ backgroundColor: "#fff" }}>
             <Image
-              style={{ width: null, height: 200 }}
-              source={{
-                uri:
-                  "http://www.downwithdesign.com/wp-content/uploads/2012/07/dark-knight-rises-logo.png"
-              }}
+              style={{ width: null, height: 400 }}
+              source={require("../../mainLogo.png")}
             />
             {this.props.fetching ? (
               <CenterSpinner />
@@ -104,8 +100,7 @@ class LoginView extends Component {
                   iosHeader="Select one"
                   mode="dropdown"
                   selectedValue={this.props.ring}
-                  onValueChange={this.props.setRing}
-                >
+                  onValueChange={this.props.setRing}>
                   <Item label="Ring A" value="A" />
                   <Item label="Ring B" value="B" />
                   <Item label="Ring C" value="C" />
@@ -117,16 +112,14 @@ class LoginView extends Component {
                     this.props.handleSubmit({
                       email: this.state.email,
                       password: this.state.password
-                    })}
-                >
+                    })}>
                   <Text>Log in</Text>
                 </Button>
                 <Button
                   block
                   success
                   disabled={!this.props.hasCameraPermission}
-                  onPress={this.handleQRPress.bind(this)}
-                >
+                  onPress={this.handleQRPress.bind(this)}>
                   <Text>Scan QR code</Text>
                 </Button>
               </Form>

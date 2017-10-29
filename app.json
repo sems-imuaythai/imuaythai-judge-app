@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "iMuayThai Judge New",
+    "name": "iMuayThai Judge",
     "icon": "./icon.png",
-    "version": "0.0.3",
-    "slug": "imuaythai-judge-new",
+    "version": "0.0.4",
+    "slug": "imuaythai-judge",
     "sdkVersion": "19.0.0",
     "privacy": "unlisted",
     "ios": {
-      "bundleIdentifier": "com.imuaythai.judgeappnew"
+      "bundleIdentifier": "com.imuaythai.judgeapp"
     },
     "android": {
       "package": "com.imuaythai.judgeappnew"
