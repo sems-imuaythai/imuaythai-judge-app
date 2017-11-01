@@ -165,7 +165,7 @@ export const setRoleInFight = () => {
     const { fight } = getState().Fight;
     const { user } = getState().Account;
 
-    if (fight.timekeeper.id === user.id) {
+    if (fight.timekeeperId === user.id) {
       dispatch({
         type: actionTypes.SET_ROLE_IN_FIGHT,
         payload: "timekeeper"
