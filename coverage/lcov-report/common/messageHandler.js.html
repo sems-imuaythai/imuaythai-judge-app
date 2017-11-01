@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for common/messageHandler.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\prettify.css" />
+    <link rel="stylesheet" href="..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\index.html">All files</a> / <a href="index.html">common</a> messageHandler.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.82% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.82% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/34</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as actions from "../actions/FightActions";
+import * as requestTypes from "./requestTypes";
+&nbsp;
+export const handleMessage = <span class="fstat-no" title="function not covered" >(m</span>essage, dispatch) =&gt; {
+  let parsedMessage = <span class="cstat-no" title="statement not covered" >parseMessage(message);</span>
+<span class="cstat-no" title="statement not covered" >  switch (parsedMessage.requestType) {</span>
+    case requestTypes.StartRound:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.startRound(parsedMessage.data));</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.EndRound:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.endRound());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.ResumeRound:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.resumeRound());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.PauseRound:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.pauseRound());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.EndFight:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.endFight());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.JuryConnected:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.juryConnected());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.AcceptPoints:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.acceptPoints());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.SendPoints:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.setPoints(parsedMessage.data));</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case requestTypes.ShowPrematureEndPanel:
+<span class="cstat-no" title="statement not covered" >      dispatch(actions.showPrematureEndPanels());</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+&nbsp;
+    default:
+<span class="cstat-no" title="statement not covered" >      break;</span>
+  }
+};
+&nbsp;
+export const strigifyMessage = <span class="fstat-no" title="function not covered" >me</span>ssage =&gt; {
+<span class="cstat-no" title="statement not covered" >  if (message &amp;&amp; typeof message.data === "object")</span>
+<span class="cstat-no" title="statement not covered" >    message.data = JSON.stringify(message.data);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return JSON.stringify(message);</span>
+};
+&nbsp;
+export const parseMessage = <span class="fstat-no" title="function not covered" >me</span>ssage =&gt; {
+  let responseData = <span class="cstat-no" title="statement not covered" >null;</span>
+  let response = <span class="cstat-no" title="statement not covered" >JSON.parse(message);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    responseData = JSON.parse(response.data);</span>
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    responseData = response.data;</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  response.data = responseData;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return response;</span>
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Sep 23 2017 22:58:48 GMT+0200 (Środkowoeuropejski czas letni)
+</div>
+</div>
+<script src="..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\sorter.js"></script>
+</body>
+</html>

@@ -1,22 +1,26 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from "react-native";
 
-export const saveState = async (state) => {
+export const saveState = state => {
+  let stateToSave = {
+    host: state.host,
+    websocket: state.websocket
+  };
   let parsedState = JSON.stringify(state);
   try {
-    await AsyncStorage.setItem("Account", parsedState);
+    AsyncStorage.setItem("Settings", parsedState);
   } catch (error) {}
-}
+};
 
 export const loadState = async () => {
   try {
-    const parsedState = await AsyncStorage.getItem("Account");
-    if (parsedState !== null) {
-      let state = JSON.parse(parsedState);
-      return state;
-    }
+    AsyncStorage.getItem("Settings").then(settingsStr => {
+      const parsedState = JSON.parse(settingsStr);
+      console.log("====================================");
+      console.log(parsedState);
+      console.log("====================================");
+      return parsedState;
+    });
   } catch (error) {
-    return undefined;
+    return "Error occured";
   }
-
-  return undefined;
-}
+};

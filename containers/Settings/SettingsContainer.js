@@ -9,7 +9,9 @@ const mapStateToProps = state => {
     websocket: state.Settings.websocket,
     ring: state.Settings.ring,
     contests: state.Settings.contests,
-    contest: state.Settings.contest
+    contest: state.Settings.contest,
+    fetched: state.Settings.fetched,
+    fetching: state.Settings.fetching
   };
 };
 

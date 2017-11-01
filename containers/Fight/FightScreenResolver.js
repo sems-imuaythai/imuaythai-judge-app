@@ -1,85 +1,54 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getFightDetails } from '../../actions/FightActions';
-import { subscribe, sendMessage } from '../../actions/WebsocketActions';
-import * as requestType from './requestTypes';
-import FightPointsContainer from './FightPointsContainer';
-import MainJudgeContainer from './MainJudgeContainer';
-import TimekeeperContainer from './TimekeeperContainer';
-import FightListContainer from './FightListContainer';
-import CenterSpinner from '../../components/Spinner/CenterSpinner';
-
-
-
-const GetJudgeRole = (props) => {
-    const {fight, user, subscribe} = props;
-    if (fight.timeKeeperId === user.id) {
-        subscribe();
-        return "Timekeeper";
-    } else if (fight.fightJudgesMappings.find(judge => judge.judgeId === user.id && judge.main === 1)) {
-        subscribe();
-        return "Main";
-    } else if (fight.fightJudgesMappings.find(judge => judge.judgeId === user.id && judge.main === 0)) {
-        subscribe();
-        return "Points";
-    }
-    else
-        return "";
-}
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { subscribe } from "../../actions/WebsocketActions";
+import { showWarning } from "../../actions/NotifyActions";
+import FightPointsContainer from "./FightPointsContainer";
+import MainJudgeContainer from "./MainJudgeContainer";
+import TimekeeperContainer from "./TimekeeperContainer";
+import FightListContainer from "./FightListContainer";
+import CenterSpinner from "../../components/Spinner/CenterSpinner";
 
 class FightScreenResolver extends Component {
-    componentWillMount() {
-        if (this.props.fight == undefined || this.props.fight.id !== this.props.fightId)
-            this.props.getFightDetails(this.props.fightId);
+  render() {
+    const { role } = this.props;
+    if (role) {
+      switch (role) {
+        case "main":
+          this.props.subscribe();
+          return <MainJudgeContainer />;
+        case "points":
+          this.props.subscribe();
+          return <FightPointsContainer />;
+        case "timekeeper":
+          this.props.subscribe();
+          return <TimekeeperContainer />;
+        default:
+          this.props.showWarning("You don't have any role in this fight");
+          return <FightListContainer />;
+      }
     }
 
-    componentWillReceiveProps(newProps){
-        if(this.props.fight !== undefined && newProps.fightId !== this.props.fight.id)
-            this.props.getFightDetails(this.props.fightId);
-    }    
-
-    render() {
-        const {fight, sendMessage, user} = this.props;      
-
-        if (fight) {
-            let judgeRole = GetJudgeRole(this.props);
-            switch (judgeRole) {
-                case "Main":
-                    return <MainJudgeContainer fight={ fight } sendMessage={ sendMessage } user={ user } />
-                case "Points":
-                    return <FightPointsContainer fight={ fight } sendMessage={ sendMessage } user={ user } />
-                case "Timekeeper":
-                    return <TimekeeperContainer fight={ fight } sendMessage={ sendMessage } user={ user } />
-                default:
-                    return <FightListContainer />
-            }
-        }
-
-        return <CenterSpinner/>
-    }
+    return <CenterSpinner />;
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-        fight: state.Fight.fight,
-        user: state.Account.user
-    }
-}
+  return {
+    role: state.Fight.role
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        getFightDetails: (id) => {
-            dispatch(getFightDetails(id))
-        },
+  return {
+    subscribe: () => {
+      dispatch(subscribe());
+    },
 
-        subscribe: () => {
-            dispatch(subscribe())
-        },
-
-        sendMessage: (message) => {
-            dispatch(sendMessage(message))
-        }
+    showWarning: message => {
+      dispatch(showWarning(message));
     }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(FightScreenResolver)
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(
+  FightScreenResolver
+);

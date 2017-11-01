@@ -14,18 +14,70 @@ import {
   Body,
   Left,
   Right,
-  Picker
+  Picker,
+  Footer,
+  FooterTab,
+  Badge
 } from "native-base";
 
+import { saveState, loadState } from "../../common/localStorage";
+import { AsyncStorage } from "react-native";
 const Item = Picker.Item;
+
+const setConnectionMessage = props => {
+  const { fetched, fetching } = props;
+  if (fetching)
+    return (
+      <FooterTab
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff"
+        }}>
+        <Text style={{ color: "gold" }}>Connecting...</Text>
+      </FooterTab>
+    );
+  else if (fetched)
+    return (
+      <FooterTab
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff"
+        }}>
+        <Text style={{ color: "green" }}>Connected to server</Text>
+      </FooterTab>
+    );
+  else
+    return (
+      <FooterTab
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff"
+        }}>
+        <Text style={{ color: "red" }}>Failed to connect to server</Text>
+      </FooterTab>
+    );
+};
 
 class SettingsView extends Component {
   componentWillMount() {
-    if (this.props.contests.length === 0) this.props.getContests();
+    AsyncStorage.getItem("Settings").then(settingsStr => {
+      let parsedState = undefined;
+      try {
+        parsedState = JSON.parse(settingsStr);
+      } catch (error) {}
+      if (parsedState) {
+        this.props.setHostUrl(parsedState.host);
+        this.props.setWebsocketUrl(parsedState.websocket);
+      }
+
+      if (this.props.contests.length === 0) this.props.getContests();
+    });
   }
 
   render() {
-    console.log(this.props.contests);
     const contests = this.props.contests.map((contest, key) => (
       <Item key={key} label={contest.name} value={contest} />
     ));
@@ -64,6 +116,14 @@ class SettingsView extends Component {
             </Picker>
           </Form>
         </Content>
+        <Footer style={{ backgroundColor: "#fff" }}>
+          <FooterTab style={{ backgroundColor: "#fff" }}>
+            <Button onPress={this.props.getContests}>
+              <Text>Check connection</Text>
+            </Button>
+          </FooterTab>
+          {setConnectionMessage(this.props)}
+        </Footer>
       </Container>
     );
   }

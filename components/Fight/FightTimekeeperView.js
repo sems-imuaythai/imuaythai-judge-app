@@ -1,49 +1,37 @@
-import React, { Component } from 'react';
-import { Container, Content, Text, Title, Button } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import FightHeader from './FightHeader';
-import * as requestType from '../../containers/Fight/requestTypes';
+import React from "react";
+import { Container, Content, Text, Button } from "native-base";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import FightHeader from "../../containers/Fight/FightHeaderContainer";
 
-
-class FightTimekeeperView extends Component {
-
-  render() {
-    const {user, fight} = this.props;
-    return (
-      <Container>
-        <Content style={ { marginTop: 25 } }>
-          <FightHeader user={ user } fight={ fight } timerStarted={this.props.timerStart} paused={this.props.paused} started={this.props.startRound} timerReset={this.props.timerReset} setRound={this.props.setRound} showTimer={true}/>
-          <Grid style={ { marginTop: 10 } }>
-            <Col style={{justifyContent: 'center', alignItems: 'flex-end'}}>
+const FightTimekeeperView = props => {
+  return (
+    <Container>
+      <Content style={{ marginTop: 25 }}>
+        <FightHeader showTimer={true} />
+        <Grid style={{ marginTop: 10 }}>
+          <Col style={{ justifyContent: "center", alignItems: "center" }}>
             <Row>
-              <Button light onPress={this.props.startRound ? this.props.toggleRound : this.props.setRound } style={{width: 200, height: 200, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginRight:1}}>
-                <Text>
-                  { this.props.timerStart ? 'PAUSE' : 'START' }
+              <Button
+                light
+                onPress={props.timerButtonClick}
+                style={{
+                  width: 400,
+                  height: 400,
+                  justifyContent: "center",
+                  borderWidth: 1.0,
+                  borderColor: "#000",
+                  marginRight: 1
+                }}>
+                <Text style={{ fontSize: 20 }}>
+                  {props.timer.fightTimerStart ? "PAUSE" : "START"}
                 </Text>
               </Button>
             </Row>
-            </Col>
-            <Col>
-            <Row>
-              <Button light onPress={this.props.prematureEndRound} style={{width: 100, height: 100, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginLeft:1, marginBottom:1}}>
-                <Text>
-                  STOP
-                </Text>
-              </Button>
-            </Row>
-            <Row>
-              <Button light style={{width: 100, height: 100, justifyContent: 'center', borderWidth:1.0, borderColor: '#000', marginLeft:1}}>
-                <Text>
-                  SIGNAL
-                </Text>
-              </Button>
-            </Row>
-            </Col>
-          </Grid>
-        </Content>
-      </Container>
-      );
-  }
-}
+          </Col>
+        </Grid>
+      </Content>
+    </Container>
+  );
+};
 
 export default FightTimekeeperView;

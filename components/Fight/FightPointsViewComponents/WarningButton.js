@@ -1,36 +1,51 @@
-import React, { Component } from 'react';
-import { H1, H2, Button } from 'native-base';
-import { StyleSheet } from 'react-native';
-import { Col, Row } from 'react-native-easy-grid';
+import React from "react";
+import { H1, H2, Button } from "native-base";
+import { StyleSheet } from "react-native";
+import { Col, Row } from "react-native-easy-grid";
 
-
-class WarningButton extends Component {
-
-  render() {
-    var style = StyleSheet.create({
-      centerElements: {
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-    });
-    return (
-      <Col style={ style.centerElements }>
-      <Row style={ style.centerElements }>
-        <Button large full light style={ { height: 85, width: 85 } } disabled={ this.props.disabled } onPress={ this.props.increment }>
-          <H1>{ this.props.symbol }</H1>
+const WarningButton = props => {
+  let style = StyleSheet.create({
+    centerElements: {
+      justifyContent: "center",
+      alignItems: "center"
+    }
+  });
+  return (
+    <Col style={style.centerElements}>
+      <Row style={style.centerElements}>
+        <Button
+          large
+          full
+          light
+          style={{ height: 85, width: 85 }}
+          disabled={props.disabled}
+          onPress={props.increment}>
+          <H1>{props.symbol}</H1>
         </Button>
       </Row>
-      <Row style={ { height: 85, width: 85, backgroundColor: this.props.playerBackgrounColor, justifyContent: 'center', alignItems: 'center' } }>
-        <H2 style={ { color: '#ffffff' } }>{ this.props.symbolCount.toString() }</H2>
+      <Row
+        style={{
+          height: 85,
+          width: 85,
+          backgroundColor: props.playerBackgrounColor,
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+        <H2 style={{ color: "#ffffff" }}>{props.symbolCount.toString()}</H2>
       </Row>
-      <Row style={ style.centerElements }>
-        <Button large full light style={ { height: 85, width: 85 } } disabled={ this.props.disabled } onPress={ this.props.decrement }>
+      <Row style={style.centerElements}>
+        <Button
+          large
+          full
+          light
+          style={{ height: 85, width: 85 }}
+          disabled={props.disabled}
+          onPress={props.decrement}>
           <H1> - </H1>
         </Button>
       </Row>
-      </Col>
-      );
-  }
-}
+    </Col>
+  );
+};
 
 export default WarningButton;
