@@ -22,6 +22,13 @@ const ui = (state = uiInitialState, action) => {
         showPrematureEndPanels: true,
         disabled: false
       };
+
+    case actionTypes.ACCOUNT_LOGOUT:
+    case actionTypes.EXIT_FIGHT:
+      return {
+        ...state,
+        uiInitialState
+      };
     default:
       return state;
   }
