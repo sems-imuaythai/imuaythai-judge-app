@@ -25,10 +25,7 @@ const ui = (state = uiInitialState, action) => {
 
     case actionTypes.ACCOUNT_LOGOUT:
     case actionTypes.EXIT_FIGHT:
-      return {
-        ...state,
-        uiInitialState
-      };
+      return uiInitialState;
     default:
       return state;
   }
