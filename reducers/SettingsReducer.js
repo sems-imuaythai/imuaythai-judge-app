@@ -2,8 +2,8 @@ import * as actionType from "../actions/types";
 
 const settingsInitialState = {
   ring: "A",
-  host: "https://imuaythai.herokuapp.com/",
-  websocket: "wss://imuaythai.herokuapp.com/",
+  host: "https://imuaythai-api.herokuapp.com/",
+  websocket: "wss://imuaythai-api.herokuapp.com/",
   contest: null,
   contests: [],
   fetching: false,
