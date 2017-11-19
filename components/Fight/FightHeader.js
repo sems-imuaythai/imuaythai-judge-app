@@ -10,6 +10,15 @@ const options = {
     marginLeft: 7
   }
 };
+const getFightStatus = props => {
+  if (props.started && props.roundId !== "") {
+    if (props.paused) return "Round paused";
+    else return "Round started";
+  } else if (!props.started && props.roundId === "") return "Fight not started";
+  else if (props.roundId < props.fight.structure.round.roundsCount)
+    return `Round #${props.roundId} ended`;
+  else return "Fight ended";
+};
 
 const FightHeader = props => {
   const { user, fight, timer } = props;
@@ -67,13 +76,10 @@ const FightHeader = props => {
                 : props.pauseTimerCallback
             }
             playPreSound={props.playPreSound}
+            startBlinking={props.startBlinking}
           />
         ) : (
-          <Title>
-            {props.started
-              ? props.paused ? "Fight paused" : "Fight started"
-              : "Fight not started"}
-          </Title>
+          <Title>{getFightStatus(props)}</Title>
         )}
       </Col>
     </Grid>

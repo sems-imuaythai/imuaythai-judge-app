@@ -34,6 +34,7 @@ export const SET_WARNINGS = "SET_WARNINGS";
 export const EDIT_POINTS = "EDIT_POINTS";
 export const RECEIVED_POINTS = "RECEIVED_POINTS";
 export const START_BLINK = "START_BLINK";
+export const STOP_BLINK = "STOP_BLINK";
 export const POINTS_ACCEPTED = "POINTS_ACCEPTED";
 export const RESET_POINTS = "RESET_POINTS";
 export const BLOCK_POINTS = "BLOCK_POINTS";

@@ -84,6 +84,11 @@ class JudgeTable extends Component {
               <Row key={key} style={styles.rowBorder}>
                 <Button
                   light
+                  danger={
+                    this.props.blinking &&
+                    judge.redPoints === 0 &&
+                    judge.bluePoints === 0
+                  }
                   full
                   style={styles.dimensions}
                   onPress={() =>

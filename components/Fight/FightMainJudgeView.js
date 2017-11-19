@@ -103,6 +103,7 @@ const FightMainJudgeView = props => {
           judgeMappings={judgeMappings}
           rounds={props.rounds}
           editPoints={props.editPoints}
+          blinking={props.blinking}
         />
         <Button
           disabled={props.disabled}

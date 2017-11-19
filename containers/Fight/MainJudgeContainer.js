@@ -27,7 +27,8 @@ const mapStateToProps = (state, ownProps) => {
     user: state.Account.user,
     rounds: state.Fight.rounds,
     disabled: state.Ui.disabled,
-    showPrematureEndPanels: state.Ui.showPrematureEndPanels
+    showPrematureEndPanels: state.Ui.showPrematureEndPanels,
+    blinking: state.Ui.blinking
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

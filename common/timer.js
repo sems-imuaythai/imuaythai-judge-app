@@ -70,6 +70,7 @@ class Timer extends Component {
         !this.state.played
       ) {
         this.props.playPreSound();
+        this.props.startBlinking();
         this.setState({ played: true });
       }
       if (remaining <= 100) {

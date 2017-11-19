@@ -91,6 +91,7 @@ export const startRound = id => {
       payload: id
     });
     playSound();
+    dispatch(stopBlinking());
     switch (role) {
       case "points":
         if (points.length > 0 && points.find(p => p.points > 0))
@@ -334,3 +335,11 @@ const playPauseSound = async () => {
   await sound.loadAsync(require("../sounds/small_bell.mp3"));
   await sound.playAsync();
 };
+
+export const startBlinking = () => ({
+  type: actionTypes.START_BLINK
+});
+
+export const stopBlinking = () => ({
+  type: actionTypes.STOP_BLINK
+});
