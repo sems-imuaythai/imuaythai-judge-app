@@ -51,7 +51,8 @@ class LoginView extends Component {
             onPress={() =>
               this.setState({
                 showQRScanner: false
-              })}>
+              })
+            }>
             <Text>Cancel</Text>
           </Button>
         </Container>
@@ -69,7 +70,7 @@ class LoginView extends Component {
           <Content style={{ backgroundColor: "#fff" }}>
             <Image
               style={{ width: null, height: 400 }}
-              source={require("../../mainLogo.png")}
+              source={require("../../assets/images/mainLogo.png")}
             />
             {this.props.fetching ? (
               <CenterSpinner />
@@ -82,7 +83,8 @@ class LoginView extends Component {
                     onChangeText={text =>
                       this.setState({
                         email: text
-                      })}
+                      })
+                    }
                   />
                 </FormItem>
                 <FormItem>
@@ -92,7 +94,8 @@ class LoginView extends Component {
                     onChangeText={text =>
                       this.setState({
                         password: text
-                      })}
+                      })
+                    }
                   />
                 </FormItem>
                 <Picker
@@ -112,7 +115,8 @@ class LoginView extends Component {
                     this.props.handleSubmit({
                       email: this.state.email,
                       password: this.state.password
-                    })}>
+                    })
+                  }>
                   <Text>Log in</Text>
                 </Button>
                 <Button

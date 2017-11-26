@@ -320,7 +320,7 @@ export const timerButtonClick = () => {
 const playSound = async () => {
   await Expo.Audio.setIsEnabledAsync(true);
   const sound = new Expo.Audio.Sound();
-  await sound.loadAsync(require("../sounds/boxing_bell.mp3"));
+  await sound.loadAsync(require("../assets/sounds/boxing_bell.mp3"));
   await sound.playAsync();
 };
 
@@ -332,7 +332,7 @@ export const playPreSound = () => {
 const playPauseSound = async () => {
   await Expo.Audio.setIsEnabledAsync(true);
   const sound = new Expo.Audio.Sound();
-  await sound.loadAsync(require("../sounds/small_bell.mp3"));
+  await sound.loadAsync(require("../assets/sounds/small_bell.mp3"));
   await sound.playAsync();
 };
 
