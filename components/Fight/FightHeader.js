@@ -12,8 +12,8 @@ const options = {
 };
 const getFightStatus = props => {
   if (props.started && props.roundId !== "") {
-    if (props.paused) return "Round paused";
-    else return "Round started";
+    if (props.paused) return `Round #${props.roundId} paused`;
+    else return `Round #${props.roundId} started`;
   } else if (!props.started && props.roundId === "") return "Fight not started";
   else if (props.roundId < props.fight.structure.round.roundsCount)
     return `Round #${props.roundId} ended`;
