@@ -6,14 +6,6 @@ import MainContainer from "./containers/Main/MainContainer";
 import { AppState } from "react-native";
 import { unsubscribe, subscribe } from "./actions/WebsocketActions";
 
-function cacheAsstes(assets) {
-  return assets.map(asset => Asset.fromModule(asset).downloadAsync());
-}
-
-function cacheFonts(fonts) {
-  return fonts.map(font => Font.loadAsync(font));
-}
-
 export default class App extends React.Component {
   constructor() {
     super();
@@ -23,27 +15,27 @@ export default class App extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      Ionicons: require("native-base/Fonts/Ionicons.ttf")
+    });
+
+    await Asset.fromModule(
+      require("./assets/images/mainLogo.png")
+    ).downloadAsync();
+    await Asset.fromModule(
+      require("./assets/sounds/boxing_bell.mp3")
+    ).downloadAsync(require("./assets/images/mainLogo.png"));
+    await Asset.fromModule(
+      require("./assets/sounds/small_bell.mp3")
+    ).downloadAsync(require("./assets/images/mainLogo.png"));
     AppState.addEventListener("change", this.handleAppStateChange);
 
     this.setState({
       ready: true
     });
-  }
-
-  async loadAssetsAsync() {
-    const imageAssets = cacheAsstes([require("./assets/images/mainLogo.png")]);
-    const fontAssets = cacheImages([
-      require("native-base/Fonts/Roboto.ttf"),
-      require("native-base/Fonts/Roboto_medium.ttf"),
-      require("native-base/Fonts/Ionicons.ttf")
-    ]);
-    const soundAssets = cacheAsstes([
-      require("./assets/sounds/boxing_bell.mp3"),
-      require("./assets/sounds/small_bell.mp3")
-    ]);
-
-    Promise.all([...imageAssets, ...fontAssets, ...soundAssets]);
   }
 
   componentWillUnmount() {
@@ -64,14 +56,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    if (!this.state.ready)
-      return (
-        <AppLoading
-          startAsync={this.loadAssetsAsync}
-          onFinish={() => this.setState({ isReady: true })}
-          onError={console.warn}
-        />
-      );
+    if (!this.state.ready) return <AppLoading />;
 
     return (
       <Provider store={store}>
